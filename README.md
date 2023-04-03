@@ -11,18 +11,18 @@ docker build -t <image-name> .
 * Specify the <image-name>
 * Then run image with
 ```bash
-docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock <image-name>:latest
+docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock <image-name>:<version>
 ```
 
 ## How to Activate Runner from Docker Registry
 * Ensure that you have Docker Desktop installed and opened
 * Open terminal then
 ```bash
-docker pull jimlyfirdaus/gitlab-runner-5
+docker pull jimlyfirdaus/docker-gitlab-runner
 ```
 * Then run image with
 ```bash
-docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock <image-name>:latest
+docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock <image-name>:<version>
 ```
 
 ## Reference
