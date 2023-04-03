@@ -1,0 +1,18 @@
+image: alpine:latest
+
+stages:
+  - test
+
+before_script:
+  - apk add --update python3
+  - echo "Python 3 installed"
+
+run-tests:
+  tags:
+    - docker-runner
+  stage: test
+  script:
+    - python3 -m unittest discover test
+  only:
+    - merge_requests
+    - main
