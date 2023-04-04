@@ -18,7 +18,7 @@ docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock 
 * Ensure that you have Docker Desktop installed and opened
 * Open terminal then
 ```bash
-docker pull jimlyfirdaus/docker-gitlab-runner
+docker pull jimlyfirdaus/gitlab-runner-concurrent
 ```
 * Then run image with
 ```bash
