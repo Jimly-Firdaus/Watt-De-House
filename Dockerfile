@@ -18,11 +18,13 @@ RUN gitlab-runner register \
   --docker-image $DOCKER_IMAGE \
   --url $GITLAB_URL \
   --registration-token $REGISTRATION_TOKEN \
-  --description "docker-runner-container" \
+  --description "watt-de-house-runner" \
   --maintenance-note "No maintenance note" \
   --tag-list $RUNNER_NAME \
   --run-untagged="true" \
   --locked="true" \
   --access-level="not_protected"
+
+RUN sed -i 's/concurrent = 1/concurrent = 5/g' /etc/gitlab-runner/config.toml
 
 CMD ["gitlab-runner", "run"]
