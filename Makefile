@@ -2,8 +2,8 @@
 REMOTE := origin
 
 # Set the name of the branches
-INTO_BRANCH := feature/gui
-FROM_BRANCH := dev
+INTO_BRANCH := dev
+FROM_BRANCH := dev-build
 
 # Update the dev branch with changes from the dev-build branch
 dev-build-to-dev:
