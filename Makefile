@@ -6,7 +6,7 @@ INTO_BRANCH := dev
 FROM_BRANCH := feature/simulator
 
 # Update the dev branch with changes from the dev-build branch
-dev-build-to-dev:
+main-to-dev:
 	git fetch $(REMOTE) $(FROM_BRANCH):$(FROM_BRANCH) --update-head-ok
 	git checkout $(INTO_BRANCH)
 	git merge $(REMOTE)/$(FROM_BRANCH)
