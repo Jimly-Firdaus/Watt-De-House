@@ -16,3 +16,4 @@ run-tests:
   only:
     - merge_requests
     - main
+    - dev
