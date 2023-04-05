@@ -3,7 +3,7 @@ REMOTE := origin
 
 # Set the name of the branches
 INTO_BRANCH := dev
-FROM_BRANCH := dev-build
+FROM_BRANCH := feature/simulator
 
 # Update the dev branch with changes from the dev-build branch
 dev-build-to-dev:
