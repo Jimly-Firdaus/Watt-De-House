@@ -2,8 +2,8 @@
 REMOTE := origin
 
 # Set the name of the branches
-INTO_BRANCH := dev
-FROM_BRANCH := dev-build
+INTO_BRANCH := feature/Estimator
+FROM_BRANCH := dev
 
 # Update the dev branch with changes from the dev-build branch
 dev-build-to-dev:
