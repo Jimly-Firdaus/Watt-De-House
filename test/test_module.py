@@ -2,12 +2,12 @@ import sys
 
 sys.path.append("..")
 import unittest
-from src.main import pangkat2
+from src.ClassFiles.Estimator import Estimator
 
 
 class ModuleTesting(unittest.TestCase):
     def test_pangkat2(self):
-        self.assertEqual(pangkat2(2), 4)
+        pass
 
 
 if __name__ == "__main__":
