@@ -41,7 +41,7 @@ class DataInput2(DataInput1):
         self, nama: str, daya: float, arus: float, tegangan: float, durasi: int
     ):
         super().__init__(nama, daya, arus, tegangan)
-        if self.durasi < 0:
+        if durasi < 0:
             raise Exception("Durasi tidak boleh < 0")
         self.durasi = durasi
 
