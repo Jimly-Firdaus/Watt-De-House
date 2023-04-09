@@ -1,14 +1,13 @@
 class Estimator:
-    def __init__(self, hargaListrik, showTotalConsumption, listPerangkatListrik):
+    def __init__(
+        self,
+        showTotalConsumption,
+        listPerangkatListrik,
+        hargaListrik=605,  # asumsi daya 900VA dan bersubsidi
+    ):
+        self.showTotalConsumption = showTotalConsumption
+        self.listPerangkatListrik = listPerangkatListrik
         self.hargaListrik = hargaListrik
-        self.showTotalConsumption = showTotalConsumption
-        self.listPerangkatListrik = listPerangkatListrik
-        self.totalBiaya = 0
-
-    def __init__(self, showTotalConsumption, listPerangkatListrik):
-        self.showTotalConsumption = showTotalConsumption
-        self.hargaListrik = 605  # asumsi daya 900VA dan bersubsidi
-        self.listPerangkatListrik = listPerangkatListrik
         self.totalBiaya = 0
 
     def getHargaListrik(self):
