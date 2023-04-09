@@ -1,4 +1,4 @@
-from interface.IDataInput import *
+from src.interface.IDataInput import *
 
 
 class DataInput1(IDataInput):
