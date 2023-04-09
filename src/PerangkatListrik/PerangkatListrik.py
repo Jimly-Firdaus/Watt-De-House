@@ -8,6 +8,7 @@ class PerangkatListrik:
         self.daya_p_listrik = 0
         self.arus_p_listrik = 0
         self.tegangan_p_listrik = 0
+        self.durasi_p_listrik = 0
 
     # Getter
     def getDataPerangkatListrik(self):
@@ -16,6 +17,7 @@ class PerangkatListrik:
             self.daya_p_listrik,
             self.arus_p_listrik,
             self.tegangan_p_listrik,
+            self.durasi_p_listrik,
         )
 
     # Setter
@@ -30,3 +32,6 @@ class PerangkatListrik:
 
     def setTeganganPListrik(self, tegangan):
         self.tegangan_p_listrik = tegangan
+
+    def setDurasiPListrik(self, durasi):
+        self.durasi_p_listrik = durasi
