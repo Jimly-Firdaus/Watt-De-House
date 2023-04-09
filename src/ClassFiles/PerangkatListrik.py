@@ -3,15 +3,13 @@
 
 class PerangkatListrik:
     # Constructor
-    def __init__(self):
-        self.nama_p_listrik = ""
-        self.daya_p_listrik = 0
-        self.arus_p_listrik = 0
-        self.tegangan_p_listrik = 0
-        self.durasi_p_listrik = 0
-
     def __init__(
-        self, nama: str, daya: float, arus: float, tegangan: float, durasi: int = 0
+        self,
+        nama: str = "",
+        daya: float = 0,
+        arus: float = 0,
+        tegangan: float = 0,
+        durasi: int = 0,
     ):
         self.nama_p_listrik = nama
         self.daya_p_listrik = daya
