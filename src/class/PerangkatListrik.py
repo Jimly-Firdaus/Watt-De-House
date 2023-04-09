@@ -10,6 +10,15 @@ class PerangkatListrik:
         self.tegangan_p_listrik = 0
         self.durasi_p_listrik = 0
 
+    def __init__(
+        self, nama: str, daya: float, arus: float, tegangan: float, durasi: int = 0
+    ):
+        self.nama_p_listrik = nama
+        self.daya_p_listrik = daya
+        self.arus_p_listrik = arus
+        self.tegangan_p_listrik = tegangan
+        self.durasi_p_listrik = durasi
+
     # Getter
     def getDataPerangkatListrik(self):
         return (
