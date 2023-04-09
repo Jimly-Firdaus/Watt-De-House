@@ -25,7 +25,7 @@ class Estimator:
             )
         self.totalBiaya *= self.hargaListrik
 
-    def displayTotalBIaya(self):
+    def displayTotalBiaya(self):
         print("Total Biaya :" + self.totalBiaya)
 
     def showConsumption(self):
