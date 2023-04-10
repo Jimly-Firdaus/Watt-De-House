@@ -12,7 +12,7 @@ class ModuleTesting(unittest.TestCase):
     def tearDown(self):
         self.db.close()
 
-    def test_insert_data(self):
+    def test_1_insert_data(self):
         self.db.create_table(
             "test_table",
             {
@@ -37,13 +37,13 @@ class ModuleTesting(unittest.TestCase):
         expected_data = [("device-1", 100.0, 12.0, 220.0, 120)]
         self.assertEqual(data, expected_data)
 
-    def test_update_data(self):
+    def test_2_update_data(self):
         self.db.update_data("test_table", {"nama": "device-2"}, {"nama": "device-1"})
         data = self.db.get_data("test_table")
         expected_data = [("device-2", 100.0, 12.0, 220.0, 120)]
         self.assertEqual(data, expected_data)
 
-    def test_delete_data(self):
+    def test_3_delete_data(self):
         self.db.delete_data("test_table", {"arus": 12.0})
         data = self.db.get_data("test_table")
         expected_data = []
