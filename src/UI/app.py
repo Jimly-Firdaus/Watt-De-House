@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QDesktopWidget
+from components.BaseCard import BaseCard
 
 
 class MainFrame(QWidget):
@@ -17,11 +18,13 @@ class MainFrame(QWidget):
         """
         )
 
-        # Center the self on the screen
+        # layout
         screen = QDesktopWidget().screenGeometry()
         x = (screen.width() - self.width()) // 2
         y = (screen.height() - self.height()) // 2
         self.move(x, y)
+
+        # Main Content Here
 
         # Create a BaseButton and add it to the layout
         a1 = FeatureButton("Estimator", self)
