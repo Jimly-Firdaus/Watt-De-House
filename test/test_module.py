@@ -11,7 +11,14 @@ class ModuleTesting(unittest.TestCase):
         # Test valid input
         data_input = DataInput1("Device-1", 100.0, 5.0, 220.0)
         self.assertEqual(data_input.get_user_input(), ("Device-1", 100.0, 5.0, 220.0))
-
+        perangkat_listrik = data_input.create_p_listrik()
+        perangkat_listrik_expected = PerangkatListrik(
+            0, False, "Device-1", 100.0, 5.0, 220.0
+        )
+        self.assertEqual(
+            perangkat_listrik.getDataPerangkatListrik(),
+            perangkat_listrik_expected.getDataPerangkatListrik(),
+        )
         # Test invalid input
         with self.assertRaises(Exception):
             data_input = DataInput1("", 100.0, 5.0, 220.0)
@@ -22,7 +29,14 @@ class ModuleTesting(unittest.TestCase):
         self.assertEqual(
             data_input.get_user_input(), ("Device-2", 100.0, 5.0, 220.0, 10)
         )
-
+        perangkat_listrik = data_input.create_p_listrik()
+        perangkat_listrik_expected = PerangkatListrik(
+            0, False, "Device-2", 100.0, 5.0, 220.0, 10
+        )
+        self.assertEqual(
+            perangkat_listrik.getDataPerangkatListrik(),
+            perangkat_listrik_expected.getDataPerangkatListrik(),
+        )
         # Test invalid input
         with self.assertRaises(Exception):
             data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, -1)
