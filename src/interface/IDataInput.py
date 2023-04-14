@@ -9,3 +9,7 @@ class IDataInput(ABC):
     @abstractmethod
     def validate_user_input(self, input):
         pass
+
+    @abstractmethod
+    def create_p_listrik(self):
+        pass
