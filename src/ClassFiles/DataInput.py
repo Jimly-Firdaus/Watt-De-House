@@ -1,4 +1,5 @@
 from src.interface.IDataInput import *
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 
 
 class DataInput1(IDataInput):
@@ -35,6 +36,11 @@ class DataInput1(IDataInput):
     def get_input_tegangan(self):
         return self.tegangan
 
+    def create_p_listrik(self):
+        data = self.get_user_input()
+        # Need to fecth database item here to create new id
+        return PerangkatListrik(0, False, data[0], data[1], data[2], data[3])
+
 
 class DataInput2(DataInput1):
     def __init__(
@@ -47,3 +53,10 @@ class DataInput2(DataInput1):
 
     def get_user_input(self):
         return (self.nama, self.daya, self.arus, self.tegangan, self.durasi)
+
+    def create_p_listrik(self):
+        data = self.get_user_input()
+        # Need to fecth database item here to create new id
+        return PerangkatListrik(
+            0, False, data[0], data[1], data[2], data[3], self.durasi
+        )
