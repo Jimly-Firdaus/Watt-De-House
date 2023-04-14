@@ -1,4 +1,4 @@
-from components.BaseCard import BaseButton
+from components.BaseButton import BaseButton
 
 
 class FeatureButton(BaseButton):
