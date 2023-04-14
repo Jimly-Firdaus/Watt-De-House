@@ -23,6 +23,7 @@ class Estimator:
         for i in range(len(self.listPerangkatListrik)):
             self.totalBiaya += (
                 self.listPerangkatListrik[i].daya_p_listrik
+                * 30
                 * self.listPerangkatListrik[i].durasi_p_listrik
                 / 1000
             )

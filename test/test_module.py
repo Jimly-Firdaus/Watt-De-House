@@ -37,7 +37,7 @@ class ModuleTesting(unittest.TestCase):
         Estimator1.hitungBiayaListrik()
         self.assertEqual(
             Estimator1.getTotalBiaya(),
-            (2 * 605),
+            (2 * 30 * 605),
         )
 
 
