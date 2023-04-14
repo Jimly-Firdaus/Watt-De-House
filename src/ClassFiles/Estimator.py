@@ -16,11 +16,15 @@ class Estimator:
     def setHargaListrik(self, hargaListrik):
         self.hargaListrik = hargaListrik
 
+    def getTotalBiaya(self):
+        return self.totalBiaya
+
     def hitungBiayaListrik(self):
         for i in range(len(self.listPerangkatListrik)):
             self.totalBiaya += (
                 self.listPerangkatListrik[i].daya_p_listrik
-                * self.listPerangkatListrik[i].durasi
+                * self.listPerangkatListrik[i].durasi_p_listrik
+                / 1000
             )
         self.totalBiaya *= self.hargaListrik
 
