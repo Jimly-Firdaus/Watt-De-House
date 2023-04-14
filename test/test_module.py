@@ -72,11 +72,13 @@ class ModuleTesting(unittest.TestCase):
         listPerangkat.append(perangkat_listrik1)
         Estimator1 = Estimator(True, listPerangkat)
         self.assertEqual(
-            Estimator1.get_harga_listrik(), (605),
+            Estimator1.get_harga_listrik(),
+            (605),
         )
         Estimator1.hitung_biaya_listrik()
         self.assertEqual(
-            Estimator1.get_total_biaya(), (2 * 30 * 605),
+            Estimator1.get_total_biaya(),
+            (2 * 30 * 605),
         )
 
     def test_ruangan(self):
