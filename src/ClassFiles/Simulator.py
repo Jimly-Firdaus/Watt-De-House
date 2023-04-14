@@ -6,13 +6,13 @@ class Simulator:
     def __init__(
         self,
         listRuangan: List[Ruangan],
-        costEstimation,
-        notifyButton,
+        # costEstimation,
+        # notifyButton,
     ):
         self.electricalOverload = False
         self.listRuangan = listRuangan
-        self.notifyButton = notifyButton
-        self.costEstimation = costEstimation
+        self.notifyButton = False
+        # self.costEstimation = costEstimation
 
     def changeProperties(self):
         self.electricalOverload = not (self.electricalOverload)
@@ -31,4 +31,14 @@ class Simulator:
     def displaySimulation(self):
         for ruangan in self.listRuangan:
             ruangan.displayDataPerangkatListrikRuangan()
-        print(self.costEstimation)
+        # print(self.costEstimation)
+
+    def changeNotifyButton(self):
+        self.notifyButton = True
+
+    def getDataSimulator(self):
+        return (
+            self.listRuangan,
+            self.electricalOverload,
+            self.notifyButton,
+        )
