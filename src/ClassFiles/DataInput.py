@@ -1,8 +1,7 @@
-from src.interface.IDataInput import *
 from src.ClassFiles.PerangkatListrik import PerangkatListrik
 
 
-class DataInput1(IDataInput):
+class DataInput1:
     def __init__(self, nama: str, daya: float, arus: float, tegangan: float):
         self.validate_user_input(nama, daya, arus, tegangan)
 
