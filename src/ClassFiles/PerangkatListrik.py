@@ -3,6 +3,7 @@ class PerangkatListrik:
     def __init__(
         self,
         id,
+        status,
         nama: str = "",
         daya: float = 0,
         arus: float = 0,
@@ -10,6 +11,7 @@ class PerangkatListrik:
         durasi: int = 0,
     ):
         self.id_p_listrik = id
+        self.is_active_p_listrik = status
         self.nama_p_listrik = nama
         self.daya_p_listrik = daya  # Power in watts
         self.arus_p_listrik = arus
@@ -20,6 +22,7 @@ class PerangkatListrik:
     def getDataPerangkatListrik(self):
         return (
             self.id_p_listrik,
+            self.is_active_p_listrik,
             self.nama_p_listrik,
             self.daya_p_listrik,
             self.arus_p_listrik,
@@ -45,3 +48,6 @@ class PerangkatListrik:
 
     def setIdPListrik(self, id):
         self.id_p_listrik = id
+
+    def setStatusPListrik(self, status):
+        self.is_active_p_listrik = status
