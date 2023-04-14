@@ -37,7 +37,7 @@ class Estimator:
             for perangkatListrik in self.listPerangkatListrik:
                 biaya = (
                     perangkatListrik.daya_p_listrik
-                    * perangkatListrik.durasi
+                    * perangkatListrik.durasi_p_listrik
                     * self.hargaListrik
                 )
                 print(perangkatListrik.nama_p_listrik + " : " + biaya)
