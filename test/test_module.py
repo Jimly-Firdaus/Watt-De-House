@@ -2,12 +2,22 @@ import sys
 
 sys.path.append("..")
 import unittest
-from src.ClassFiles.Estimator import Estimator
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 
 
 class ModuleTesting(unittest.TestCase):
-    def test_pangkat2(self):
-        pass
+    def test_perangkat_listrik_default(self):
+        # Test valid input
+        perangkat_listrik = PerangkatListrik()
+        self.assertEqual(perangkat_listrik.getDataPerangkatListrik(), ("", 0, 0, 0, 0))
+
+    def test_perangkat_listrik_defined(self):
+        # Test valid input
+        perangkat_listrik = PerangkatListrik("Device-1", 100.0, 5.0, 220.0, 10)
+        self.assertEqual(
+            perangkat_listrik.getDataPerangkatListrik(),
+            ("Device-1", 100.0, 5.0, 220.0, 10),
+        )
 
 
 if __name__ == "__main__":
