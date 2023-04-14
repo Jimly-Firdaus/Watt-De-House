@@ -17,4 +17,3 @@ run-tests:
     - merge_requests
     - main
     - dev
-    - feature/PerangkatListrik
