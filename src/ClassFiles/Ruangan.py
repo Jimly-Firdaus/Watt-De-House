@@ -53,3 +53,10 @@ class Ruangan:
             if data[0] == id and data[1] == nama_perangkat:
                 self.list_perangkat_listrik_ruangan.remove(pl)
                 break
+
+    def totalPowerUsed(self):
+        power_used = 0
+        for pl in self.list_perangkat_listrik_ruangan:
+            data = pl.getDataPerangkatListrik()
+            power_used += data[2]
+        return power_used

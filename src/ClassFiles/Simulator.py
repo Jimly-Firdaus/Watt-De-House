@@ -1,12 +1,14 @@
+from typing import List
+from ClassFiles.Ruangan import Ruangan
+
+
 class Simulator:
     def __init__(
         self,
-        maxPower,
-        listRuangan,
+        listRuangan: List[Ruangan],
         costEstimation,
         notifyButton,
     ):
-        self.maxPower = maxPower
         self.electricalOverload = False
         self.listRuangan = listRuangan
         self.notifyButton = notifyButton
@@ -17,7 +19,7 @@ class Simulator:
 
     def updateElectricalState(self):
         for ruangan in self.listRuangan:
-            if ruangan.daya > self.maxPower:
+            if ruangan.totalPowerUsed() > ruangan.getThreshold():
                 self.changeProperties(self)
                 return True
         return False
@@ -28,5 +30,5 @@ class Simulator:
 
     def displaySimulation(self):
         for ruangan in self.listRuangan:
-            print("All attribute")
+            ruangan.displayDataPerangkatListrikRuangan()
         print(self.costEstimation)
