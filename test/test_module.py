@@ -8,15 +8,17 @@ from src.ClassFiles.PerangkatListrik import PerangkatListrik
 class ModuleTesting(unittest.TestCase):
     def test_perangkat_listrik_default(self):
         # Test valid input
-        perangkat_listrik = PerangkatListrik()
-        self.assertEqual(perangkat_listrik.getDataPerangkatListrik(), ("", 0, 0, 0, 0))
+        perangkat_listrik = PerangkatListrik(1)
+        self.assertEqual(
+            perangkat_listrik.getDataPerangkatListrik(), (1, "", 0, 0, 0, 0)
+        )
 
     def test_perangkat_listrik_defined(self):
         # Test valid input
-        perangkat_listrik = PerangkatListrik("Device-1", 100.0, 5.0, 220.0, 10)
+        perangkat_listrik = PerangkatListrik(1, "Device-1", 100.0, 5.0, 220.0, 10)
         self.assertEqual(
             perangkat_listrik.getDataPerangkatListrik(),
-            ("Device-1", 100.0, 5.0, 220.0, 10),
+            (1, "Device-1", 100.0, 5.0, 220.0, 10),
         )
 
 
