@@ -11,10 +11,10 @@ class PerangkatListrik:
     ):
         self.id_p_listrik = id
         self.nama_p_listrik = nama
-        self.daya_p_listrik = daya
+        self.daya_p_listrik = daya  # Power in watts
         self.arus_p_listrik = arus
         self.tegangan_p_listrik = tegangan
-        self.durasi_p_listrik = durasi
+        self.durasi_p_listrik = durasi  # Duration in hours
 
     # Getter
     def getDataPerangkatListrik(self):
