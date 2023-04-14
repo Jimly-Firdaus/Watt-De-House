@@ -3,6 +3,7 @@ class PerangkatListrik:
     def __init__(
         self,
         id,
+        status,
         nama: str = "",
         daya: float = 0,
         arus: float = 0,
@@ -10,6 +11,7 @@ class PerangkatListrik:
         durasi: int = 0,
     ):
         self.id_p_listrik = id
+        self.is_active_p_listrik = status
         self.nama_p_listrik = nama
         self.daya_p_listrik = daya  # Power in watts
         self.arus_p_listrik = arus
@@ -17,9 +19,10 @@ class PerangkatListrik:
         self.durasi_p_listrik = durasi  # Duration in hours
 
     # Getter
-    def getDataPerangkatListrik(self):
+    def get_data_perangkat_listrik(self):
         return (
             self.id_p_listrik,
+            self.is_active_p_listrik,
             self.nama_p_listrik,
             self.daya_p_listrik,
             self.arus_p_listrik,
@@ -28,20 +31,23 @@ class PerangkatListrik:
         )
 
     # Setter
-    def setNamaPListrik(self, name):
+    def set_nama_p_listrik(self, name):
         self.nama_p_listrik = name
 
-    def setDayaPListrik(self, daya):
+    def set_daya_p_listrik(self, daya):
         self.daya_p_listrik = daya
 
-    def setArusPListrik(self, arus):
+    def set_arus_p_listrik(self, arus):
         self.arus_p_listrik = arus
 
-    def setTeganganPListrik(self, tegangan):
+    def set_tegangan_p_listrik(self, tegangan):
         self.tegangan_p_listrik = tegangan
 
-    def setDurasiPListrik(self, durasi):
+    def set_durasi_p_listrik(self, durasi):
         self.durasi_p_listrik = durasi
 
-    def setIdPListrik(self, id):
+    def set_id_p_listrik(self, id):
         self.id_p_listrik = id
+
+    def set_status_p_listrik(self, status):
+        self.is_active_p_listrik = status
