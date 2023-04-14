@@ -13,14 +13,14 @@ class ModuleTesting(unittest.TestCase):
         # Test valid input
         perangkat_listrik = PerangkatListrik(1, False)
         self.assertEqual(
-            perangkat_listrik.getDataPerangkatListrik(), (1, False, "", 0, 0, 0, 0)
+            perangkat_listrik.get_data_perangkat_listrik(), (1, False, "", 0, 0, 0, 0)
         )
 
     def test_perangkat_listrik_defined(self):
         # Test valid input
         perangkat_listrik = PerangkatListrik(1, True, "Device-1", 100.0, 5.0, 220.0, 10)
         self.assertEqual(
-            perangkat_listrik.getDataPerangkatListrik(),
+            perangkat_listrik.get_data_perangkat_listrik(),
             (1, True, "Device-1", 100.0, 5.0, 220.0, 10),
         )
 
