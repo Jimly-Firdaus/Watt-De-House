@@ -10,17 +10,18 @@ class Estimator:
         self.hargaListrik = hargaListrik
         self.totalBiaya = 0
 
-    def getHargaListrik(self):
+    def get_harga_listrik(self):
         return self.hargaListrik
 
-    def setHargaListrik(self, hargaListrik):
+    def set_harga_listrik(self, hargaListrik):
         self.hargaListrik = hargaListrik
 
-    def getTotalBiaya(self):
+    def get_total_biaya(self):
         return self.totalBiaya
 
-    def hitungBiayaListrik(self):
+    def hitung_biaya_listrik(self):
         for i in range(len(self.listPerangkatListrik)):
+            print(self.listPerangkatListrik[i].durasi_p_listrik)
             self.totalBiaya += (
                 self.listPerangkatListrik[i].daya_p_listrik
                 * 30
@@ -29,15 +30,15 @@ class Estimator:
             )
         self.totalBiaya *= self.hargaListrik
 
-    def displayTotalBiaya(self):
+    def display_total_biaya(self):
         print("Total Biaya :" + self.totalBiaya)
 
-    def showConsumption(self):
+    def show_consumption(self):
         if self.showTotalConsumption == True:
             for perangkatListrik in self.listPerangkatListrik:
                 biaya = (
                     perangkatListrik.daya_p_listrik
-                    * perangkatListrik.durasi
+                    * perangkatListrik.durasi_p_listrik
                     * self.hargaListrik
                 )
                 print(perangkatListrik.nama_p_listrik + " : " + biaya)

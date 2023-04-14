@@ -11,14 +11,14 @@ class ModuleTesting(unittest.TestCase):
         # Test valid input
         perangkat_listrik = PerangkatListrik(1, False)
         self.assertEqual(
-            perangkat_listrik.getDataPerangkatListrik(), (1, False, "", 0, 0, 0, 0)
+            perangkat_listrik.get_data_perangkat_listrik(), (1, False, "", 0, 0, 0, 0)
         )
 
     def test_perangkat_listrik_defined(self):
         # Test valid input
         perangkat_listrik = PerangkatListrik(1, True, "Device-1", 100.0, 5.0, 220.0, 10)
         self.assertEqual(
-            perangkat_listrik.getDataPerangkatListrik(),
+            perangkat_listrik.get_data_perangkat_listrik(),
             (1, True, "Device-1", 100.0, 5.0, 220.0, 10),
         )
 
@@ -35,12 +35,12 @@ class ModuleTesting(unittest.TestCase):
         listPerangkat.append(perangkat_listrik1)
         Estimator1 = Estimator(True, listPerangkat)
         self.assertEqual(
-            Estimator1.getHargaListrik(),
+            Estimator1.get_harga_listrik(),
             (605),
         )
-        Estimator1.hitungBiayaListrik()
+        Estimator1.hitung_biaya_listrik()
         self.assertEqual(
-            Estimator1.getTotalBiaya(),
+            Estimator1.get_total_biaya(),
             (2 * 30 * 605),
         )
 
