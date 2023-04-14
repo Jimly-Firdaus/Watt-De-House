@@ -78,7 +78,7 @@ class ModuleTesting(unittest.TestCase):
         Estimator1.hitung_biaya_listrik()
         self.assertEqual(
             Estimator1.get_total_biaya(),
-            (0),
+            (2 * 30 * 605),
         )
 
     def test_ruangan(self):
