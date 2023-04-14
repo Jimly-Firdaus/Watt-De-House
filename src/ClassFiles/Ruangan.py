@@ -34,9 +34,6 @@ class Ruangan:
             return self.circuit_breaker_threshold
         return -1
 
-    def getMaxPower(self):
-        return self.max_power
-
     def setThreshold(self, o):
         if self.avail_circuit_breaker:
             self.circuit_breaker_threshold = o
@@ -50,7 +47,7 @@ class Ruangan:
     def removePerangkatListirk(self, nama_perangkat: str, id: int):
         for pl in self.list_perangkat_listrik_ruangan:
             data = pl.getDataPerangkatListrik()
-            if data[0] == id and data[1] == nama_perangkat:
+            if data[0] == id and data[2] == nama_perangkat:
                 self.list_perangkat_listrik_ruangan.remove(pl)
                 break
 
@@ -58,5 +55,6 @@ class Ruangan:
         power_used = 0
         for pl in self.list_perangkat_listrik_ruangan:
             data = pl.getDataPerangkatListrik()
-            power_used += data[2]
+            if data[1]:
+                power_used += data[3]
         return power_used
