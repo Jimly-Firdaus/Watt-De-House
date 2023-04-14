@@ -1,18 +1,16 @@
 from typing import List
-from ClassFiles.Ruangan import Ruangan
+from src.ClassFiles.Ruangan import Ruangan
+from src.ClassFiles.Estimator import Estimator
 
 
 class Simulator:
     def __init__(
         self,
         listRuangan: List[Ruangan],
-        # costEstimation,
-        # notifyButton,
     ):
         self.electricalOverload = False
         self.listRuangan = listRuangan
         self.notifyButton = False
-        # self.costEstimation = costEstimation
 
     def changeProperties(self):
         self.electricalOverload = not (self.electricalOverload)
@@ -31,7 +29,14 @@ class Simulator:
     def displaySimulation(self):
         for ruangan in self.listRuangan:
             ruangan.displayDataPerangkatListrikRuangan()
-        # print(self.costEstimation)
+            list_perangkat_listrik_ruangan = ruangan.getListPerangkatListrik()
+            active_pl = []
+            for pl in list_perangkat_listrik_ruangan:
+                data = pl.getDataPerangkatListrik()
+                if data[1]:
+                    active_pl.append(pl)
+            estimator_ruangan = Estimator(True, active_pl)
+            print(estimator_ruangan)
 
     def changeNotifyButton(self):
         self.notifyButton = True
