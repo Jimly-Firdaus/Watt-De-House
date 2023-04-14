@@ -6,44 +6,44 @@ from src.ClassFiles.Estimator import Estimator
 class Simulator:
     def __init__(
         self,
-        listRuangan: List[Ruangan],
+        list_ruangan: List[Ruangan],
     ):
-        self.electricalOverload = False
-        self.listRuangan = listRuangan
-        self.notifyButton = False
+        self.electrical_overload = False
+        self.list_ruangan = list_ruangan
+        self.notify_button = False
 
-    def changeProperties(self):
-        self.electricalOverload = not (self.electricalOverload)
+    def change_properties(self):
+        self.electrical_overload = not (self.electrical_overload)
 
-    def updateElectricalState(self):
-        for ruangan in self.listRuangan:
-            if ruangan.totalPowerUsed() > ruangan.getThreshold():
-                self.changeProperties(self)
+    def update_electrical_state(self):
+        for ruangan in self.list_ruangan:
+            if ruangan.total_power_used() > ruangan.get_threshold():
+                self.change_properties(self)
                 return True
         return False
 
-    def stopSimulation(self):
-        if self.notifyButton:
+    def stop_simulation(self):
+        if self.notify_button:
             del self
 
-    def displaySimulation(self):
-        for ruangan in self.listRuangan:
-            ruangan.displayDataPerangkatListrikRuangan()
-            list_perangkat_listrik_ruangan = ruangan.getListPerangkatListrik()
+    def display_simulation(self):
+        for ruangan in self.list_ruangan:
+            ruangan.display_data_perangkat_listrik_ruangan()
+            list_perangkat_listrik_ruangan = ruangan.get_list_perangkat_listrik()
             active_pl = []
             for pl in list_perangkat_listrik_ruangan:
-                data = pl.getDataPerangkatListrik()
+                data = pl.get_data_perangkat_listrik()
                 if data[1]:
                     active_pl.append(pl)
             estimator_ruangan = Estimator(True, active_pl)
             print(estimator_ruangan)
 
-    def changeNotifyButton(self):
-        self.notifyButton = True
+    def change_notify_button(self):
+        self.notify_button = True
 
-    def getDataSimulator(self):
+    def get_data_simulator(self):
         return (
-            self.listRuangan,
-            self.electricalOverload,
-            self.notifyButton,
+            self.list_ruangan,
+            self.electrical_overload,
+            self.notify_button,
         )

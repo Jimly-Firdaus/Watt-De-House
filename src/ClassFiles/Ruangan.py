@@ -17,44 +17,44 @@ class Ruangan:
         self.avail_circuit_breaker = circuit_breaker
         self.circuit_breaker_threshold = threshold
 
-    def displayDataPerangkatListrikRuangan(self):
+    def display_data_perangkat_listrik_ruangan(self):
         print(self.list_perangkat_listrik_ruangan)
 
-    def getRuanganName(self):
+    def get_ruangan_name(self):
         return self.nama_ruangan
 
-    def getListPerangkatListrik(self):
+    def get_list_perangkat_listrik(self):
         return self.list_perangkat_listrik_ruangan
 
-    def haveCircuitBreaker(self):
+    def have_circuit_breaker(self):
         return self.avail_circuit_breaker
 
-    def getThreshold(self):
+    def get_threshold(self):
         if self.avail_circuit_breaker:
             return self.circuit_breaker_threshold
         return -1
 
-    def setThreshold(self, o):
+    def set_threshold(self, o):
         if self.avail_circuit_breaker:
             self.circuit_breaker_threshold = o
 
-    def changeCircuitBreakerStatus(self, status):
+    def change_circuit_breaker_status(self, status):
         self.avail_circuit_breaker = status
 
-    def addPerangkatListrik(self, perangkat_listrik: PerangkatListrik):
+    def add_perangkat_listrik(self, perangkat_listrik: PerangkatListrik):
         self.list_perangkat_listrik_ruangan.append(perangkat_listrik)
 
-    def removePerangkatListirk(self, nama_perangkat: str, id: int):
+    def remove_perangkat_listirk(self, nama_perangkat: str, id: int):
         for pl in self.list_perangkat_listrik_ruangan:
-            data = pl.getDataPerangkatListrik()
+            data = pl.get_data_perangkat_listrik()
             if data[0] == id and data[2] == nama_perangkat:
                 self.list_perangkat_listrik_ruangan.remove(pl)
                 break
 
-    def totalPowerUsed(self):
+    def total_power_used(self):
         power_used = 0
         for pl in self.list_perangkat_listrik_ruangan:
-            data = pl.getDataPerangkatListrik()
+            data = pl.get_data_perangkat_listrik()
             if data[1]:
                 power_used += data[3]
         return power_used
