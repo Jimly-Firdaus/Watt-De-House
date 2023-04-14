@@ -1,5 +1,12 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QWidget
+from PyQt5.QtWidgets import (
+    QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QWidget,
+    QSizePolicy,
+)
 
 
 class BaseCard(QWidget):
@@ -11,6 +18,7 @@ class BaseCard(QWidget):
     def add_text(self, text, alignment="left"):
         label = QLabel(text)
         label.setWordWrap(True)
+        label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         if alignment == "left":
             self.layout.addWidget(label, alignment=Qt.AlignLeft)
         elif alignment == "center":
@@ -28,6 +36,9 @@ class BaseCard(QWidget):
     def set_size(self, width, height):
         self.setFixedSize(width, height)
 
+    def set_position(self, x, y):
+        self.move(x, y)
+
     def finalize(self):
         self.layout.addLayout(self.button_layout)
 
@@ -40,16 +51,21 @@ class BaseCard(QWidget):
     # card.add_button("Button 1")
     # card.add_button("Button 2")
     # card.set_style("""
-    #     Card {
-    #         background-color: lightgray;
-    #         padding: 10px;
-    #     }
     #     QLabel {
     #         color: blue;
+    #         font-size: 18px;
     #     }
     #     QPushButton {
-    #         background-color: red;
+    #         background-color: white;
+    #         color: blue;
+    #         font-size: 18px;
+    #         border: 2px solid blue;
+    #         border-radius: 10px;
+    #         padding: 10px;
+    #     }
+    #     QPushButton:hover {
+    #         background-color: blue;
     #         color: white;
     #     }
-    # """)
+    # # """)
     # card.finalize()
