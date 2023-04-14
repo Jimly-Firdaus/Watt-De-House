@@ -21,7 +21,6 @@ class Estimator:
 
     def hitung_biaya_listrik(self):
         for i in range(len(self.listPerangkatListrik)):
-            print(self.listPerangkatListrik[i].durasi_p_listrik)
             self.totalBiaya += (
                 self.listPerangkatListrik[i].daya_p_listrik
                 * 30
