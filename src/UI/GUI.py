@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QDesktopWidget
 
 
 class MainWindow(QMainWindow):
@@ -11,6 +11,14 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
+    window = QWidget()
+    window.setGeometry(0, 0, 1440, 810)
+
+    # Center the window on the screen
+    screen = QDesktopWidget().screenGeometry()
+    x = (screen.width() - window.width()) // 2
+    y = (screen.height() - window.height()) // 2
+    window.move(x, y)
+
+    window.show()
     sys.exit(app.exec_())
