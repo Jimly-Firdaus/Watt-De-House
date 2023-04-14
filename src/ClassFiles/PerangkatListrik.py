@@ -9,7 +9,7 @@ class PerangkatListrik:
         tegangan: float = 0,
         durasi: int = 0,
     ):
-        self.id_perangkat_listrik = id
+        self.id_p_listrik = id
         self.nama_p_listrik = nama
         self.daya_p_listrik = daya
         self.arus_p_listrik = arus
@@ -19,7 +19,7 @@ class PerangkatListrik:
     # Getter
     def getDataPerangkatListrik(self):
         return (
-            self.id,
+            self.id_p_listrik,
             self.nama_p_listrik,
             self.daya_p_listrik,
             self.arus_p_listrik,
@@ -43,5 +43,5 @@ class PerangkatListrik:
     def setDurasiPListrik(self, durasi):
         self.durasi_p_listrik = durasi
 
-    def setIdPListrik(self, o):
-        self.id = o
+    def setIdPListrik(self, id):
+        self.id_p_listrik = id
