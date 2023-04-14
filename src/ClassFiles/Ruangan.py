@@ -1,15 +1,15 @@
 from typing import List
-from ClassFiles.PerangkatListrik import PerangkatListrik
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 
 
 class Ruangan:
     def __init__(
         self,
+        id: int,
         nama_ruangan: str,
         list_perangkat_listrik_ruangan: List[PerangkatListrik],
         circuit_breaker: bool,
         threshold: float,
-        id: int,
     ):
         self.id = id
         self.nama_ruangan = nama_ruangan
@@ -58,3 +58,12 @@ class Ruangan:
             if data[1]:
                 power_used += data[3]
         return power_used
+
+    def get_all_attributes(self):
+        return (
+            self.id,
+            self.nama_ruangan,
+            self.list_perangkat_listrik_ruangan,
+            self.avail_circuit_breaker,
+            self.circuit_breaker_threshold,
+        )
