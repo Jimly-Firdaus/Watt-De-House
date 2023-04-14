@@ -3,26 +3,47 @@ from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from components.FeatureButton import FeatureButton
+from components.UtilityButton import UtilityButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QDesktopWidget
 
 
-class MainWindow(QMainWindow):
+class MainFrame(QWidget):
     def __init__(self):
         super().__init__()
+        self.setGeometry(0, 0, 1440, 810)
         self.setStyleSheet(
             """
             background-color: #0B2447;
         """
         )
-        self.resize(1280, 720)
-        self.setWindowTitle("Watt de house")
-        self.a1 = FeatureButton("Estimator", self)
-        self.a1.setGeometry(380, 270, 200, 90)
-        self.a2 = FeatureButton("Simulator", self)
-        self.a2.setGeometry(700, 270, 200, 90)
+
+        # Center the self on the screen
+        screen = QDesktopWidget().screenGeometry()
+        x = (screen.width() - self.width()) // 2
+        y = (screen.height() - self.height()) // 2
+        self.move(x, y)
+
+        # Create a BaseButton and add it to the layout
+        a1 = FeatureButton("Estimator", self)
+        a1.set_size(210, 100)
+        a1.set_position(440, 350)
+
+        a2 = FeatureButton("Simulator", self)
+        a2.set_size(210, 100)
+        a2.set_position(770, 350)
+
+        exitButton = UtilityButton("Exit", self)
+        exitButton.set_size(90, 90)
+        exitButton.set_position(1300, 30)
+
+        helpButton = UtilityButton("Help", self)
+        helpButton.set_size(90, 90)
+        helpButton.set_position(1300, 650)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
+    window = MainFrame()
+
+    window.show()
     sys.exit(app.exec_())
