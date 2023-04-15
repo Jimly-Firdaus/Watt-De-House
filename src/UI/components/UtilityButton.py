@@ -2,8 +2,8 @@ from components.BaseButton import BaseButton
 
 
 class UtilityButton(BaseButton):
-    def __init__(self, text, parent=None):
-        super().__init__(text, parent)
+    def __init__(self, text, on_click_callback=None, parent=None):
+        super().__init__(text, on_click_callback, parent)
         self.setStyleSheet(
             """
             UtilityButton {
