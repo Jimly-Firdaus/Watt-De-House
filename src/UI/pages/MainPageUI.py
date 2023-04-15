@@ -49,7 +49,9 @@ class MainFrame(PageWindow):
         h2_layout = QtWidgets.QHBoxLayout()
         v_layout.addLayout(h2_layout)
         h2_layout.addStretch()
-        self.a1 = FeatureButton("Estimator", None, self)
+        self.a1 = FeatureButton(
+            "Estimator", lambda: self.move_to_page("estimator"), self
+        )
         self.a1.setFont(ft_button_font)
         self.a1.setMinimumSize(210, 100)
         h2_layout.addWidget(self.a1)
@@ -76,3 +78,5 @@ class MainFrame(PageWindow):
     def move_to_page(self, page_name):
         if page_name == "simulator":
             self.goto("simulator")
+        elif page_name == "estimator":
+            self.goto("estimator")
