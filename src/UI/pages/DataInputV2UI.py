@@ -96,7 +96,7 @@ class DataInputV2Page(PageWindow):
         voltage_label = QtWidgets.QLabel("Voltage : ")
 
         self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
-        self.voltage_spinbox.setRange(0, 100)
+        self.voltage_spinbox.setRange(220, 240)
         self.voltage_spinbox.setSingleStep(0.1)
         # self.voltage_spinbox.setValue(50)
         self.voltage_spinbox.setSizePolicy(
