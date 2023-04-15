@@ -76,7 +76,7 @@ class DataInputV2Page(PageWindow):
         self.power_spinbox = QtWidgets.QDoubleSpinBox()
         self.power_spinbox.setRange(0, 100)
         self.power_spinbox.setSingleStep(0.1)
-        # self.power_spinbox.setValue(50)
+        self.power_spinbox.setValue(0)
         self.power_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
@@ -98,7 +98,7 @@ class DataInputV2Page(PageWindow):
         self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
         self.voltage_spinbox.setRange(220, 240)
         self.voltage_spinbox.setSingleStep(0.1)
-        # self.voltage_spinbox.setValue(50)
+        self.voltage_spinbox.setValue(220)
         self.voltage_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
@@ -120,7 +120,7 @@ class DataInputV2Page(PageWindow):
         self.current_spinbox = QtWidgets.QDoubleSpinBox()
         self.current_spinbox.setRange(0, 100)
         self.current_spinbox.setSingleStep(0.1)
-        # self.current_spinbox.setValue(50)
+        self.current_spinbox.setValue(0)
         self.current_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
@@ -189,7 +189,7 @@ class DataInputV2Page(PageWindow):
 
         # next btn
         next_btn = UtilityButton(
-            "Next", lambda: self.handle_next_button_clicked(), self
+            "Next and Save", lambda: self.handle_next_button_clicked(), self
         )
         next_btn.setMinimumSize(90, 90)
         # next_btn.clicked.connect(self.handle_next_button_clicked)
@@ -245,8 +245,11 @@ class DataInputV2Page(PageWindow):
             self.list_of_data.append(export_data.create_p_listrik())
             self.name_input.clear()
             self.power_spinbox.clear()
+            self.power_spinbox.setValue(0)
             self.voltage_spinbox.clear()
+            self.voltage_spinbox.setValue(220)
             self.current_spinbox.clear()
+            self.current_spinbox.setValue(0)
             self.room_input.clear()
             self.duration_input.clear()
         except Exception as e:
