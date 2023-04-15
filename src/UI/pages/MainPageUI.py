@@ -36,7 +36,9 @@ class MainFrame(PageWindow):
         h2_layout.addWidget(self.a1)
         h2_layout.addStretch()
 
-        self.a2 = FeatureButton("Simulator", lambda: self.moveToPage("simulator"), self)
+        self.a2 = FeatureButton(
+            "Simulator", lambda: self.move_to_page("simulator"), self
+        )
         self.a2.setMinimumSize(210, 100)
         h2_layout.addWidget(self.a2)
         h2_layout.addStretch()
@@ -51,6 +53,6 @@ class MainFrame(PageWindow):
         v_layout.addLayout(h3_layout)
 
     # Callback fn
-    def moveToPage(self, page_name):
+    def move_to_page(self, page_name):
         if page_name == "simulator":
             self.goto("simulator")
