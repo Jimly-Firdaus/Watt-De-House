@@ -6,6 +6,7 @@ from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
+from ClassFiles.DataInput import DataInput1
 
 
 class DataInputV1Page(PageWindow):
@@ -207,15 +208,10 @@ class DataInputV1Page(PageWindow):
         device_voltage = self.voltage_spinbox.value()
         device_current = self.current_spinbox.value()
         device_room_name = self.room_name_input.text()
-        self.v1_list.append(
-            (
-                device_name,
-                device_power,
-                device_voltage,
-                device_current,
-                device_room_name,
-            )
+        device = DataInput1(
+            device_name, device_power, device_current, device_voltage, device_room_name
         )
+        self.v1_list.append(device)
 
     def back_to_estimator(self):
         self.goto("estimator")
