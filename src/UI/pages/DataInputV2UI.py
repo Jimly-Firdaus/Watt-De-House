@@ -53,11 +53,11 @@ class DataInputV2Page(PageWindow):
 
         name_label = QtWidgets.QLabel("Name: ")
 
-        name_input = QtWidgets.QLineEdit()
+        self.name_input = QtWidgets.QLineEdit()
 
         name_layout.addStretch()
         name_layout.addWidget(name_label)
-        name_layout.addWidget(name_input)
+        name_layout.addWidget(self.name_input)
         name_layout.addStretch()
 
         # power container
@@ -69,17 +69,17 @@ class DataInputV2Page(PageWindow):
 
         power_label = QtWidgets.QLabel("Power: ")
 
-        power_spinbox = QtWidgets.QSpinBox()
-        power_spinbox.setMinimum(0)
-        power_spinbox.setMaximum(100)
-        # power_spinbox.setValue(50)
-        power_spinbox.setSizePolicy(
+        self.power_spinbox = QtWidgets.QDoubleSpinBox()
+        self.power_spinbox.setRange(0, 100)
+        self.power_spinbox.setSingleStep(0.1)
+        # self.power_spinbox.setValue(50)
+        self.power_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
 
         power_layout.addStretch()
         power_layout.addWidget(power_label)
-        power_layout.addWidget(power_spinbox)
+        power_layout.addWidget(self.power_spinbox)
         power_layout.addStretch()
 
         # voltage container
@@ -91,17 +91,17 @@ class DataInputV2Page(PageWindow):
 
         voltage_label = QtWidgets.QLabel("Voltage: ")
 
-        voltage_spinbox = QtWidgets.QSpinBox()
-        voltage_spinbox.setMinimum(0)
-        voltage_spinbox.setMaximum(100)
-        # voltage_spinbox.setValue(50)
-        voltage_spinbox.setSizePolicy(
+        self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
+        self.voltage_spinbox.setRange(0, 100)
+        self.voltage_spinbox.setSingleStep(0.1)
+        # self.voltage_spinbox.setValue(50)
+        self.voltage_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
 
         voltage_layout.addStretch()
         voltage_layout.addWidget(voltage_label)
-        voltage_layout.addWidget(voltage_spinbox)
+        voltage_layout.addWidget(self.voltage_spinbox)
         voltage_layout.addStretch()
 
         # current container
@@ -113,17 +113,17 @@ class DataInputV2Page(PageWindow):
 
         current_label = QtWidgets.QLabel("Current: ")
 
-        current_spinbox = QtWidgets.QSpinBox()
-        current_spinbox.setMinimum(0)
-        current_spinbox.setMaximum(100)
-        # current_spinbox.setValue(50)
-        current_spinbox.setSizePolicy(
+        self.current_spinbox = QtWidgets.QDoubleSpinBox()
+        self.current_spinbox.setRange(0, 100)
+        self.current_spinbox.setSingleStep(0.1)
+        # self.current_spinbox.setValue(50)
+        self.current_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
 
         current_layout.addStretch()
         current_layout.addWidget(current_label)
-        current_layout.addWidget(current_spinbox)
+        current_layout.addWidget(self.current_spinbox)
         current_layout.addStretch()
 
         # duration container
@@ -135,17 +135,17 @@ class DataInputV2Page(PageWindow):
 
         duration_label = QtWidgets.QLabel("Duration: ")
 
-        duration_input = QtWidgets.QLineEdit()
+        self.duration_input = QtWidgets.QLineEdit()
 
         validator = QtGui.QDoubleValidator(decimals=2)
         validator_greater_equal0 = PositiveNumberValidator()
 
-        duration_input.setValidator(validator)
-        duration_input.setValidator(validator_greater_equal0)
+        self.duration_input.setValidator(validator)
+        self.duration_input.setValidator(validator_greater_equal0)
 
         duration_layout.addStretch()
         duration_layout.addWidget(duration_label)
-        duration_layout.addWidget(duration_input)
+        duration_layout.addWidget(self.duration_input)
         duration_layout.addStretch()
 
         input_layout.addWidget(name_container)
@@ -164,6 +164,7 @@ class DataInputV2Page(PageWindow):
         # next btn
         next_btn = UtilityButton("Next", None, self)
         next_btn.setMinimumSize(90, 90)
+        next_btn.clicked.connect(self.handle_next_button_clicked)
 
         # finish btn
         finish_btn = UtilityButton("Finish", None, self)
@@ -191,6 +192,13 @@ class DataInputV2Page(PageWindow):
 
     def back_to_estimator(self):
         self.goto("estimator")
+
+    def handle_next_button_clicked(self):
+        print(self.name_input.text())
+        print(self.power_spinbox.value())
+        print(self.voltage_spinbox.value())
+        print(self.current_spinbox.value())
+        print(self.duration_input.text())
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):
