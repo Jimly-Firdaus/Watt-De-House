@@ -5,11 +5,12 @@ from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.DataInput import DataInput1, DataInput2
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 from typing import List
 
 
 class EstimatorPage(PageWindow):
-    def __init__(self, list_of_data: List[DataInput2]):
+    def __init__(self, list_of_data: List[PerangkatListrik]):
         super().__init__()
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
@@ -18,6 +19,8 @@ class EstimatorPage(PageWindow):
         self.list_of_data = list_of_data
 
         font = QtGui.QFont("Courier New", 20, weight=QtGui.QFont.Bold)
+
+        result_font = QtGui.QFont("Courier New", 15, weight=QtGui.QFont.Bold)
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -42,7 +45,7 @@ class EstimatorPage(PageWindow):
         btn_container = QtWidgets.QWidget()
         btn_layout = QtWidgets.QHBoxLayout(btn_container)
         self.btn_to_dpl2 = UtilityButton(
-            "Please Press Here to Include", self.go_to_input_data_v2, self
+            "Please Press Here to Include Data", self.go_to_input_data_v2, self
         )
         self.btn_to_dpl2.setMinimumSize(90, 90)
         btn_layout.addStretch()
@@ -50,13 +53,48 @@ class EstimatorPage(PageWindow):
         btn_layout.addStretch()
 
         # create go button
-        go_btn_container = QtWidgets.QWidget()
-        go_btn_layout = QtWidgets.QHBoxLayout(go_btn_container)
-        self.go_btn = UtilityButton("Calculate Estimation", None, self)
-        self.go_btn.setMinimumSize(90, 90)
-        go_btn_layout.addStretch()
-        go_btn_layout.addWidget(self.go_btn)
-        go_btn_layout.addStretch()
+        # go_btn_container = QtWidgets.QWidget()
+        # go_btn_layout = QtWidgets.QHBoxLayout(go_btn_container)
+        # self.go_btn = UtilityButton("Calculate Estimation", None, self)
+        # self.go_btn.setMinimumSize(90, 90)
+        # go_btn_layout.addStretch()
+        # go_btn_layout.addWidget(self.go_btn)
+        # go_btn_layout.addStretch()
+
+        # create price defined container
+        price_container = QtWidgets.QWidget()
+
+        price_container.setMaximumHeight(int(0.1 * main_container.height()))
+
+        price_layout = QtWidgets.QHBoxLayout(price_container)
+
+        price_label = QtWidgets.QLabel("price: ")
+
+        self.price_input = QtWidgets.QLineEdit()
+
+        # Set placeholder text to indicate required input
+        self.price_input.setPlaceholderText("605")
+
+        price_layout.addStretch()
+        price_layout.addWidget(price_label)
+        price_layout.addWidget(self.price_input)
+        price_layout.addStretch()
+
+        # create result container
+        result_container = QtWidgets.QWidget()
+        result_layout = QtWidgets.QHBoxLayout(result_container)
+
+        result_str = self.get_estimator()
+        self.result_label = QtWidgets.QLabel(result_str)
+        self.result_label.setFont(result_font)
+
+        timer = QtCore.QTimer(self)
+        timer.timeout.connect(self.update_label)
+        timer.start(1000)
+
+        result_layout.addStretch()
+        result_layout.addWidget(self.result_label)
+        result_layout.addStretch()
 
         # create back button
         back_btn_container = QtWidgets.QWidget()
@@ -70,7 +108,8 @@ class EstimatorPage(PageWindow):
         # main_layout.addWidget(QtWidgets.QLabel("Up"))
         main_layout.addWidget(title_container)
         main_layout.addWidget(btn_container)
-        main_layout.addWidget(go_btn_container)
+        main_layout.addWidget(price_container)
+        main_layout.addWidget(result_container)
         main_layout.addWidget(back_btn_container)
 
     def back_to_main(self):
@@ -78,6 +117,20 @@ class EstimatorPage(PageWindow):
 
     def go_to_input_data_v2(self):
         self.goto("inputdatav2")
+
+    def update_label(self):
+        update_result_str = self.get_estimator()
+        self.result_label.setText(update_result_str)
+
+    def get_estimator(self):
+        input_value = self.price_input.text()
+        if not input_value:
+            input_value = float(605)
+        else:
+            input_value = float(input_value)
+        estimator_obj = Estimator(True, self.list_of_data, input_value)
+        estimator_obj.hitung_biaya_listrik()
+        return estimator_obj.display_total_biaya()
         # self.setLayout(main_layout)
 
         # # get the center position of the main container
