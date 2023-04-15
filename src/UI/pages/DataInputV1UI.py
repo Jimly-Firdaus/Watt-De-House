@@ -10,8 +10,11 @@ from src.ClassFiles.DataInput import DataInput1
 
 
 class DataInputV1Page(PageWindow):
+    list_updated = pyqtSignal(list)
+
     def __init__(
-        self, data_input_v1_list: list = [],
+        self,
+        data_input_v1_list: list = [],
     ):
         super().__init__()
 
@@ -275,7 +278,9 @@ class DataInputV1Page(PageWindow):
         device = DataInput1(
             device_name, device_power, device_current, device_voltage, device_room_name
         )
-        self.v1_list.append(device)
+        self.v1_list.append(device.create_p_listrik())
+        self.list_updated.emit(self.v1_list)
+        print("Signal emitted with list:", self.v1_list)
 
     def back_to_estimator(self):
         self.goto("estimator")
@@ -293,4 +298,4 @@ class DataInputV1Page(PageWindow):
 
     def finish_input(self):
         self.add_to_list()
-        self.goto("simulator")
+        self.goto("houseframe")

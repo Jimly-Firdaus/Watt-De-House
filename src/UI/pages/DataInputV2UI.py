@@ -5,6 +5,7 @@ from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtCore import *
 from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.DataInput import DataInput1, DataInput2
 from src.ClassFiles.PerangkatListrik import PerangkatListrik
@@ -12,6 +13,8 @@ from typing import List
 
 
 class DataInputV2Page(PageWindow):
+    list_updated = pyqtSignal(list)
+
     def __init__(self, list_of_data: List[PerangkatListrik] = []):
         super().__init__()
 
@@ -226,7 +229,9 @@ class DataInputV2Page(PageWindow):
         btn_layout = QtWidgets.QHBoxLayout(btn_container)
 
         # next btn
-        next_btn = UtilityButton("Next", lambda: self.next_device(), self)
+        next_btn = UtilityButton(
+            "Next", lambda: self.handle_next_button_clicked(), self
+        )
         next_btn.setMinimumSize(90, 90)
         next_btn.setStyleSheet(
             """
@@ -307,13 +312,11 @@ class DataInputV2Page(PageWindow):
                 duration,
             )
             self.list_of_data.append(export_data.create_p_listrik())
+            self.list_updated.emit(self.list_of_data)
             self.name_input.clear()
             self.power_spinbox.clear()
-            self.power_spinbox.setValue(0)
             self.voltage_spinbox.clear()
-            self.voltage_spinbox.setValue(220)
             self.current_spinbox.clear()
-            self.current_spinbox.setValue(0)
             self.room_input.clear()
             self.duration_input.clear()
         except Exception as e:

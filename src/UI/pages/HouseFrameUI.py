@@ -1,17 +1,34 @@
+import sys
+
+sys.path.insert(0, "../../")
 from components.StepButton import StepButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets
+from typing import List
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
+from src.ClassFiles.Ruangan import Ruangan
 
 
 class HouseFrame(PageWindow):
-    def __init__(self):
+    def __init__(
+        self,
+        list_of_data: List[PerangkatListrik] = [],
+        list_ruangan: List[Ruangan] = [],
+    ):
         super().__init__()
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #0B2447;")
         self.setWindowTitle("House Frame")
         self.circuit_breaker_info = []
+        self.list_perangkat_listrik = list_of_data
+        self.list_ruangan = list_ruangan
+
+        self.distinct_room_name = set()
+
+    def init_ui(self):
+        self.add_ruangan()
 
         widget = QtWidgets.QWidget()
         self.setCentralWidget(widget)
@@ -84,16 +101,19 @@ class HouseFrame(PageWindow):
         tickbox_container.addLayout(tickbox_layout)
 
         # Add multiple tickboxes here
-        num_checkboxes = 7  # Number of Circuit Breaker (Can be Modified)
+        num_checkboxes = len(
+            self.distinct_room_name
+        )  # Number of Circuit Breaker (Can be Modified)
         tickboxes = []
         checkbox_values = [False] * num_checkboxes
 
         def update_checkbox_val(idx, state):
             checkbox_values[idx] = state == 2
 
-        for i in range(num_checkboxes):
+        i = 0
+        for ele in self.distinct_room_name:
             # Create a new checkbox
-            checkbox = QtWidgets.QCheckBox(f"Ruangan {i + 1}")
+            checkbox = QtWidgets.QCheckBox(ele.get_data_perangkat_listrik()[6])
             tickboxes.append(checkbox)
 
             # Connect the stateChanged signal
@@ -107,6 +127,7 @@ class HouseFrame(PageWindow):
 
             # Add the checkbox to the layout
             tickbox_layout.addWidget(checkbox, row, col)
+            i += 1
 
         tickbox_container.addStretch()
 
@@ -187,4 +208,17 @@ class HouseFrame(PageWindow):
         back_button = UtilityButton("Back")
         backbutton_layout.addWidget(back_button)
 
+        def on_back_button_clicked():
+            self.goto("datainputv2")
+
+        back_button.clicked.connect(on_back_button_clicked)
+
         v_layout.addStretch(1)
+
+    def update_list_perangkat_listrik(self, new_list):
+        self.list_perangkat_listrik = new_list
+        self.init_ui()
+
+    def add_ruangan(self):
+        for perangkat in self.list_perangkat_listrik:
+            self.distinct_room_name.add(perangkat)
