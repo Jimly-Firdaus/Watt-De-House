@@ -8,6 +8,7 @@ class PerangkatListrik:
         daya: float = 0,
         arus: float = 0,
         tegangan: float = 0,
+        nama_ruangan: str = "",
         durasi: int = 0,
     ):
         self.id_p_listrik = id
@@ -16,6 +17,7 @@ class PerangkatListrik:
         self.daya_p_listrik = daya  # Power in watts
         self.arus_p_listrik = arus
         self.tegangan_p_listrik = tegangan
+        self.nama_ruangan = nama_ruangan
         self.durasi_p_listrik = durasi  # Duration in hours
 
     # Getter
@@ -27,6 +29,7 @@ class PerangkatListrik:
             self.daya_p_listrik,
             self.arus_p_listrik,
             self.tegangan_p_listrik,
+            self.nama_ruangan,
             self.durasi_p_listrik,
         )
 
@@ -48,6 +51,9 @@ class PerangkatListrik:
 
     def set_id_p_listrik(self, id):
         self.id_p_listrik = id
+
+    def set_nama_ruangan(self, nama_ruangan):
+        self.nama_ruangan = nama_ruangan
 
     def set_status_p_listrik(self, status):
         self.is_active_p_listrik = status

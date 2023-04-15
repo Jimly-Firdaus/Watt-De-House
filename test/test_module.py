@@ -59,11 +59,13 @@ class ModuleTesting(unittest.TestCase):
 
     def test_data_input_1(self):
         # Test valid input
-        data_input = DataInput1("Device-1", 100.0, 5.0, 220.0)
-        self.assertEqual(data_input.get_user_input(), ("Device-1", 100.0, 5.0, 220.0))
+        data_input = DataInput1("Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
+        self.assertEqual(
+            data_input.get_user_input(), ("Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
+        )
         perangkat_listrik = data_input.create_p_listrik()
         perangkat_listrik_expected = PerangkatListrik(
-            0, False, "Device-1", 100.0, 5.0, 220.0
+            0, False, "Device-1", 100.0, 5.0, 220.0, "Ruangan-1"
         )
         self.assertEqual(
             perangkat_listrik.get_data_perangkat_listrik(),
@@ -71,17 +73,18 @@ class ModuleTesting(unittest.TestCase):
         )
         # Test invalid input
         with self.assertRaises(Exception):
-            data_input = DataInput1("", 100.0, 5.0, 220.0)
+            data_input = DataInput1("", 100.0, 5.0, 220.0, "Ruangan-1")
 
     def test_data_input_2(self):
         # Test valid input
-        data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, 10)
+        data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10)
         self.assertEqual(
-            data_input.get_user_input(), ("Device-2", 100.0, 5.0, 220.0, 10)
+            data_input.get_user_input(),
+            ("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10),
         )
         perangkat_listrik = data_input.create_p_listrik()
         perangkat_listrik_expected = PerangkatListrik(
-            0, False, "Device-2", 100.0, 5.0, 220.0, 10
+            0, False, "Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10
         )
         self.assertEqual(
             perangkat_listrik.get_data_perangkat_listrik(),
@@ -89,30 +92,33 @@ class ModuleTesting(unittest.TestCase):
         )
         # Test invalid input
         with self.assertRaises(Exception):
-            data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, -1)
+            data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", -1)
 
     def test_perangkat_listrik_default(self):
         # Test valid input
         perangkat_listrik = PerangkatListrik(1, False)
         self.assertEqual(
-            perangkat_listrik.get_data_perangkat_listrik(), (1, False, "", 0, 0, 0, 0)
+            perangkat_listrik.get_data_perangkat_listrik(),
+            (1, False, "", 0, 0, 0, "", 0),
         )
 
     def test_perangkat_listrik_defined(self):
         # Test valid input
-        perangkat_listrik = PerangkatListrik(1, True, "Device-1", 100.0, 5.0, 220.0, 10)
+        perangkat_listrik = PerangkatListrik(
+            1, True, "Device-1", 100.0, 5.0, 220.0, "Ruangan-2", 10
+        )
         self.assertEqual(
             perangkat_listrik.get_data_perangkat_listrik(),
-            (1, True, "Device-1", 100.0, 5.0, 220.0, 10),
+            (1, True, "Device-1", 100.0, 5.0, 220.0, "Ruangan-2", 10),
         )
 
     def test_Estimator_defined(self):
         # Test valid input
         perangkat_listrik1 = PerangkatListrik(
-            1, True, "Device-1", 100.0, 5.0, 220.0, 10
+            1, True, "Device-1", 100.0, 5.0, 220.0, "Ruangan-2", 10
         )
         perangkat_listrik2 = PerangkatListrik(
-            2, True, "Device-2", 100.0, 5.0, 220.0, 10
+            2, True, "Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10
         )
         listPerangkat = []
         listPerangkat.append(perangkat_listrik2)
@@ -129,7 +135,9 @@ class ModuleTesting(unittest.TestCase):
         list_perangkat_listrik = []
         for i in range(10):
             list_perangkat_listrik.append(
-                PerangkatListrik(i, False, "Device-" + str(i), 100.0, 5.0, 220.0, 10)
+                PerangkatListrik(
+                    i, False, "Device-" + str(i), 100.0, 5.0, 220.0, "Ruangan-2", 10
+                )
             )
         test_nama_ruangan = "Test_Ruangan"
         ruangan = Ruangan(

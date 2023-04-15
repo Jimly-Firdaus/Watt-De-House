@@ -10,7 +10,7 @@ class HouseFrame(PageWindow):
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #0B2447;")
-        self.setWindowTitle("Watt de House")
+        self.setWindowTitle("House Frame")
         self.circuit_breaker_info = []
 
         widget = QtWidgets.QWidget()
