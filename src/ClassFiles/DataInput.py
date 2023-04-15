@@ -12,12 +12,6 @@ class DataInput1:
     ):
         if len(nama) == 0 or len(nama_ruangan) == 0:
             raise Exception("Nama perangkat listrik tidak boleh kosong!")
-        if daya <= 0:
-            raise Exception("Daya tidak boleh < 0 atau sama dengan 0!")
-        if arus <= 0:
-            raise Exception("Arus tidak boleh < 0 atau sama dengan 0!")
-        if tegangan <= 0:
-            raise Exception("Tegangan tidak boleh < 0 atau sama dengan 0!")
         self.nama = nama
         self.daya = daya
         self.arus = arus
@@ -57,11 +51,9 @@ class DataInput2(DataInput1):
         arus: float,
         tegangan: float,
         nama_ruangan: str,
-        durasi: int,
+        durasi: float,
     ):
         super().__init__(nama, daya, arus, tegangan, nama_ruangan)
-        if durasi < 0:
-            raise Exception("Durasi tidak boleh < 0")
         self.durasi = durasi
 
     def get_user_input(self):
