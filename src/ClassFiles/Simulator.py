@@ -13,8 +13,11 @@ class Simulator:
     def update_electrical_state(self, list_ruangan):
         self.overloads_ruangan = []
         for ruangan in list_ruangan:
-            if ruangan.total_power_used() > ruangan.get_threshold():
-                self.overloads_ruangan.append(ruangan.get_ruangan_name())
+            if (
+                ruangan.total_power_used() > ruangan.get_threshold()
+                and ruangan.have_circuit_breaker()
+            ):
+                self.overloads_ruangan.append((ruangan.get_ruangan_name(), True))
 
     def get_simulator_state(self, list_ruangan):
         self.update_electrical_state(list_ruangan)
