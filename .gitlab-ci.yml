@@ -17,4 +17,4 @@ run-tests:
     - merge_requests
     - main
     - dev
-    - dev-database
+    - feature/simulator
