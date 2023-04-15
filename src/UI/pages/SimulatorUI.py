@@ -10,6 +10,7 @@ from src.ClassFiles.Ruangan import Ruangan
 
 
 class Simulator(PageWindow):
+    # TODO: Circuit Breaker and overloads detection
     def __init__(self, list_of_ruangan: List[Ruangan]):
         super().__init__()
         self.setBaseSize(1024, 720)
