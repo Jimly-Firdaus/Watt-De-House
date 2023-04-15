@@ -43,7 +43,6 @@ class HouseFrame(PageWindow):
         self.textInput = QtWidgets.QLineEdit()
         self.textInput.setStyleSheet("color: #FFFFFF;")
         self.textInput.setFixedWidth(300)
-        text = self.textInput.text()
         input_grid.addWidget(self.textInput, 0, 1)
 
         # Threshold
@@ -55,7 +54,6 @@ class HouseFrame(PageWindow):
         self.thresholdInput = QtWidgets.QLineEdit()
         self.thresholdInput.setStyleSheet("color: #FFFFFF;")
         self.thresholdInput.setFixedWidth(300)
-        threshold_val = self.thresholdInput.text()
         input_grid.addWidget(self.thresholdInput, 1, 1)
 
         input_container.addStretch()
@@ -123,7 +121,10 @@ class HouseFrame(PageWindow):
 
         def on_next_button_clicked():
             # Clear Text Input
+            text = self.textInput.text()
             self.textInput.clear()
+
+            threshold_val = self.thresholdInput.text()
             self.thresholdInput.clear()
 
             ticked_name = []
@@ -136,8 +137,20 @@ class HouseFrame(PageWindow):
                         "QCheckBox::indicator {background-color:black; border-radius: 5%}"
                     )
 
-            # Add to circuit breaker dictionary
-            self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+            # Validate Threshold Value
+            if threshold_val.isdigit():
+                threshold_val = int(threshold_val)
+
+                # Add to circuit breaker dictionary
+                self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setText("Input Invalid!")
+                msg.setInformativeText(
+                    "Please try to input the correct threshold value!"
+                )
+                msg.setWindowTitle("Error Message")
+                msg.exec_()
 
         next_button.clicked.connect(on_next_button_clicked)
 
