@@ -43,7 +43,6 @@ class HouseFrame(PageWindow):
         self.textInput = QtWidgets.QLineEdit()
         self.textInput.setStyleSheet("color: #FFFFFF;")
         self.textInput.setFixedWidth(300)
-        text = self.textInput.text()
         input_grid.addWidget(self.textInput, 0, 1)
 
         # Threshold
@@ -55,7 +54,6 @@ class HouseFrame(PageWindow):
         self.thresholdInput = QtWidgets.QLineEdit()
         self.thresholdInput.setStyleSheet("color: #FFFFFF;")
         self.thresholdInput.setFixedWidth(300)
-        threshold_val = self.thresholdInput.text()
         input_grid.addWidget(self.thresholdInput, 1, 1)
 
         input_container.addStretch()
@@ -123,21 +121,39 @@ class HouseFrame(PageWindow):
 
         def on_next_button_clicked():
             # Clear Text Input
+            text = self.textInput.text()
             self.textInput.clear()
+
+            threshold_val = self.thresholdInput.text()
             self.thresholdInput.clear()
 
-            ticked_name = []
-            # Tickbox
-            for tickbox in tickboxes:
-                if tickbox.isChecked():
-                    ticked_name.append(tickbox.text())
-                    tickbox.setEnabled(False)
-                    tickbox.setStyleSheet(
-                        "QCheckBox::indicator {background-color:black; border-radius: 5%}"
-                    )
+            # Validate Threshold Value
+            if threshold_val.isdigit():
+                threshold_val = int(threshold_val)
+                ticked_name = []
 
-            # Add to circuit breaker dictionary
-            self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+                # Tickbox
+                for tickbox in tickboxes:
+                    if tickbox.isChecked():
+                        ticked_name.append(tickbox.text())
+                        tickbox.setEnabled(False)
+                        tickbox.setStyleSheet(
+                            "QCheckBox::indicator {background-color:black; border-radius: 5%}"
+                        )
+
+                # Add to circuit breaker info
+                self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+            else:
+                # Untick the check box
+                for tickbox in tickboxes:
+                    if tickbox.isChecked():
+                        tickbox.setChecked(False)
+
+                msg = QtWidgets.QMessageBox()
+                msg.setText("Input Invalid!")
+                msg.setInformativeText("Please try to input the correct value!")
+                msg.setWindowTitle("Error Message")
+                msg.exec_()
 
         next_button.clicked.connect(on_next_button_clicked)
 
