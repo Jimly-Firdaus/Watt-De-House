@@ -2,6 +2,7 @@ import sys
 
 sys.path.append("..")
 import unittest
+from src.ClassFiles.Database import Database
 from src.ClassFiles.PerangkatListrik import PerangkatListrik
 from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.Simulator import Simulator
@@ -10,6 +11,52 @@ from src.ClassFiles.DataInput import DataInput1, DataInput2
 
 
 class ModuleTesting(unittest.TestCase):
+    def setUp(self):
+        self.db = Database("test.db")
+
+    def tearDown(self):
+        self.db.close()
+
+    def test_database_operations(self):
+        with self.subTest("Insert data"):
+            self.db.create_table(
+                "test_table",
+                {
+                    "nama": "text",
+                    "daya": "real",
+                    "arus": "real",
+                    "tegangan": "real",
+                    "durasi": "integer",
+                },
+            )
+            self.db.insert_data(
+                "test_table",
+                {
+                    "nama": "device-1",
+                    "daya": 100.0,
+                    "arus": 12.0,
+                    "tegangan": 220.0,
+                    "durasi": 120,
+                },
+            )
+            data = self.db.get_data("test_table")
+            expected_data = [("device-1", 100.0, 12.0, 220.0, 120)]
+            self.assertEqual(data, expected_data)
+
+        with self.subTest("Update data"):
+            self.db.update_data(
+                "test_table", {"nama": "device-2"}, {"nama": "device-1"}
+            )
+            data = self.db.get_data("test_table")
+            expected_data = [("device-2", 100.0, 12.0, 220.0, 120)]
+            self.assertEqual(data, expected_data)
+
+        with self.subTest("Delete data"):
+            self.db.delete_data("test_table", {"arus": 12.0})
+            data = self.db.get_data("test_table")
+            expected_data = []
+            self.assertEqual(data, expected_data)
+
     def test_data_input_1(self):
         # Test valid input
         data_input = DataInput1("Device-1", 100.0, 5.0, 220.0)
@@ -72,12 +119,10 @@ class ModuleTesting(unittest.TestCase):
         listPerangkat.append(perangkat_listrik1)
         Estimator1 = Estimator(True, listPerangkat)
         self.assertEqual(
-            Estimator1.get_harga_listrik(),
-            (605),
+            Estimator1.get_harga_listrik(), (605),
         )
         self.assertEqual(
-            Estimator1.get_total_biaya(),
-            (2 * 30 * 605),
+            Estimator1.get_total_biaya(), (2 * 30 * 605),
         )
 
     def test_ruangan(self):
