@@ -5,18 +5,19 @@ from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.DataInput import DataInput1, DataInput2
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 from typing import List
 
 
 class DataInputV2Page(PageWindow):
-    def __init__(self, list_of_data: List[DataInput2]):
+    def __init__(self, list_of_data: List[PerangkatListrik]):
         super().__init__()
 
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #FFFFFF;")
         self.setWindowTitle("Data Input V2")
-        self.list_of_data: list_of_data
+        self.list_of_data = list_of_data
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -51,9 +52,12 @@ class DataInputV2Page(PageWindow):
 
         name_layout = QtWidgets.QHBoxLayout(name_container)
 
-        name_label = QtWidgets.QLabel("Name: ")
+        name_label = QtWidgets.QLabel("Name    : ")
 
         self.name_input = QtWidgets.QLineEdit()
+
+        # Set placeholder text to indicate required input
+        self.name_input.setPlaceholderText("Required*")
 
         name_layout.addStretch()
         name_layout.addWidget(name_label)
@@ -67,7 +71,7 @@ class DataInputV2Page(PageWindow):
 
         power_layout = QtWidgets.QHBoxLayout(power_container)
 
-        power_label = QtWidgets.QLabel("Power: ")
+        power_label = QtWidgets.QLabel("Power   : ")
 
         self.power_spinbox = QtWidgets.QDoubleSpinBox()
         self.power_spinbox.setRange(0, 100)
@@ -89,10 +93,10 @@ class DataInputV2Page(PageWindow):
 
         voltage_layout = QtWidgets.QHBoxLayout(voltage_container)
 
-        voltage_label = QtWidgets.QLabel("Voltage: ")
+        voltage_label = QtWidgets.QLabel("Voltage : ")
 
         self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
-        self.voltage_spinbox.setRange(0, 100)
+        self.voltage_spinbox.setRange(220, 240)
         self.voltage_spinbox.setSingleStep(0.1)
         # self.voltage_spinbox.setValue(50)
         self.voltage_spinbox.setSizePolicy(
@@ -111,7 +115,7 @@ class DataInputV2Page(PageWindow):
 
         current_layout = QtWidgets.QHBoxLayout(current_container)
 
-        current_label = QtWidgets.QLabel("Current: ")
+        current_label = QtWidgets.QLabel("Current : ")
 
         self.current_spinbox = QtWidgets.QDoubleSpinBox()
         self.current_spinbox.setRange(0, 100)
@@ -126,6 +130,25 @@ class DataInputV2Page(PageWindow):
         current_layout.addWidget(self.current_spinbox)
         current_layout.addStretch()
 
+        # room container
+        room_container = QtWidgets.QWidget()
+
+        room_container.setMaximumHeight(int(0.1 * input_container.height()))
+
+        room_layout = QtWidgets.QHBoxLayout(room_container)
+
+        room_label = QtWidgets.QLabel("Room    : ")
+
+        self.room_input = QtWidgets.QLineEdit()
+
+        # Set placeholder text to indicate required input
+        self.room_input.setPlaceholderText("Required*")
+
+        room_layout.addStretch()
+        room_layout.addWidget(room_label)
+        room_layout.addWidget(self.room_input)
+        room_layout.addStretch()
+
         # duration container
         duration_container = QtWidgets.QWidget()
 
@@ -136,6 +159,8 @@ class DataInputV2Page(PageWindow):
         duration_label = QtWidgets.QLabel("Duration: ")
 
         self.duration_input = QtWidgets.QLineEdit()
+
+        self.duration_input.setPlaceholderText("0.00")
 
         validator = QtGui.QDoubleValidator(decimals=2)
         validator_greater_equal0 = PositiveNumberValidator()
@@ -152,6 +177,7 @@ class DataInputV2Page(PageWindow):
         input_layout.addWidget(power_container)
         input_layout.addWidget(voltage_container)
         input_layout.addWidget(current_container)
+        input_layout.addWidget(room_container)
         input_layout.addWidget(duration_container)
 
         # btn container
@@ -162,9 +188,11 @@ class DataInputV2Page(PageWindow):
         btn_layout = QtWidgets.QHBoxLayout(btn_container)
 
         # next btn
-        next_btn = UtilityButton("Next", None, self)
+        next_btn = UtilityButton(
+            "Next", lambda: self.handle_next_button_clicked(), self
+        )
         next_btn.setMinimumSize(90, 90)
-        next_btn.clicked.connect(self.handle_next_button_clicked)
+        # next_btn.clicked.connect(self.handle_next_button_clicked)
 
         # finish btn
         finish_btn = UtilityButton("Finish", None, self)
@@ -198,7 +226,32 @@ class DataInputV2Page(PageWindow):
         print(self.power_spinbox.value())
         print(self.voltage_spinbox.value())
         print(self.current_spinbox.value())
+        print(self.room_input.text())
         print(self.duration_input.text())
+        try:
+            duration = self.duration_input.text()
+            if not duration:
+                duration = float(0)
+            else:
+                duration = float(self.duration_input.text())
+            export_data = DataInput2(
+                self.name_input.text(),
+                self.power_spinbox.value(),
+                self.voltage_spinbox.value(),
+                self.current_spinbox.value(),
+                self.room_input.text(),
+                duration,
+            )
+            self.list_of_data.append(export_data.create_p_listrik())
+            self.name_input.clear()
+            self.power_spinbox.clear()
+            self.voltage_spinbox.clear()
+            self.current_spinbox.clear()
+            self.room_input.clear()
+            self.duration_input.clear()
+        except Exception as e:
+            print(e)
+        print(self.list_of_data)
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):

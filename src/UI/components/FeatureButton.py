@@ -7,7 +7,7 @@ class FeatureButton(BaseButton):
         self.setStyleSheet(
             """
             FeatureButton {
-                background-color: #A5D7E8;
+                background-color: #00AE90;
                 border: 2px solid #A5D7E8;
                 color: #0B2447;
                 padding: 8px 16px;

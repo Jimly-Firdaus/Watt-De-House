@@ -128,21 +128,25 @@ class HouseFrame(PageWindow):
             self.thresholdInput.clear()
 
             # Validate Threshold Value
-            if threshold_val.isdigit():
-                threshold_val = int(threshold_val)
-                ticked_name = []
+            if threshold_val.isdigit() and text != "":
+                any_checked = False
 
+                ticked_name = []
                 # Tickbox
                 for tickbox in tickboxes:
                     if tickbox.isChecked():
+                        any_checked = True
                         ticked_name.append(tickbox.text())
                         tickbox.setEnabled(False)
                         tickbox.setStyleSheet(
                             "QCheckBox::indicator {background-color:black; border-radius: 5%}"
                         )
 
-                # Add to circuit breaker info
-                self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+                if any_checked:
+                    threshold_val = int(threshold_val)
+
+                    # Add to circuit breaker info
+                    self.circuit_breaker_info.append([text, ticked_name, threshold_val])
             else:
                 # Untick the check box
                 for tickbox in tickboxes:
@@ -161,6 +165,18 @@ class HouseFrame(PageWindow):
         finish_button = StepButton("Finish")
         button_layout.addWidget(finish_button)
         button_layout.addStretch()
+
+        def on_finish_button_clicked():
+            if not self.circuit_breaker_info:
+                msg = QtWidgets.QMessageBox()
+                msg.setText("Empty Input!")
+                msg.setInformativeText("Please try to input some values!")
+                msg.setWindowTitle("Error Message")
+                msg.exec_()
+            else:
+                self.goto("simulator")
+
+        finish_button.clicked.connect(on_finish_button_clicked)
 
         v_layout.addStretch(2)
 
