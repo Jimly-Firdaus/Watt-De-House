@@ -2,9 +2,12 @@ from PyQt5.QtWidgets import QPushButton
 
 
 class BaseButton(QPushButton):
-    def __init__(self, label, parent=None):
+    def __init__(self, label, on_click_callback=None, parent=None):
         super().__init__(label, parent)
-        self.clicked.connect(self.on_click)
+        if on_click_callback:
+            self.clicked.connect(on_click_callback)
+        else:
+            self.clicked.connect(self.on_click)
 
         style_sheet = """
             BaseButton {
