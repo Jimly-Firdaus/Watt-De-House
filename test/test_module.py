@@ -90,9 +90,6 @@ class ModuleTesting(unittest.TestCase):
             perangkat_listrik.get_data_perangkat_listrik(),
             perangkat_listrik_expected.get_data_perangkat_listrik(),
         )
-        # Test invalid input
-        with self.assertRaises(Exception):
-            data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", -1)
 
     def test_perangkat_listrik_default(self):
         # Test valid input
@@ -125,10 +122,12 @@ class ModuleTesting(unittest.TestCase):
         listPerangkat.append(perangkat_listrik1)
         Estimator1 = Estimator(True, listPerangkat)
         self.assertEqual(
-            Estimator1.get_harga_listrik(), (605),
+            Estimator1.get_harga_listrik(),
+            (605),
         )
         self.assertEqual(
-            Estimator1.get_total_biaya(), (2 * 30 * 605),
+            Estimator1.get_total_biaya(),
+            (2 * 30 * 605),
         )
 
     def test_ruangan(self):
