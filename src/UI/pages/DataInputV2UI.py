@@ -5,11 +5,12 @@ from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.DataInput import DataInput1, DataInput2
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 from typing import List
 
 
 class DataInputV2Page(PageWindow):
-    def __init__(self, list_of_data: List[DataInput2]):
+    def __init__(self, list_of_data: List[PerangkatListrik]):
         super().__init__()
 
         self.setBaseSize(1024, 720)
@@ -187,9 +188,11 @@ class DataInputV2Page(PageWindow):
         btn_layout = QtWidgets.QHBoxLayout(btn_container)
 
         # next btn
-        next_btn = UtilityButton("Next", None, self)
+        next_btn = UtilityButton(
+            "Next", lambda: self.handle_next_button_clicked(), self
+        )
         next_btn.setMinimumSize(90, 90)
-        next_btn.clicked.connect(self.handle_next_button_clicked)
+        # next_btn.clicked.connect(self.handle_next_button_clicked)
 
         # finish btn
         finish_btn = UtilityButton("Finish", None, self)
@@ -239,7 +242,13 @@ class DataInputV2Page(PageWindow):
                 self.room_input.text(),
                 duration,
             )
-            self.list_of_data.append(export_data)
+            self.list_of_data.append(export_data.create_p_listrik())
+            self.name_input.clear()
+            self.power_spinbox.clear()
+            self.voltage_spinbox.clear()
+            self.current_spinbox.clear()
+            self.room_input.clear()
+            self.duration_input.clear()
         except Exception as e:
             print(e)
         print(self.list_of_data)
