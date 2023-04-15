@@ -129,20 +129,24 @@ class HouseFrame(PageWindow):
 
             # Validate Threshold Value
             if threshold_val.isdigit() and text != "":
-                threshold_val = int(threshold_val)
-                ticked_name = []
+                any_checked = False
 
+                ticked_name = []
                 # Tickbox
                 for tickbox in tickboxes:
                     if tickbox.isChecked():
+                        any_checked = True
                         ticked_name.append(tickbox.text())
                         tickbox.setEnabled(False)
                         tickbox.setStyleSheet(
                             "QCheckBox::indicator {background-color:black; border-radius: 5%}"
                         )
 
-                # Add to circuit breaker info
-                self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+                if any_checked:
+                    threshold_val = int(threshold_val)
+
+                    # Add to circuit breaker info
+                    self.circuit_breaker_info.append([text, ticked_name, threshold_val])
             else:
                 # Untick the check box
                 for tickbox in tickboxes:
