@@ -4,16 +4,19 @@ from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from src.ClassFiles.Estimator import Estimator
+from src.ClassFiles.DataInput import DataInput1, DataInput2
+from typing import List
 
 
 class DataInputV2Page(PageWindow):
-    def __init__(self,):
+    def __init__(self, list_of_data: List[DataInput2]):
         super().__init__()
 
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #FFFFFF;")
         self.setWindowTitle("Data Input V2")
+        self.list_of_data: list_of_data
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -134,6 +137,12 @@ class DataInputV2Page(PageWindow):
 
         duration_input = QtWidgets.QLineEdit()
 
+        validator = QtGui.QDoubleValidator(decimals=2)
+        validator_greater_equal0 = PositiveNumberValidator()
+
+        duration_input.setValidator(validator)
+        duration_input.setValidator(validator_greater_equal0)
+
         duration_layout.addStretch()
         duration_layout.addWidget(duration_label)
         duration_layout.addWidget(duration_input)
@@ -182,3 +191,16 @@ class DataInputV2Page(PageWindow):
 
     def back_to_estimator(self):
         self.goto("estimator")
+
+
+class PositiveNumberValidator(QtGui.QDoubleValidator):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setBottom(0)
+
+    def validate(self, input_str, pos):
+        result, input_str, pos = super().validate(input_str, pos)
+        if input_str == "":
+            return (QtGui.QDoubleValidator.Intermediate, input_str, pos)
+        else:
+            return (result, input_str, pos)

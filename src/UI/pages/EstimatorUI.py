@@ -4,15 +4,18 @@ from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
 from src.ClassFiles.Estimator import Estimator
+from src.ClassFiles.DataInput import DataInput1, DataInput2
+from typing import List
 
 
 class EstimatorPage(PageWindow):
-    def __init__(self,):
+    def __init__(self, list_of_data: List[DataInput2]):
         super().__init__()
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #FFFFFF;")
         self.setWindowTitle("Estimator")
+        self.list_of_data = list_of_data
 
         font = QtGui.QFont("Courier New", 20, weight=QtGui.QFont.Bold)
 
