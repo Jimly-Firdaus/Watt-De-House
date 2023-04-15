@@ -17,6 +17,7 @@ class Estimator:
         self.hargaListrik = hargaListrik
 
     def get_total_biaya(self):
+        self.hitung_biaya_listrik()
         return self.totalBiaya
 
     def hitung_biaya_listrik(self):
