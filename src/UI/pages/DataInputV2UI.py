@@ -195,7 +195,7 @@ class DataInputV2Page(PageWindow):
         # next_btn.clicked.connect(self.handle_next_button_clicked)
 
         # finish btn
-        finish_btn = UtilityButton("Finish", None, self)
+        finish_btn = UtilityButton("Finish", self.back_to_estimator, self)
         finish_btn.setMinimumSize(90, 90)
 
         btn_layout.addStretch()
