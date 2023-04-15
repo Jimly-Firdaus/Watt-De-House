@@ -49,12 +49,20 @@ class SimulatorPage(PageWindow):
         main_layout.addLayout(header)
 
         # Main content section
-        h_layout = QtWidgets.QHBoxLayout()
+        grid_layout = QtWidgets.QGridLayout()
+        row = 0
+        col = 0
+
         # Loop each ruangan
         for ruangan in self.list_ruangan:
             # Group box for the Ruangan
             group_box = QtWidgets.QGroupBox(ruangan.get_ruangan_name())
-            h_layout.addWidget(group_box)
+            grid_layout.addWidget(group_box, row, col)
+
+            col += 1
+            if col == 3:
+                col = 0
+                row += 1
 
             # Vertical layout for the Perangkat
             v_layout = QtWidgets.QVBoxLayout(group_box)
@@ -68,6 +76,7 @@ class SimulatorPage(PageWindow):
                     lambda state, p=perangkat: self.update_state_perangkat(p, state)
                 )
                 v_layout.addWidget(check_box)
+
             if ruangan.have_circuit_breaker():
                 circuit_breaker_box = QtWidgets.QCheckBox(
                     ruangan.get_circuit_breaker_name()
@@ -78,7 +87,24 @@ class SimulatorPage(PageWindow):
                     ruangan.get_ruangan_name()
                 ] = circuit_breaker_box
                 v_layout.addWidget(circuit_breaker_box)
-        main_layout.addLayout(h_layout)
+        main_layout.addLayout(grid_layout)
+        main_layout.addStretch()
+
+        footer = QtWidgets.QHBoxLayout()
+        # Set this to Data Input v1 page
+        self.addItem = UtilityButton(
+            "Tambah Perangkat Listrik", lambda: self.back_to_main(), self
+        )
+        self.addItem.setMinimumSize(90, 90)
+        footer.addWidget(self.addItem)
+        footer.addStretch()
+
+        self.hint = QtWidgets.QLabel(
+            '1. Checkbox determines whether the device is on or off state. \n2. Circuit Breaker data will be placed at the bottom of each Ruangan (if available) \n3. You can add device by pressing "Tambah Perangkat Listrik" button.'
+        )
+        footer.addWidget(self.hint)
+
+        main_layout.addLayout(footer)
 
     # Callback fn
     def back_to_main(self):
