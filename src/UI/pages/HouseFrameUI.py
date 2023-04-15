@@ -128,7 +128,7 @@ class HouseFrame(PageWindow):
             self.thresholdInput.clear()
 
             # Validate Threshold Value
-            if threshold_val.isdigit():
+            if threshold_val.isdigit() and text != "":
                 threshold_val = int(threshold_val)
                 ticked_name = []
 
@@ -161,6 +161,18 @@ class HouseFrame(PageWindow):
         finish_button = StepButton("Finish")
         button_layout.addWidget(finish_button)
         button_layout.addStretch()
+
+        def on_finish_button_clicked():
+            if not self.circuit_breaker_info:
+                msg = QtWidgets.QMessageBox()
+                msg.setText("Empty Input!")
+                msg.setInformativeText("Please try to input some values!")
+                msg.setWindowTitle("Error Message")
+                msg.exec_()
+            else:
+                self.goto("simulator")
+
+        finish_button.clicked.connect(on_finish_button_clicked)
 
         v_layout.addStretch(2)
 
