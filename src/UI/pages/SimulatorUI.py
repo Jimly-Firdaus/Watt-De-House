@@ -93,7 +93,7 @@ class SimulatorPage(PageWindow):
         footer = QtWidgets.QHBoxLayout()
         # Set this to Data Input v1 page
         self.addItem = UtilityButton(
-            "Tambah Perangkat Listrik", lambda: self.back_to_main(), self
+            "Tambah Perangkat Listrik", lambda: self.goto_data_input(), self
         )
         self.addItem.setMinimumSize(90, 90)
         footer.addWidget(self.addItem)
@@ -109,6 +109,9 @@ class SimulatorPage(PageWindow):
     # Callback fn
     def back_to_main(self):
         self.goto("main")
+
+    def goto_data_input(self):
+        self.goto("datainputv1")
 
     @QtCore.pyqtSlot(object, int)
     def update_state_perangkat(self, perangkat, state):

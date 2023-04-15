@@ -1,13 +1,11 @@
 import sys
 
 sys.path.insert(0, "../../")
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtWidgets
-from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
-from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5 import QtWidgets, QtCore
 from src.ClassFiles.DataInput import DataInput1
 
 
@@ -43,7 +41,7 @@ class DataInputV1Page(PageWindow):
         title_layout = QtWidgets.QHBoxLayout(title_container)
 
         title_layout.addStretch()
-        title_label = QtWidgets.QLabel("Input Perangkat Listrik")
+        title_label = QtWidgets.QLabel("Input Electrical Data")
         title_label.setStyleSheet(
             """
             color: #FEFAE0;
@@ -172,9 +170,6 @@ class DataInputV1Page(PageWindow):
                 border: 2px solid #00AE90;
                 border-radius: 4%;
                 padding: 3px 10px 3px 3px;
-            }
-            QSpinBox::up-button {
-                background-color: #00AE90;
             }
         """
         )
