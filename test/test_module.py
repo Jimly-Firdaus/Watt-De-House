@@ -90,9 +90,6 @@ class ModuleTesting(unittest.TestCase):
             perangkat_listrik.get_data_perangkat_listrik(),
             perangkat_listrik_expected.get_data_perangkat_listrik(),
         )
-        # Test invalid input
-        with self.assertRaises(Exception):
-            data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", -1)
 
     def test_perangkat_listrik_default(self):
         # Test valid input

@@ -244,7 +244,7 @@ class DataInputV2Page(PageWindow):
         )
 
         # finish btn
-        finish_btn = UtilityButton("Finish", lambda: self.finish_input(), self)
+        finish_btn = UtilityButton("Finish", self.back_to_estimator, self)
         finish_btn.setMinimumSize(90, 90)
         finish_btn.setStyleSheet(
             """
@@ -315,7 +315,7 @@ class DataInputV2Page(PageWindow):
             self.duration_input.clear()
         except Exception as e:
             print(e)
-        print(self.list_of_data)
+        print("Total length: " + str(len(self.list_of_data)))
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):

@@ -1,3 +1,4 @@
+import sys
 from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
@@ -21,7 +22,7 @@ class MainFrame(PageWindow):
         # Exit button section
         h1_layout = QtWidgets.QHBoxLayout()
         h1_layout.addStretch()
-        self.exitButton = UtilityButton("Exit", None, self)
+        self.exitButton = UtilityButton("Exit", lambda: self.move_to_page("exit"), self)
         self.exitButton.setMinimumSize(90, 90)
         h1_layout.addWidget(self.exitButton)
         v_layout.addLayout(h1_layout)
@@ -69,7 +70,7 @@ class MainFrame(PageWindow):
         # Help button section
         h3_layout = QtWidgets.QHBoxLayout()
         h3_layout.addStretch()
-        self.helpButton = UtilityButton("Help", None, self)
+        self.helpButton = UtilityButton("Help", lambda: self.move_to_page("help"), self)
         self.helpButton.setMinimumSize(90, 90)
         h3_layout.addWidget(self.helpButton)
         v_layout.addLayout(h3_layout)
@@ -80,3 +81,7 @@ class MainFrame(PageWindow):
             self.goto("simulator")
         elif page_name == "estimator":
             self.goto("estimator")
+        elif page_name == "help":
+            self.goto("help")
+        elif page_name == "exit":
+            sys.exit()
