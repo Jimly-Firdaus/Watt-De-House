@@ -6,7 +6,6 @@ from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
-from src.ClassFiles.DataInput import DataInput1
 
 
 class DataInputV1Page(PageWindow):
@@ -15,6 +14,7 @@ class DataInputV1Page(PageWindow):
     ):
         super().__init__()
 
+        # List of tuple (name, power, voltage, current, room_name)
         self.v1_list = data_input_v1_list
 
         self.setBaseSize(1024, 720)
@@ -61,11 +61,11 @@ class DataInputV1Page(PageWindow):
 
         name_label = QtWidgets.QLabel("Name: ")
 
-        name_input = QtWidgets.QLineEdit()
+        self.name_input = QtWidgets.QLineEdit()
 
         name_layout.addStretch()
         name_layout.addWidget(name_label)
-        name_layout.addWidget(name_input)
+        name_layout.addWidget(self.name_input)
         name_layout.addStretch()
 
         # power container
@@ -77,10 +77,10 @@ class DataInputV1Page(PageWindow):
 
         power_label = QtWidgets.QLabel("Power: ")
 
-        power_spinbox = QtWidgets.QSpinBox()
-        power_spinbox.setMinimum(0)
-        power_spinbox.setMaximum(100)
-        power_spinbox.setStyleSheet(
+        self.power_spinbox = QtWidgets.QSpinBox()
+        self.power_spinbox.setMinimum(0)
+        self.power_spinbox.setMaximum(100)
+        self.power_spinbox.setStyleSheet(
             """
             QSpinBox {
                 color: #576CBC;
@@ -91,13 +91,13 @@ class DataInputV1Page(PageWindow):
         )
 
         # power_spinbox.setValue(50)
-        power_spinbox.setSizePolicy(
+        self.power_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
 
         power_layout.addStretch()
         power_layout.addWidget(power_label)
-        power_layout.addWidget(power_spinbox)
+        power_layout.addWidget(self.power_spinbox)
         power_layout.addStretch()
 
         # voltage container
@@ -109,17 +109,17 @@ class DataInputV1Page(PageWindow):
 
         voltage_label = QtWidgets.QLabel("Voltage: ")
 
-        voltage_spinbox = QtWidgets.QSpinBox()
-        voltage_spinbox.setMinimum(0)
-        voltage_spinbox.setMaximum(100)
-        # voltage_spinbox.setValue(50)
-        voltage_spinbox.setSizePolicy(
+        self.voltage_spinbox = QtWidgets.QSpinBox()
+        self.voltage_spinbox.setMinimum(0)
+        self.voltage_spinbox.setMaximum(100)
+        # self.voltage_spinbox.setValue(50)
+        self.voltage_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
 
         voltage_layout.addStretch()
         voltage_layout.addWidget(voltage_label)
-        voltage_layout.addWidget(voltage_spinbox)
+        voltage_layout.addWidget(self.voltage_spinbox)
         voltage_layout.addStretch()
 
         # current container
@@ -131,17 +131,17 @@ class DataInputV1Page(PageWindow):
 
         current_label = QtWidgets.QLabel("Current: ")
 
-        current_spinbox = QtWidgets.QSpinBox()
-        current_spinbox.setMinimum(0)
-        current_spinbox.setMaximum(100)
-        # current_spinbox.setValue(50)
-        current_spinbox.setSizePolicy(
+        self.current_spinbox = QtWidgets.QSpinBox()
+        self.current_spinbox.setMinimum(0)
+        self.current_spinbox.setMaximum(100)
+        # self.current_spinbox.setValue(50)
+        self.current_spinbox.setSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         )
 
         current_layout.addStretch()
         current_layout.addWidget(current_label)
-        current_layout.addWidget(current_spinbox)
+        current_layout.addWidget(self.current_spinbox)
         current_layout.addStretch()
 
         # duration container
@@ -153,11 +153,11 @@ class DataInputV1Page(PageWindow):
 
         room_name_label = QtWidgets.QLabel("Room Name: ")
 
-        room_name_input = QtWidgets.QLineEdit()
+        self.room_name_input = QtWidgets.QLineEdit()
 
         room_name_layout.addStretch()
         room_name_layout.addWidget(room_name_label)
-        room_name_layout.addWidget(room_name_input)
+        room_name_layout.addWidget(self.room_name_input)
         room_name_layout.addStretch()
 
         input_layout.addWidget(name_container)
