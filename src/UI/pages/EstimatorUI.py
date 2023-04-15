@@ -77,7 +77,7 @@ class EstimatorPage(PageWindow):
         self.goto("main")
 
     def go_to_input_data_v2(self):
-        self.goto("inputdatav2")
+        self.goto("datainputv2")
         # self.setLayout(main_layout)
 
         # # get the center position of the main container

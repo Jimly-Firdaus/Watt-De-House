@@ -251,7 +251,7 @@ class DataInputV2Page(PageWindow):
             self.duration_input.clear()
         except Exception as e:
             print(e)
-        print(self.list_of_data)
+        print("Total length: " + str(len(self.list_of_data)))
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):

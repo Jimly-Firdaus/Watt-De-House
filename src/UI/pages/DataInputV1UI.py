@@ -13,7 +13,8 @@ from src.ClassFiles.DataInput import DataInput1
 
 class DataInputV1Page(PageWindow):
     def __init__(
-        self, data_input_v1_list: list = [],
+        self,
+        data_input_v1_list: list = [],
     ):
         super().__init__()
 
