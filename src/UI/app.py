@@ -1,9 +1,22 @@
+import sys
+
+sys.path.insert(0, "../")
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget
 from components.BaseCard import BaseCard
 from pages.MainPageUI import MainFrame
+from pages.SimulatorUI import SimulatorPage
+from pages.EstimatorUI import EstimatorPage
+from pages.DataInputV1UI import DataInputV1Page
+from pages.DataInputV2UI import DataInputV2Page
+from pages.HelpUI import HelpPage
+from pages.HouseFrameUI import HouseFrame
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
+from src.ClassFiles.Ruangan import Ruangan
+from src.ClassFiles.Database import Database
+from composables.Utility import Util
 
 
 class Window(QtWidgets.QMainWindow):
@@ -12,6 +25,42 @@ class Window(QtWidgets.QMainWindow):
         self.setGeometry(0, 0, 1440, 810)
         self.stacked_widget = QtWidgets.QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
+
+        self.db = Database("watt_de_house.db")
+        # Create table incase doesnot exist
+        self.db.create_table(
+            "perangkat_listrik",
+            {
+                "id": "INTEGER PRIMARY KEY",
+                "status": "TEXT",
+                "nama": "TEXT",
+                "daya": "REAL",
+                "arus": "REAL",
+                "tegangan": "REAL",
+                "durasi": "INTEGER",
+            },
+        )
+        self.db.create_table(
+            "ruangan",
+            {
+                "id": "INTEGER PRIMARY KEY",
+                "nama_ruangan": "TEXT",
+                "circuit_breaker": "INTEGER",
+                "circuit_breaker_name": "TEXT",
+                "threshold": "REAL",
+            },
+        )
+        self.db.create_table(
+            "ruangan_perangkat_listrik",
+            {
+                "id_ruangan": "INTEGER",
+                "id_perangkat_listrik": "INTEGER",
+            },
+        )
+
+        # Fetch all data from database
+        list_ruangan = Util.get_all_ruangan(self.db)
+        list_perangkat_listrik = []
 
         # Center the opened window
         screen = QDesktopWidget().screenGeometry()
@@ -22,9 +71,14 @@ class Window(QtWidgets.QMainWindow):
         # Pages here
         self.m_pages = {}
 
-        # Register your page here
+        # Register page here
         self.register(MainFrame(), "main")
-        # e.g: self.register(SearchWindow(), "search")
+        self.register(HelpPage(), "help")
+        self.register(HouseFrame(list_perangkat_listrik, list_ruangan), "datainputv1")
+        self.register(SimulatorPage(list_ruangan), "simulator")
+        self.register(EstimatorPage(list_perangkat_listrik), "estimator")
+        self.register(DataInputV1Page(list_perangkat_listrik), "datainputv1")
+        self.register(DataInputV2Page(list_perangkat_listrik), "datainputv2")
 
         # Defaults to main
         self.goto("main")
