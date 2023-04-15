@@ -6,21 +6,25 @@ from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
+from src.ClassFiles.DataInput import DataInput1
 
 
 class DataInputV1Page(PageWindow):
-    def __init__(self,):
+    def __init__(
+        self, data_input_v1_list: list = [],
+    ):
         super().__init__()
+
+        self.v1_list = data_input_v1_list
 
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet(
             """
             background-color: #0B2447;
-            
             """
         )
-        self.setWindowTitle("Data Input V2")
+        self.setWindowTitle("Data Input V1")
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -170,11 +174,11 @@ class DataInputV1Page(PageWindow):
         btn_layout = QtWidgets.QHBoxLayout(btn_container)
 
         # next btn
-        next_btn = UtilityButton("Next", None, self)
+        next_btn = UtilityButton("Next", lambda: self.next_device(), self)
         next_btn.setMinimumSize(90, 90)
 
         # finish btn
-        finish_btn = UtilityButton("Finish", None, self)
+        finish_btn = UtilityButton("Finish", lambda: self.finish_input(), self)
         finish_btn.setMinimumSize(90, 90)
 
         btn_layout.addStretch()
@@ -197,5 +201,29 @@ class DataInputV1Page(PageWindow):
         main_layout.addWidget(btn_container)
         main_layout.addWidget(back_btn_container)
 
+    def add_to_list(self):
+        device_name = self.name_input.text()
+        device_power = self.power_spinbox.value()
+        device_voltage = self.voltage_spinbox.value()
+        device_current = self.current_spinbox.value()
+        device_room_name = self.room_name_input.text()
+        self.v1_list.append(
+            (
+                device_name,
+                device_power,
+                device_voltage,
+                device_current,
+                device_room_name,
+            )
+        )
+
     def back_to_estimator(self):
         self.goto("estimator")
+
+    def next_device(self):
+        self.add_to_list()
+        self.goto("datainputv1")
+
+    def finish_input(self):
+        self.add_to_list()
+        self.goto("simulator")
