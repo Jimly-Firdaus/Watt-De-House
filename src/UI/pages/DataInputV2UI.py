@@ -16,7 +16,7 @@ class DataInputV2Page(PageWindow):
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #FFFFFF;")
         self.setWindowTitle("Data Input V2")
-        self.list_of_data: list_of_data
+        self.list_of_data = list_of_data
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -51,9 +51,12 @@ class DataInputV2Page(PageWindow):
 
         name_layout = QtWidgets.QHBoxLayout(name_container)
 
-        name_label = QtWidgets.QLabel("Name: ")
+        name_label = QtWidgets.QLabel("Name    : ")
 
         self.name_input = QtWidgets.QLineEdit()
+
+        # Set placeholder text to indicate required input
+        self.name_input.setPlaceholderText("Required*")
 
         name_layout.addStretch()
         name_layout.addWidget(name_label)
@@ -67,7 +70,7 @@ class DataInputV2Page(PageWindow):
 
         power_layout = QtWidgets.QHBoxLayout(power_container)
 
-        power_label = QtWidgets.QLabel("Power: ")
+        power_label = QtWidgets.QLabel("Power   : ")
 
         self.power_spinbox = QtWidgets.QDoubleSpinBox()
         self.power_spinbox.setRange(0, 100)
@@ -89,7 +92,7 @@ class DataInputV2Page(PageWindow):
 
         voltage_layout = QtWidgets.QHBoxLayout(voltage_container)
 
-        voltage_label = QtWidgets.QLabel("Voltage: ")
+        voltage_label = QtWidgets.QLabel("Voltage : ")
 
         self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
         self.voltage_spinbox.setRange(0, 100)
@@ -111,7 +114,7 @@ class DataInputV2Page(PageWindow):
 
         current_layout = QtWidgets.QHBoxLayout(current_container)
 
-        current_label = QtWidgets.QLabel("Current: ")
+        current_label = QtWidgets.QLabel("Current : ")
 
         self.current_spinbox = QtWidgets.QDoubleSpinBox()
         self.current_spinbox.setRange(0, 100)
@@ -126,6 +129,25 @@ class DataInputV2Page(PageWindow):
         current_layout.addWidget(self.current_spinbox)
         current_layout.addStretch()
 
+        # room container
+        room_container = QtWidgets.QWidget()
+
+        room_container.setMaximumHeight(int(0.1 * input_container.height()))
+
+        room_layout = QtWidgets.QHBoxLayout(room_container)
+
+        room_label = QtWidgets.QLabel("Room    : ")
+
+        self.room_input = QtWidgets.QLineEdit()
+
+        # Set placeholder text to indicate required input
+        self.room_input.setPlaceholderText("Required*")
+
+        room_layout.addStretch()
+        room_layout.addWidget(room_label)
+        room_layout.addWidget(self.room_input)
+        room_layout.addStretch()
+
         # duration container
         duration_container = QtWidgets.QWidget()
 
@@ -136,6 +158,8 @@ class DataInputV2Page(PageWindow):
         duration_label = QtWidgets.QLabel("Duration: ")
 
         self.duration_input = QtWidgets.QLineEdit()
+
+        self.duration_input.setPlaceholderText("0.00")
 
         validator = QtGui.QDoubleValidator(decimals=2)
         validator_greater_equal0 = PositiveNumberValidator()
@@ -152,6 +176,7 @@ class DataInputV2Page(PageWindow):
         input_layout.addWidget(power_container)
         input_layout.addWidget(voltage_container)
         input_layout.addWidget(current_container)
+        input_layout.addWidget(room_container)
         input_layout.addWidget(duration_container)
 
         # btn container
@@ -198,7 +223,26 @@ class DataInputV2Page(PageWindow):
         print(self.power_spinbox.value())
         print(self.voltage_spinbox.value())
         print(self.current_spinbox.value())
+        print(self.room_input.text())
         print(self.duration_input.text())
+        try:
+            duration = self.duration_input.text()
+            if not duration:
+                duration = float(0)
+            else:
+                duration = float(self.duration_input.text())
+            export_data = DataInput2(
+                self.name_input.text(),
+                self.power_spinbox.value(),
+                self.voltage_spinbox.value(),
+                self.current_spinbox.value(),
+                self.room_input.text(),
+                duration,
+            )
+            self.list_of_data.append(export_data)
+        except Exception as e:
+            print(e)
+        print(self.list_of_data)
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):
