@@ -27,16 +27,18 @@ class Window(QtWidgets.QMainWindow):
         self.setCentralWidget(self.stacked_widget)
 
         self.db = Database("watt_de_house.db")
+        self.modified_state = False
         # Create table incase doesnot exist
         self.db.create_table(
             "perangkat_listrik",
             {
                 "id": "INTEGER PRIMARY KEY",
-                "status": "TEXT",
+                "status": "INTEGER",
                 "nama": "TEXT",
                 "daya": "REAL",
                 "arus": "REAL",
                 "tegangan": "REAL",
+                "nama_ruangan": "TEXT",
                 "durasi": "INTEGER",
             },
         )
@@ -59,8 +61,9 @@ class Window(QtWidgets.QMainWindow):
         )
 
         # Fetch all data from database
-        list_ruangan = Util.get_all_ruangan(self.db)
-        list_perangkat_listrik = []
+        list_ruangan, list_perangkat_listrik = Util.get_all_data(self.db)
+        # print(list_ruangan[0].get_list_perangkat_listrik())
+        print(list_perangkat_listrik)
 
         # Center the opened window
         screen = QDesktopWidget().screenGeometry()
@@ -72,7 +75,7 @@ class Window(QtWidgets.QMainWindow):
         self.m_pages = {}
 
         # Register page here
-        self.register(MainFrame(), "main")
+        self.register(MainFrame(list_ruangan, self.db), "main")
         self.register(HelpPage(), "help")
         self.register(HouseFrame(list_perangkat_listrik, list_ruangan), "houseframe")
         self.register(SimulatorPage(list_ruangan), "simulator")
@@ -83,12 +86,14 @@ class Window(QtWidgets.QMainWindow):
         data_input_v1_page = self.m_pages["datainputv1"]
         data_input_v2_page = self.m_pages["datainputv2"]
         house_frame = self.m_pages["houseframe"]
+        simulator_page = self.m_pages["simulator"]
         data_input_v1_page.list_updated.connect(
             house_frame.update_list_perangkat_listrik
         )
         data_input_v2_page.list_updated.connect(
             house_frame.update_list_perangkat_listrik
         )
+        house_frame.list_ruangan_updated.connect(simulator_page.update_self_list)
 
         # Defaults to main
         self.goto("main")
