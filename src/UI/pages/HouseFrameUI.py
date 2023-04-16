@@ -28,6 +28,7 @@ class HouseFrame(PageWindow):
         self.distinct_room_name = set()
 
     def init_ui(self):
+        list_obj_ruangan = []
         self.add_ruangan()
 
         widget = QtWidgets.QWidget()
@@ -140,6 +141,8 @@ class HouseFrame(PageWindow):
         next_button = StepButton("Next")
         button_layout.addWidget(next_button)
 
+        id_ruangan = 1
+
         def on_next_button_clicked():
             # Clear Text Input
             text = self.textInput.text()
@@ -168,6 +171,26 @@ class HouseFrame(PageWindow):
 
                     # Add to circuit breaker info
                     self.circuit_breaker_info.append([text, ticked_name, threshold_val])
+
+                    # Insert perangkat listrik into a list
+                    for ruangan_name in ticked_name:
+                        list_p_listrik = []
+                        for pl in self.list_perangkat_listrik:
+                            if ruangan_name == pl.get_data_perangkat_listrik()[6]:
+                                list_p_listrik.append(pl)
+
+                        ruangan = Ruangan(
+                            id_ruangan,
+                            ruangan_name,
+                            list_p_listrik,
+                            True,
+                            text,
+                            threshold_val,
+                        )
+
+                        # Append to list_ruangan
+                        self.list_ruangan.append(ruangan)
+
             else:
                 # Untick the check box
                 for tickbox in tickboxes:
@@ -195,6 +218,7 @@ class HouseFrame(PageWindow):
                 msg.setWindowTitle("Error Message")
                 msg.exec_()
             else:
+                self.list_ruangan.append(list_obj_ruangan)
                 self.goto("simulator")
 
         finish_button.clicked.connect(on_finish_button_clicked)
