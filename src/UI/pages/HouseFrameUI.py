@@ -5,12 +5,15 @@ from components.StepButton import StepButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import *
 from typing import List
 from src.ClassFiles.PerangkatListrik import PerangkatListrik
 from src.ClassFiles.Ruangan import Ruangan
 
 
 class HouseFrame(PageWindow):
+    list_ruangan_updated = pyqtSignal(list)
+
     def __init__(
         self,
         list_of_data: List[PerangkatListrik] = [],
@@ -24,8 +27,10 @@ class HouseFrame(PageWindow):
         self.circuit_breaker_info = []
         self.list_perangkat_listrik = list_of_data
         self.list_ruangan = list_ruangan
-
+        self.id_ruangan = len(self.list_ruangan) + 1
+        self.distinct_pl = set()
         self.distinct_room_name = set()
+        print(len(self.list_ruangan))
 
     def init_ui(self):
         list_obj_ruangan = []
@@ -114,7 +119,7 @@ class HouseFrame(PageWindow):
         i = 0
         for ele in self.distinct_room_name:
             # Create a new checkbox
-            checkbox = QtWidgets.QCheckBox(ele.get_data_perangkat_listrik()[6])
+            checkbox = QtWidgets.QCheckBox(ele)
             tickboxes.append(checkbox)
 
             # Connect the stateChanged signal
@@ -138,10 +143,8 @@ class HouseFrame(PageWindow):
         button_layout = QtWidgets.QHBoxLayout()
         v_layout.addLayout(button_layout)
         button_layout.addStretch()
-        next_button = StepButton("Next")
+        next_button = StepButton("Next", lambda: on_next_button_clicked())
         button_layout.addWidget(next_button)
-
-        id_ruangan = 1
 
         def on_next_button_clicked():
             # Clear Text Input
@@ -180,7 +183,7 @@ class HouseFrame(PageWindow):
                                 list_p_listrik.append(pl)
 
                         ruangan = Ruangan(
-                            id_ruangan,
+                            self.id_ruangan,
                             ruangan_name,
                             list_p_listrik,
                             True,
@@ -189,7 +192,35 @@ class HouseFrame(PageWindow):
                         )
 
                         # Append to list_ruangan
-                        self.list_ruangan.append(ruangan)
+                        temp_list_room_name = []
+                        for room in self.list_ruangan:
+                            temp_list_room_name.append(room.get_ruangan_name())
+
+                        if not ruangan.get_ruangan_name() in temp_list_room_name:
+                            self.list_ruangan.append(ruangan)
+                            self.id_ruangan += 1
+                            self.list_ruangan_updated.emit(self.list_ruangan)
+                        else:
+                            i = 0
+                            for room in self.list_ruangan:
+                                if (
+                                    room.get_ruangan_name()
+                                    == ruangan.get_ruangan_name()
+                                ):
+                                    break
+                                i += 1
+                            temp_list = self.list_ruangan[
+                                i
+                            ].get_list_perangkat_listrik()
+                            for ele in list_p_listrik:
+                                temp_list.append(ele)
+                            self.list_ruangan[i].set_list_perangkat_listrik(temp_list)
+                            print(self.list_ruangan[i].get_list_perangkat_listrik())
+                            self.list_ruangan_updated.emit(self.list_ruangan)
+
+                for tickbox in tickboxes:
+                    if tickbox.isChecked():
+                        tickbox.setChecked(False)
 
             else:
                 # Untick the check box
@@ -203,10 +234,10 @@ class HouseFrame(PageWindow):
                 msg.setWindowTitle("Error Message")
                 msg.exec_()
 
-        next_button.clicked.connect(on_next_button_clicked)
+        # next_button.clicked.connect(on_next_button_clicked)
 
         button_layout.addStretch()
-        finish_button = StepButton("Finish")
+        finish_button = StepButton("Finish", lambda: on_finish_button_clicked())
         button_layout.addWidget(finish_button)
         button_layout.addStretch()
 
@@ -218,10 +249,88 @@ class HouseFrame(PageWindow):
                 msg.setWindowTitle("Error Message")
                 msg.exec_()
             else:
-                self.list_ruangan.append(list_obj_ruangan)
+                text = self.textInput.text()
+                threshold_val = self.thresholdInput.text()
+
+                # Validate Threshold Value
+                if threshold_val.isdigit() and text != "":
+                    any_checked = False
+
+                    ticked_name = []
+                    # Tickbox
+                    for tickbox in tickboxes:
+                        if tickbox.isChecked():
+                            any_checked = True
+                            ticked_name.append(tickbox.text())
+                            tickbox.setEnabled(False)
+                            tickbox.setStyleSheet(
+                                "QCheckBox::indicator {background-color:black; border-radius: 5%}"
+                            )
+
+                    if any_checked:
+                        threshold_val = int(threshold_val)
+
+                        # Add to circuit breaker info
+                        self.circuit_breaker_info.append(
+                            [text, ticked_name, threshold_val]
+                        )
+
+                        # Insert perangkat listrik into a list
+                        for ruangan_name in ticked_name:
+                            list_p_listrik = []
+                            for pl in self.list_perangkat_listrik:
+                                if ruangan_name == pl.get_data_perangkat_listrik()[6]:
+                                    list_p_listrik.append(pl)
+
+                            ruangan = Ruangan(
+                                self.id_ruangan,
+                                ruangan_name,
+                                list_p_listrik,
+                                True,
+                                text,
+                                threshold_val,
+                            )
+
+                            # Append to list_ruangan
+                            temp_list_room_name = []
+                            for room in self.list_ruangan:
+                                temp_list_room_name.append(room.get_ruangan_name())
+
+                            if not ruangan.get_ruangan_name() in temp_list_room_name:
+                                self.list_ruangan.append(ruangan)
+                                self.id_ruangan += 1
+                                self.list_ruangan_updated.emit(self.list_ruangan)
+                            else:
+                                i = 0
+                                for room in self.list_ruangan:
+                                    if (
+                                        room.get_ruangan_name()
+                                        == ruangan.get_ruangan_name()
+                                    ):
+                                        break
+                                    i += 1
+                                temp_list = self.list_ruangan[
+                                    i
+                                ].get_list_perangkat_listrik()
+                                for ele in list_p_listrik:
+                                    temp_list.append(ele)
+                                self.list_ruangan[i].set_list_perangkat_listrik(
+                                    temp_list
+                                )
+                                print(self.list_ruangan[i].get_list_perangkat_listrik())
+                                self.list_ruangan_updated.emit(self.list_ruangan)
+
+                else:
+                    msg = QtWidgets.QMessageBox()
+                    msg.setText("Input Invalid!")
+                    msg.setInformativeText("Please try to input the correct value!")
+                    msg.setWindowTitle("Error Message")
+                    msg.exec_()
+                    self.list_ruangan_updated.emit(self.list_ruangan)
+
                 self.goto("simulator")
 
-        finish_button.clicked.connect(on_finish_button_clicked)
+        # finish_button.clicked.connect(on_finish_button_clicked)
 
         v_layout.addStretch(2)
 
@@ -229,13 +338,13 @@ class HouseFrame(PageWindow):
         backbutton_layout = QtWidgets.QHBoxLayout()
         v_layout.addLayout(backbutton_layout)
         backbutton_layout.addStretch()
-        back_button = UtilityButton("Back")
+        back_button = UtilityButton("Back", lambda: on_back_button_clicked())
         backbutton_layout.addWidget(back_button)
 
         def on_back_button_clicked():
             self.goto("datainputv2")
 
-        back_button.clicked.connect(on_back_button_clicked)
+        # back_button.clicked.connect(on_back_button_clicked)
 
         v_layout.addStretch(1)
 
@@ -245,4 +354,5 @@ class HouseFrame(PageWindow):
 
     def add_ruangan(self):
         for perangkat in self.list_perangkat_listrik:
-            self.distinct_room_name.add(perangkat)
+            self.distinct_pl.add(perangkat)
+            self.distinct_room_name.add(perangkat.get_data_perangkat_listrik()[6])
