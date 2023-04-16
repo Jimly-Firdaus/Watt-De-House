@@ -20,7 +20,9 @@ class SimulatorPage(PageWindow):
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #FFFFFF;")
         self.setWindowTitle("Simulator")
+        self.init_ui()
 
+    def init_ui(self):
         # Create a scroll area
         scroll_area = QtWidgets.QScrollArea()
         self.setCentralWidget(scroll_area)
