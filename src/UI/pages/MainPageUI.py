@@ -3,16 +3,21 @@ from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtGui
+from composables.Utility import Util
 
 
 class MainFrame(PageWindow):
-    def __init__(self):
+    def __init__(self, list_ruangan, db):
         super().__init__()
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #0B2447;")
         self.setWindowTitle("Watt de House")
+        self.list_ruangan = list_ruangan
+        self.db = db
+        self.init_ui()
 
+    def init_ui(self):
         widget = QtWidgets.QWidget()
         self.setCentralWidget(widget)
 
@@ -84,4 +89,11 @@ class MainFrame(PageWindow):
         elif page_name == "help":
             self.goto("help")
         elif page_name == "exit":
+            Util.store_to_db(self.db, self.list_ruangan)
             sys.exit()
+
+    def update_user_data(self, list_ruangan, list_perangkat_listrik):
+        print("Connected to main frame")
+        self.list_ruangan = list_ruangan
+        self.list_perangkat_listrik = list_perangkat_listrik
+        self.init_ui()
