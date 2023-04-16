@@ -29,6 +29,7 @@ class DataInputV1Page(PageWindow):
             """
         )
         self.setWindowTitle("Data Input V1")
+        self.id_perangkat_listrik = len(self.v1_list)
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -275,8 +276,14 @@ class DataInputV1Page(PageWindow):
         device_voltage = self.voltage_spinbox.value()
         device_current = self.current_spinbox.value()
         device_room_name = self.room_name_input.text()
+        self.id_perangkat_listrik = len(self.v1_list) + 1
         device = DataInput1(
-            device_name, device_power, device_current, device_voltage, device_room_name
+            self.id_perangkat_listrik,
+            device_name,
+            device_power,
+            device_current,
+            device_voltage,
+            device_room_name,
         )
         self.v1_list.append(device.create_p_listrik())
         self.list_updated.emit(self.v1_list)

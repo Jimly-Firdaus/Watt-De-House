@@ -23,6 +23,7 @@ class DataInputV2Page(PageWindow):
         self.setStyleSheet("background-color: #0B2447;")
         self.setWindowTitle("Data Input V2")
         self.list_of_data = list_of_data
+        self.id_perangkat_listrik = len(self.list_of_data)
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -303,7 +304,9 @@ class DataInputV2Page(PageWindow):
                 duration = float(0)
             else:
                 duration = float(self.duration_input.text())
+            self.id_perangkat_listrik = len(self.list_of_data) + 1
             export_data = DataInput2(
+                self.id_perangkat_listrik,
                 self.name_input.text(),
                 self.power_spinbox.value(),
                 self.voltage_spinbox.value(),
