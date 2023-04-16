@@ -116,7 +116,7 @@ class EstimatorPage(PageWindow):
         self.goto("main")
 
     def go_to_input_data_v2(self):
-        self.goto("inputdatav2")
+        self.goto("datainputv2")
 
     def update_label(self):
         update_result_str = self.get_estimator()
