@@ -120,7 +120,7 @@ class ModuleTesting(unittest.TestCase):
         listPerangkat = []
         listPerangkat.append(perangkat_listrik2)
         listPerangkat.append(perangkat_listrik1)
-        Estimator1 = Estimator(True, listPerangkat)
+        Estimator1 = Estimator(True, listPerangkat, 605)
         self.assertEqual(
             Estimator1.get_harga_listrik(), (605),
         )
