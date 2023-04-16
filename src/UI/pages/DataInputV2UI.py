@@ -91,7 +91,7 @@ class DataInputV2Page(PageWindow):
 
         self.power_spinbox = QtWidgets.QSpinBox()
         self.power_spinbox.setMinimum(0)
-        self.power_spinbox.setMaximum(100)
+        self.power_spinbox.setMaximum(200)
         self.power_spinbox.setStyleSheet(
             """
             QSpinBox {
@@ -120,8 +120,8 @@ class DataInputV2Page(PageWindow):
         input_layout.addWidget(voltage_label, 2, 0)
 
         self.voltage_spinbox = QtWidgets.QSpinBox()
-        self.voltage_spinbox.setMinimum(0)
-        self.voltage_spinbox.setMaximum(100)
+        self.voltage_spinbox.setMinimum(120)
+        self.voltage_spinbox.setMaximum(300)
         # self.voltage_spinbox.setValue(50)
         # self.voltage_spinbox.setSizePolicy(
         #     QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed

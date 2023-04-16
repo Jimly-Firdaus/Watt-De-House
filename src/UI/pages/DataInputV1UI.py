@@ -97,7 +97,7 @@ class DataInputV1Page(PageWindow):
 
         self.power_spinbox = QtWidgets.QSpinBox()
         self.power_spinbox.setMinimum(0)
-        self.power_spinbox.setMaximum(100)
+        self.power_spinbox.setMaximum(200)
         self.power_spinbox.setStyleSheet(
             """
             QSpinBox {
@@ -126,8 +126,8 @@ class DataInputV1Page(PageWindow):
         input_layout.addWidget(voltage_label, 2, 0)
 
         self.voltage_spinbox = QtWidgets.QSpinBox()
-        self.voltage_spinbox.setMinimum(0)
-        self.voltage_spinbox.setMaximum(100)
+        self.voltage_spinbox.setMinimum(120)
+        self.voltage_spinbox.setMaximum(300)
         # self.voltage_spinbox.setValue(50)
         # self.voltage_spinbox.setSizePolicy(
         #     QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
@@ -259,7 +259,7 @@ class DataInputV1Page(PageWindow):
         back_btn_container = QtWidgets.QWidget()
         back_btn_container.setMaximumHeight(int(self.height() * 0.2))
         back_btn_layout = QtWidgets.QHBoxLayout(back_btn_container)
-        self.back_btn = UtilityButton("Back", lambda: self.back_to_estimator(), self)
+        self.back_btn = UtilityButton("Back", lambda: self.back_to_simulator(), self)
         self.back_btn.setMinimumSize(90, 90)
         back_btn_layout.addStretch()
         back_btn_layout.addWidget(self.back_btn, alignment=QtCore.Qt.AlignBottom)
@@ -282,8 +282,8 @@ class DataInputV1Page(PageWindow):
         self.list_updated.emit(self.v1_list)
         print("Signal emitted with list:", self.v1_list)
 
-    def back_to_estimator(self):
-        self.goto("estimator")
+    def back_to_simulator(self):
+        self.goto("simulator")
 
     def reset_values(self):
         self.name_input.setText("")
