@@ -171,7 +171,22 @@ class HouseFrame(PageWindow):
         button_layout = QtWidgets.QHBoxLayout()
         v_layout.addLayout(button_layout)
         button_layout.addStretch()
-        next_button = StepButton("Next", lambda: on_next_button_clicked())
+        next_button = UtilityButton("Next", lambda: on_next_button_clicked())
+        next_button.setMinimumSize(90, 90)
+        next_button.setStyleSheet(
+            """
+            UtilityButton {
+                color: #00AE90;
+                border: 2px solid #00AE90;
+                border-radius: 25%;
+                font-size: 18px;
+            }
+            UtilityButton:hover {
+                background-color: #00AE90;
+                color: #0B2447;
+            }
+        """
+        )
         button_layout.addWidget(next_button)
 
         def on_next_button_clicked():
@@ -265,7 +280,23 @@ class HouseFrame(PageWindow):
         # next_button.clicked.connect(on_next_button_clicked)
 
         button_layout.addStretch()
-        finish_button = StepButton("Finish", lambda: on_finish_button_clicked())
+        finish_button = UtilityButton("Finish", lambda: on_finish_button_clicked())
+        finish_button.setMinimumSize(90, 90)
+        finish_button.setStyleSheet(
+            """
+            UtilityButton {
+                background-color: #00AE90;
+                color: #0B2447;
+                border: 2px solid #00AE90;
+                border-radius: 25%;
+                font-size: 18px;
+            }
+            UtilityButton:hover {
+                background-color: #0B2447;
+                color: #00AE90;
+            }
+        """
+        )
         button_layout.addWidget(finish_button)
         button_layout.addStretch()
 
