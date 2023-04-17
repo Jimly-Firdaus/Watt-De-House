@@ -1,9 +1,9 @@
 import sys
-from components.FeatureButton import FeatureButton
-from components.UtilityButton import UtilityButton
-from util.PageWindow import PageWindow
+from UI.components.FeatureButton import FeatureButton
+from UI.components.UtilityButton import UtilityButton
+from UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtGui
-from composables.Utility import Util
+from UI.composables.Utility import Util
 
 
 class MainFrame(PageWindow):

@@ -1,14 +1,14 @@
 import sys
 
 sys.path.insert(0, "../../")
-from components.StepButton import StepButton
-from components.UtilityButton import UtilityButton
-from util.PageWindow import PageWindow
+from UI.components.StepButton import StepButton
+from UI.components.UtilityButton import UtilityButton
+from UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import *
 from typing import List
-from src.ClassFiles.PerangkatListrik import PerangkatListrik
-from src.ClassFiles.Ruangan import Ruangan
+from ClassFiles.PerangkatListrik import PerangkatListrik
+from ClassFiles.Ruangan import Ruangan
 
 
 class HouseFrame(PageWindow):
