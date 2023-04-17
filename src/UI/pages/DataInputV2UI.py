@@ -1,8 +1,11 @@
 import sys
+
+sys.path.insert(0, "../../")
 from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtCore import *
 from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.DataInput import DataInput1, DataInput2
 from src.ClassFiles.PerangkatListrik import PerangkatListrik
@@ -10,14 +13,17 @@ from typing import List
 
 
 class DataInputV2Page(PageWindow):
-    def __init__(self, list_of_data: List[PerangkatListrik]):
+    list_updated = pyqtSignal(list)
+
+    def __init__(self, list_of_data: List[PerangkatListrik] = []):
         super().__init__()
 
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
-        self.setStyleSheet("background-color: #FFFFFF;")
+        self.setStyleSheet("background-color: #0B2447;")
         self.setWindowTitle("Data Input V2")
         self.list_of_data = list_of_data
+        self.id_perangkat_listrik = len(self.list_of_data)
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -28,157 +34,193 @@ class DataInputV2Page(PageWindow):
         # create title container
         title_container = QtWidgets.QWidget()
 
-        title_container.setMaximumHeight(int(self.height() * 0.1))
+        title_container.setMaximumHeight(int(self.height() * 0.2))
 
         title_layout = QtWidgets.QHBoxLayout(title_container)
 
-        title_label = QtWidgets.QLabel("Input Electrical Device Data Second Version")
+        title_label = QtWidgets.QLabel("Input Electrical Data")
+        title_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 40px;
+        """
+        )
 
-        font = QtGui.QFont("Courier New", 20, weight=QtGui.QFont.Bold)
-
-        title_label.setFont(font)
-
+        title_layout.addStretch()
         title_layout.addWidget(title_label)
+        title_layout.addStretch()
 
         # input container
-        input_container = QtWidgets.QWidget()
+        input_container = QtWidgets.QHBoxLayout()
+        input_container.addStretch()
 
-        input_layout = QtWidgets.QVBoxLayout(input_container)
+        input_layout = QtWidgets.QGridLayout()
+        input_container.addLayout(input_layout)
 
         # name container
-        name_container = QtWidgets.QWidget()
-
-        name_container.setMaximumHeight(int(0.1 * input_container.height()))
-
-        name_layout = QtWidgets.QHBoxLayout(name_container)
-
-        name_label = QtWidgets.QLabel("Name    : ")
+        name_label = QtWidgets.QLabel("Name: ")
+        name_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+        """
+        )
+        input_layout.addWidget(name_label, 0, 0)
 
         self.name_input = QtWidgets.QLineEdit()
-
-        # Set placeholder text to indicate required input
-        self.name_input.setPlaceholderText("Required*")
-
-        name_layout.addStretch()
-        name_layout.addWidget(name_label)
-        name_layout.addWidget(self.name_input)
-        name_layout.addStretch()
+        self.name_input.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+            height: 33px;
+            border: 2px solid #00AE90;
+            border-radius: 4%;
+            padding: 3px 10px;
+        """
+        )
+        input_layout.addWidget(self.name_input, 0, 1)
 
         # power container
-        power_container = QtWidgets.QWidget()
-
-        power_container.setMaximumHeight(int(0.1 * input_container.height()))
-
-        power_layout = QtWidgets.QHBoxLayout(power_container)
-
-        power_label = QtWidgets.QLabel("Power   : ")
-
-        self.power_spinbox = QtWidgets.QDoubleSpinBox()
-        self.power_spinbox.setRange(0, 100)
-        self.power_spinbox.setSingleStep(0.1)
-        # self.power_spinbox.setValue(50)
-        self.power_spinbox.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
+        power_label = QtWidgets.QLabel("Power: ")
+        power_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+        """
         )
+        input_layout.addWidget(power_label, 1, 0)
 
-        power_layout.addStretch()
-        power_layout.addWidget(power_label)
-        power_layout.addWidget(self.power_spinbox)
-        power_layout.addStretch()
+        self.power_spinbox = QtWidgets.QSpinBox()
+        self.power_spinbox.setMinimum(0)
+        self.power_spinbox.setMaximum(200)
+        self.power_spinbox.setStyleSheet(
+            """
+            QSpinBox {
+                color: #FEFAE0;
+                font-size: 19px;
+                height: 33px;
+                border: 2px solid #00AE90;
+                border-radius: 4%;
+                padding: 3px 10px 3px 3px;
+            }
+        """
+        )
+        input_layout.addWidget(self.power_spinbox, 1, 1)
+
+        # power_spinbox.setValue(50)
+        # self.power_spinbox.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
 
         # voltage container
-        voltage_container = QtWidgets.QWidget()
-
-        voltage_container.setMaximumHeight(int(0.1 * input_container.height()))
-
-        voltage_layout = QtWidgets.QHBoxLayout(voltage_container)
-
-        voltage_label = QtWidgets.QLabel("Voltage : ")
-
-        self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
-        self.voltage_spinbox.setRange(0, 100)
-        self.voltage_spinbox.setSingleStep(0.1)
-        # self.voltage_spinbox.setValue(50)
-        self.voltage_spinbox.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
+        voltage_label = QtWidgets.QLabel("Voltage: ")
+        voltage_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+        """
         )
+        input_layout.addWidget(voltage_label, 2, 0)
 
-        voltage_layout.addStretch()
-        voltage_layout.addWidget(voltage_label)
-        voltage_layout.addWidget(self.voltage_spinbox)
-        voltage_layout.addStretch()
+        self.voltage_spinbox = QtWidgets.QSpinBox()
+        self.voltage_spinbox.setMinimum(120)
+        self.voltage_spinbox.setMaximum(300)
+        # self.voltage_spinbox.setValue(50)
+        # self.voltage_spinbox.setSizePolicy(
+        #     QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
+        # )
+        self.voltage_spinbox.setStyleSheet(
+            """
+            QSpinBox {
+                color: #FEFAE0;
+                font-size: 19px;
+                height: 33px;
+                border: 2px solid #00AE90;
+                border-radius: 4%;
+                padding: 3px 10px 3px 3px;
+            }
+        """
+        )
+        input_layout.addWidget(self.voltage_spinbox, 2, 1)
 
         # current container
-        current_container = QtWidgets.QWidget()
 
-        current_container.setMaximumHeight(int(0.1 * input_container.height()))
+        current_label = QtWidgets.QLabel("Current: ")
+        current_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+        """
+        )
+        input_layout.addWidget(current_label, 3, 0)
 
-        current_layout = QtWidgets.QHBoxLayout(current_container)
-
-        current_label = QtWidgets.QLabel("Current : ")
-
-        self.current_spinbox = QtWidgets.QDoubleSpinBox()
-        self.current_spinbox.setRange(0, 100)
-        self.current_spinbox.setSingleStep(0.1)
+        self.current_spinbox = QtWidgets.QSpinBox()
+        self.current_spinbox.setMinimum(0)
+        self.current_spinbox.setMaximum(100)
         # self.current_spinbox.setValue(50)
-        self.current_spinbox.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
+        # self.current_spinbox.setSizePolicy(
+        #     QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
+        # )
+        self.current_spinbox.setStyleSheet(
+            """
+            QSpinBox {
+                color: #FEFAE0;
+                font-size: 19px;
+                height: 33px;
+                border: 2px solid #00AE90;
+                border-radius: 4%;
+                padding: 3px 10px 3px 3px;
+            }
+        """
         )
 
-        current_layout.addStretch()
-        current_layout.addWidget(current_label)
-        current_layout.addWidget(self.current_spinbox)
-        current_layout.addStretch()
-
-        # room container
-        room_container = QtWidgets.QWidget()
-
-        room_container.setMaximumHeight(int(0.1 * input_container.height()))
-
-        room_layout = QtWidgets.QHBoxLayout(room_container)
-
-        room_label = QtWidgets.QLabel("Room    : ")
-
-        self.room_input = QtWidgets.QLineEdit()
-
-        # Set placeholder text to indicate required input
-        self.room_input.setPlaceholderText("Required*")
-
-        room_layout.addStretch()
-        room_layout.addWidget(room_label)
-        room_layout.addWidget(self.room_input)
-        room_layout.addStretch()
+        input_layout.addWidget(self.current_spinbox, 3, 1)
 
         # duration container
-        duration_container = QtWidgets.QWidget()
 
-        duration_container.setMaximumHeight(int(0.1 * input_container.height()))
+        room_name_label = QtWidgets.QLabel("Room Name: ")
+        room_name_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+        """
+        )
+        input_layout.addWidget(room_name_label, 4, 0)
 
-        duration_layout = QtWidgets.QHBoxLayout(duration_container)
+        self.room_input = QtWidgets.QLineEdit()
+        self.room_input.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+            height: 33px;
+            border: 2px solid #00AE90;
+            border-radius: 4%;
+            padding: 3px 10px;
+        """
+        )
+        input_layout.addWidget(self.room_input, 4, 1)
 
+        # duration container
         duration_label = QtWidgets.QLabel("Duration: ")
+        duration_label.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+        """
+        )
+        input_layout.addWidget(duration_label, 5, 0)
 
         self.duration_input = QtWidgets.QLineEdit()
-
-        self.duration_input.setPlaceholderText("0.00")
-
-        validator = QtGui.QDoubleValidator(decimals=2)
-        validator_greater_equal0 = PositiveNumberValidator()
-
-        self.duration_input.setValidator(validator)
-        self.duration_input.setValidator(validator_greater_equal0)
-
-        duration_layout.addStretch()
-        duration_layout.addWidget(duration_label)
-        duration_layout.addWidget(self.duration_input)
-        duration_layout.addStretch()
-
-        input_layout.addWidget(name_container)
-        input_layout.addWidget(power_container)
-        input_layout.addWidget(voltage_container)
-        input_layout.addWidget(current_container)
-        input_layout.addWidget(room_container)
-        input_layout.addWidget(duration_container)
+        self.duration_input.setStyleSheet(
+            """
+            color: #FEFAE0;
+            font-size: 19px;
+            height: 33px;
+            border: 2px solid #00AE90;
+            border-radius: 4%;
+            padding: 3px 10px;
+        """
+        )
+        input_layout.addWidget(self.duration_input, 5, 1)
+        input_container.addStretch()
 
         # btn container
         btn_container = QtWidgets.QWidget()
@@ -192,17 +234,45 @@ class DataInputV2Page(PageWindow):
             "Next", lambda: self.handle_next_button_clicked(), self
         )
         next_btn.setMinimumSize(90, 90)
-        # next_btn.clicked.connect(self.handle_next_button_clicked)
+        next_btn.setStyleSheet(
+            """
+            UtilityButton {
+                color: #00AE90;
+                border: 2px solid #00AE90;
+                border-radius: 25%;
+                font-size: 18px;
+            }
+            UtilityButton:hover {
+                background-color: #00AE90;
+                color: #0B2447;
+            }
+        """
+        )
 
         # finish btn
-        finish_btn = UtilityButton("Finish", None, self)
+        finish_btn = UtilityButton("Finish", self.back_to_estimator, self)
         finish_btn.setMinimumSize(90, 90)
+        finish_btn.setStyleSheet(
+            """
+            UtilityButton {
+                background-color: #00AE90;
+                color: #0B2447;
+                border: 2px solid #00AE90;
+                border-radius: 25%;
+                font-size: 18px;
+            }
+            UtilityButton:hover {
+                background-color: #0B2447;
+                color: #00AE90;
+            }
+        """
+        )
 
-        btn_layout.addStretch()
+        btn_layout.addStretch(3)
         btn_layout.addWidget(next_btn)
-        btn_layout.addStretch()
+        btn_layout.addStretch(1)
         btn_layout.addWidget(finish_btn)
-        btn_layout.addStretch()
+        btn_layout.addStretch(3)
 
         # back btn container
         back_btn_container = QtWidgets.QWidget()
@@ -214,7 +284,7 @@ class DataInputV2Page(PageWindow):
         back_btn_layout.addWidget(self.back_btn, alignment=QtCore.Qt.AlignBottom)
 
         main_layout.addWidget(title_container)
-        main_layout.addWidget(input_container)
+        main_layout.addLayout(input_container)
         main_layout.addWidget(btn_container)
         main_layout.addWidget(back_btn_container)
 
@@ -234,7 +304,9 @@ class DataInputV2Page(PageWindow):
                 duration = float(0)
             else:
                 duration = float(self.duration_input.text())
+            self.id_perangkat_listrik = len(self.list_of_data) + 1
             export_data = DataInput2(
+                self.id_perangkat_listrik,
                 self.name_input.text(),
                 self.power_spinbox.value(),
                 self.voltage_spinbox.value(),
@@ -243,6 +315,7 @@ class DataInputV2Page(PageWindow):
                 duration,
             )
             self.list_of_data.append(export_data.create_p_listrik())
+            self.list_updated.emit(self.list_of_data)
             self.name_input.clear()
             self.power_spinbox.clear()
             self.voltage_spinbox.clear()
@@ -251,7 +324,7 @@ class DataInputV2Page(PageWindow):
             self.duration_input.clear()
         except Exception as e:
             print(e)
-        print(self.list_of_data)
+        print("Total length: " + str(len(self.list_of_data)))
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):

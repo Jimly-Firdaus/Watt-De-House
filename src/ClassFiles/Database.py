@@ -16,8 +16,10 @@ class Database:
     def insert_data(self, table_name, data):
         columns_str = ", ".join(data.keys())
         values_str = ", ".join(["?" for _ in data.values()])
+        values = tuple(data.values())
+        print(f"Inserting values: {values}")
         self.c.execute(
-            f"INSERT INTO {table_name} ({columns_str}) VALUES ({values_str})",
+            f"INSERT OR REPLACE INTO {table_name} ({columns_str}) VALUES ({values_str})",
             tuple(data.values()),
         )
         self.conn.commit()
@@ -43,10 +45,20 @@ class Database:
             ", ".join(columns) if isinstance(columns, (list, tuple)) else columns
         )
         if condition:
-            condition_str = " AND ".join([f"{key} = ?" for key in condition.keys()])
+            condition_strs = []
+            condition_values = []
+            for key, value in condition.items():
+                if isinstance(value, str) and value.startswith("SELECT"):
+                    # Handle subqueries
+                    condition_strs.append(f"{key} IN ({value})")
+                else:
+                    # Handle regular values
+                    condition_strs.append(f"{key} = ?")
+                    condition_values.append(value)
+            condition_str = " AND ".join(condition_strs)
             self.c.execute(
                 f"SELECT {columns_str} FROM {table_name} WHERE {condition_str}",
-                tuple(condition.values()),
+                tuple(condition_values),
             )
         else:
             self.c.execute(f"SELECT {columns_str} FROM {table_name}")

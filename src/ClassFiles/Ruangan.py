@@ -43,6 +43,9 @@ class Ruangan:
         if self.avail_circuit_breaker:
             self.circuit_breaker_threshold = o
 
+    def set_list_perangkat_listrik(self, o):
+        self.list_perangkat_listrik_ruangan = o
+
     def change_circuit_breaker_status(self, status):
         self.avail_circuit_breaker = status
 

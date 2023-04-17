@@ -1,17 +1,23 @@
+import sys
 from components.FeatureButton import FeatureButton
 from components.UtilityButton import UtilityButton
 from util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtGui
+from composables.Utility import Util
 
 
 class MainFrame(PageWindow):
-    def __init__(self):
+    def __init__(self, list_ruangan, db):
         super().__init__()
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
         self.setStyleSheet("background-color: #0B2447;")
         self.setWindowTitle("Watt de House")
+        self.list_ruangan = list_ruangan
+        self.db = db
+        self.init_ui()
 
+    def init_ui(self):
         widget = QtWidgets.QWidget()
         self.setCentralWidget(widget)
 
@@ -21,7 +27,7 @@ class MainFrame(PageWindow):
         # Exit button section
         h1_layout = QtWidgets.QHBoxLayout()
         h1_layout.addStretch()
-        self.exitButton = UtilityButton("Exit", None, self)
+        self.exitButton = UtilityButton("Exit", lambda: self.move_to_page("exit"), self)
         self.exitButton.setMinimumSize(90, 90)
         h1_layout.addWidget(self.exitButton)
         v_layout.addLayout(h1_layout)
@@ -69,7 +75,7 @@ class MainFrame(PageWindow):
         # Help button section
         h3_layout = QtWidgets.QHBoxLayout()
         h3_layout.addStretch()
-        self.helpButton = UtilityButton("Help", None, self)
+        self.helpButton = UtilityButton("Help", lambda: self.move_to_page("help"), self)
         self.helpButton.setMinimumSize(90, 90)
         h3_layout.addWidget(self.helpButton)
         v_layout.addLayout(h3_layout)
@@ -80,3 +86,14 @@ class MainFrame(PageWindow):
             self.goto("simulator")
         elif page_name == "estimator":
             self.goto("estimator")
+        elif page_name == "help":
+            self.goto("help")
+        elif page_name == "exit":
+            Util.store_to_db(self.db, self.list_ruangan)
+            sys.exit()
+
+    def update_user_data(self, list_ruangan, list_perangkat_listrik):
+        print("Connected to main frame")
+        self.list_ruangan = list_ruangan
+        self.list_perangkat_listrik = list_perangkat_listrik
+        self.init_ui()
