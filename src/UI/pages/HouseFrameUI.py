@@ -79,6 +79,7 @@ class HouseFrame(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.textInput.setPlaceholderText("Required")
         self.textInput.setFixedWidth(300)
         input_grid.addWidget(self.textInput, 0, 1)
 
@@ -104,6 +105,7 @@ class HouseFrame(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.thresholdInput.setPlaceholderText("Required")
         self.thresholdInput.setFixedWidth(300)
         input_grid.addWidget(self.thresholdInput, 1, 1)
 
