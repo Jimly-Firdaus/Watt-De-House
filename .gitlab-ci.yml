@@ -7,7 +7,7 @@ variables:
   PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/src"
 
 before_script:
-  - apt-get update && apt-get install -y python3-pip
+  - apt-get update && apt-get install -y python3-pip libgl1-mesa-glx
   - echo "Python 3 and pip installed"
   - pip3 install PyQt5
   - echo "PyQt5 installed"
