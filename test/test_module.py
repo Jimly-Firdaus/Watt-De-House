@@ -8,7 +8,7 @@ from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.Simulator import Simulator
 from src.ClassFiles.Ruangan import Ruangan
 from src.ClassFiles.DataInput import DataInput1, DataInput2
-import main
+from src import main
 
 
 class ModuleTesting(unittest.TestCase):
