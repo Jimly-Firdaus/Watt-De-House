@@ -370,6 +370,7 @@ class HouseFrame(PageWindow):
                             for tickbox in tickboxes:
                                 if tickbox.isChecked():
                                     tickbox.setChecked(False)
+                self.goto("simulator")
 
             else:
                 msg = QtWidgets.QMessageBox()
@@ -378,8 +379,7 @@ class HouseFrame(PageWindow):
                 msg.setWindowTitle("Error Message")
                 msg.exec_()
                 self.list_ruangan_updated.emit(self.list_ruangan)
-
-            self.goto("simulator")
+                self.goto("houseframe")
 
         # finish_button.clicked.connect(on_finish_button_clicked)
 
