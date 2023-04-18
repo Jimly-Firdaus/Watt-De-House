@@ -7,8 +7,7 @@ variables:
   PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/src"
 
 before_script:
-  - apk add --update python3 py3-pip gcc musl-dev python3-dev
-  - pip3 install sip==4.19.24
+  - apk add --update python3 py3-pip gcc musl-dev python3-dev py3-pyqt5
   - echo "Python 3 and build tools installed"
   - pip3 install PyQt5
   - echo "PyQt5 installed"
