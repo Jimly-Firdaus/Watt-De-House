@@ -24,6 +24,7 @@ class DataInputV2Page(PageWindow):
         self.setWindowTitle("Data Input V2")
         self.list_of_data = list_of_data
         self.id_perangkat_listrik = len(self.list_of_data)
+        self.temp_data = []
 
         # create main container
         main_container = QtWidgets.QWidget()
@@ -78,6 +79,7 @@ class DataInputV2Page(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.name_input.setPlaceholderText("Required")
         input_layout.addWidget(self.name_input, 0, 1)
 
         # power container
@@ -90,12 +92,12 @@ class DataInputV2Page(PageWindow):
         )
         input_layout.addWidget(power_label, 1, 0)
 
-        self.power_spinbox = QtWidgets.QSpinBox()
-        self.power_spinbox.setMinimum(0)
-        self.power_spinbox.setMaximum(200)
+        self.power_spinbox = QtWidgets.QDoubleSpinBox()
+        self.power_spinbox.setRange(0, 100)
+        self.power_spinbox.setValue(0)
         self.power_spinbox.setStyleSheet(
             """
-            QSpinBox {
+            QDoubleSpinBox {
                 color: #FEFAE0;
                 font-size: 19px;
                 height: 33px;
@@ -120,16 +122,16 @@ class DataInputV2Page(PageWindow):
         )
         input_layout.addWidget(voltage_label, 2, 0)
 
-        self.voltage_spinbox = QtWidgets.QSpinBox()
-        self.voltage_spinbox.setMinimum(120)
-        self.voltage_spinbox.setMaximum(300)
+        self.voltage_spinbox = QtWidgets.QDoubleSpinBox()
+        self.voltage_spinbox.setRange(120, 300)
+        self.voltage_spinbox.setValue(120)
         # self.voltage_spinbox.setValue(50)
         # self.voltage_spinbox.setSizePolicy(
         #     QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         # )
         self.voltage_spinbox.setStyleSheet(
             """
-            QSpinBox {
+            QDoubleSpinBox {
                 color: #FEFAE0;
                 font-size: 19px;
                 height: 33px;
@@ -152,16 +154,16 @@ class DataInputV2Page(PageWindow):
         )
         input_layout.addWidget(current_label, 3, 0)
 
-        self.current_spinbox = QtWidgets.QSpinBox()
-        self.current_spinbox.setMinimum(0)
-        self.current_spinbox.setMaximum(100)
+        self.current_spinbox = QtWidgets.QDoubleSpinBox()
+        self.current_spinbox.setRange(0, 100)
+        self.current_spinbox.setValue(0)
         # self.current_spinbox.setValue(50)
         # self.current_spinbox.setSizePolicy(
         #     QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
         # )
         self.current_spinbox.setStyleSheet(
             """
-            QSpinBox {
+            QDoubleSpinBox {
                 color: #FEFAE0;
                 font-size: 19px;
                 height: 33px;
@@ -196,6 +198,7 @@ class DataInputV2Page(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.room_input.setPlaceholderText("Required")
         input_layout.addWidget(self.room_input, 4, 1)
 
         # duration container
@@ -219,6 +222,7 @@ class DataInputV2Page(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.duration_input.setPlaceholderText("0.00")
         input_layout.addWidget(self.duration_input, 5, 1)
         input_container.addStretch()
 
@@ -250,7 +254,7 @@ class DataInputV2Page(PageWindow):
         )
 
         # finish btn
-        finish_btn = UtilityButton("Finish", self.back_to_estimator, self)
+        finish_btn = UtilityButton("Finish", self.handle_finish_button_clicked, self)
         finish_btn.setMinimumSize(90, 90)
         finish_btn.setStyleSheet(
             """
@@ -280,6 +284,12 @@ class DataInputV2Page(PageWindow):
         back_btn_layout = QtWidgets.QHBoxLayout(back_btn_container)
         self.back_btn = UtilityButton("Back", lambda: self.back_to_estimator(), self)
         self.back_btn.setMinimumSize(90, 90)
+        self.reset_data_btn = UtilityButton(
+            "Reset", self.handle_reset_button_clicked, self
+        )
+        self.reset_data_btn.setMinimumSize(90, 90)
+
+        back_btn_layout.addWidget(self.reset_data_btn, alignment=QtCore.Qt.AlignBottom)
         back_btn_layout.addStretch()
         back_btn_layout.addWidget(self.back_btn, alignment=QtCore.Qt.AlignBottom)
 
@@ -291,7 +301,16 @@ class DataInputV2Page(PageWindow):
     def back_to_estimator(self):
         self.goto("estimator")
 
-    def handle_next_button_clicked(self):
+    def handle_finish_button_clicked(self):
+        self.add_data()
+        for data in self.temp_data:
+            self.list_of_data.append(data)
+        self.list_updated.emit(self.list_of_data)
+        self.back_to_estimator()
+        self.temp_data = []
+        print("Total length: " + str(len(self.list_of_data)))
+
+    def add_data(self):
         print(self.name_input.text())
         print(self.power_spinbox.value())
         print(self.voltage_spinbox.value())
@@ -314,17 +333,32 @@ class DataInputV2Page(PageWindow):
                 self.room_input.text(),
                 duration,
             )
-            self.list_of_data.append(export_data.create_p_listrik())
-            self.list_updated.emit(self.list_of_data)
-            self.name_input.clear()
-            self.power_spinbox.clear()
-            self.voltage_spinbox.clear()
-            self.current_spinbox.clear()
-            self.room_input.clear()
-            self.duration_input.clear()
+            self.temp_data.append(export_data.create_p_listrik())
+            self.reset_input_current()
         except Exception as e:
             print(e)
-        print("Total length: " + str(len(self.list_of_data)))
+
+    def reset_input_current(self):
+        self.name_input.clear()
+        self.name_input.setPlaceholderText("Required")
+        self.power_spinbox.clear()
+        self.power_spinbox.setValue(0)
+        self.voltage_spinbox.clear()
+        self.voltage_spinbox.setValue(120)
+        self.current_spinbox.clear()
+        self.current_spinbox.setValue(0)
+        self.room_input.clear()
+        self.room_input.setPlaceholderText("Required")
+        self.duration_input.clear()
+        self.duration_input.setPlaceholderText("0.00")
+
+    def handle_next_button_clicked(self):
+        self.add_data()
+        print(self.temp_data)
+
+    def handle_reset_button_clicked(self):
+        self.reset_input_current()
+        self.temp_data = []
 
 
 class PositiveNumberValidator(QtGui.QDoubleValidator):

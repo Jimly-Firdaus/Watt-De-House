@@ -71,14 +71,16 @@ class Window(QtWidgets.QMainWindow):
         # Pages here
         self.m_pages = {}
 
+        list_perangkat_listrik2 = []
+
         # Register page here
-        self.register(MainFrame(list_ruangan, self.db), "main")
+        self.register(MainFrame(list_ruangan, list_perangkat_listrik, self.db), "main")
         self.register(HelpPage(), "help")
         self.register(HouseFrame(list_perangkat_listrik, list_ruangan), "houseframe")
         self.register(SimulatorPage(list_ruangan), "simulator")
-        self.register(EstimatorPage(list_perangkat_listrik), "estimator")
+        self.register(EstimatorPage(list_perangkat_listrik2), "estimator")
         self.register(DataInputV1Page(list_perangkat_listrik), "datainputv1")
-        self.register(DataInputV2Page(list_perangkat_listrik), "datainputv2")
+        self.register(DataInputV2Page(list_perangkat_listrik2), "datainputv2")
 
         data_input_v1_page = self.m_pages["datainputv1"]
         data_input_v2_page = self.m_pages["datainputv2"]
