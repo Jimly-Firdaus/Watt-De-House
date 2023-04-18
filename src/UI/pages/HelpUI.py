@@ -31,7 +31,7 @@ class HelpPage(PageWindow):
             "font-size: 25px; color: #FEFAE0; background-color: #0B2447; height: 200px; width: 500px;"
         )
 
-        text = "1. Klik simulator untuk menjalakan fitur simulator \n2. Klik Estimator untuk menjalakan fitur estimator\n"
+        text = "1. Klik simulator untuk menjalakan fitur simulator \n2. Klik Estimator untuk menjalakan fitur estimator\n3. Jika ingin menambahkan data, masuk kedalam fitur simulator atau estimator kemudian klik tambahkan perangkat listrik\n4. Setelah selesai menambahkan perangkat listrik, fitur siap untuk digunakan "
         self.text.setText(text)
 
         self.BackButton = UtilityButton("Back", lambda: self.back_to_main(), self)
