@@ -375,13 +375,14 @@ class HouseFrame(PageWindow):
                 self.goto("simulator")
 
             else:
-                msg = QtWidgets.QMessageBox()
-                msg.setText("Input Invalid!")
-                msg.setInformativeText("Please try to input the correct value!")
-                msg.setWindowTitle("Error Message")
-                msg.exec_()
-                self.list_ruangan_updated.emit(self.list_ruangan)
-                self.goto("houseframe")
+                self.goto("simulator")
+                # msg = QtWidgets.QMessageBox()
+                # msg.setText("Input Invalid!")
+                # msg.setInformativeText("Please try to input the correct value!")
+                # msg.setWindowTitle("Error Message")
+                # msg.exec_()
+                # self.list_ruangan_updated.emit(self.list_ruangan)
+                # self.goto("houseframe")
 
         # finish_button.clicked.connect(on_finish_button_clicked)
 
