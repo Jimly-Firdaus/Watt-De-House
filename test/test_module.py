@@ -1,6 +1,6 @@
-import sys
+# import sys
 
-sys.path.append("..")
+# sys.path.insert(0, "../")
 import unittest
 from src.ClassFiles.Database import Database
 from src.ClassFiles.PerangkatListrik import PerangkatListrik

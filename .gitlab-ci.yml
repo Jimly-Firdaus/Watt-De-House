@@ -3,6 +3,9 @@ image: alpine:latest
 stages:
   - test
 
+variables:
+  PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/src"
+  
 before_script:
   - apk add --update python3 py3-pip
   - echo "Python 3 installed"
