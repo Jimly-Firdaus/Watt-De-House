@@ -398,7 +398,6 @@ class HouseFrame(PageWindow):
             self.goto("datainputv2")
 
         # back_button.clicked.connect(on_back_button_clicked)
-
         v_layout.addStretch(1)
 
     def update_list_perangkat_listrik(self, new_list):
