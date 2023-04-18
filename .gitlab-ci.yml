@@ -4,8 +4,10 @@ stages:
   - test
 
 before_script:
-  - apk add --update python3
+  - apk add --update python3 py3-pip
   - echo "Python 3 installed"
+  - pip3 install PyQt5
+  - echo "PyQt5 installed"
 
 run-tests:
   tags:
