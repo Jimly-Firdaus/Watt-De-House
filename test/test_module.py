@@ -1,6 +1,6 @@
-import sys
+# import sys
 
-sys.path.append("..")
+# sys.path.insert(0, "../")
 import unittest
 from src.ClassFiles.Database import Database
 from src.ClassFiles.PerangkatListrik import PerangkatListrik
@@ -8,6 +8,7 @@ from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.Simulator import Simulator
 from src.ClassFiles.Ruangan import Ruangan
 from src.ClassFiles.DataInput import DataInput1, DataInput2
+from src import main
 
 
 class ModuleTesting(unittest.TestCase):
@@ -59,9 +60,9 @@ class ModuleTesting(unittest.TestCase):
 
     def test_data_input_1(self):
         # Test valid input
-        data_input = DataInput1("Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
+        data_input = DataInput1(0, "Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
         self.assertEqual(
-            data_input.get_user_input(), ("Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
+            data_input.get_user_input(), (0, "Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
         )
         perangkat_listrik = data_input.create_p_listrik()
         perangkat_listrik_expected = PerangkatListrik(
@@ -73,14 +74,14 @@ class ModuleTesting(unittest.TestCase):
         )
         # Test invalid input
         with self.assertRaises(Exception):
-            data_input = DataInput1("", 100.0, 5.0, 220.0, "Ruangan-1")
+            data_input = DataInput1(1, "", 100.0, 5.0, 220.0, "Ruangan-1")
 
     def test_data_input_2(self):
         # Test valid input
-        data_input = DataInput2("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10)
+        data_input = DataInput2(0, "Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10)
         self.assertEqual(
             data_input.get_user_input(),
-            ("Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10),
+            (0, "Device-2", 100.0, 5.0, 220.0, "Ruangan-2", 10),
         )
         perangkat_listrik = data_input.create_p_listrik()
         perangkat_listrik_expected = PerangkatListrik(
@@ -152,36 +153,11 @@ class ModuleTesting(unittest.TestCase):
             ruangan.get_all_attributes(),
         )
 
-    # def test_simulator(self):
-    #     perangkat_listrik1 = PerangkatListrik(1, False, "Device-1", 100.0, 5.0, 220.0, 10)
-    #     perangkat_listrik2 = PerangkatListrik(2, False, "Device-2", 200.0, 5.0, 220.0, 10)
-    #     perangkat_listrik3 = PerangkatListrik(3, False, "Device-3", 300.0, 5.0, 220.0, 10)
-    #     perangkat_listrik4 = PerangkatListrik(4, False, "Device-4", 400.0, 5.0, 220.0, 10)
-    #     perangkat_listrik5 = PerangkatListrik(5, False, "Device-5", 500.0, 5.0, 220.0, 10)
-    #     perangkat_listrik6 = PerangkatListrik(6, True, "Device-6", 300.0, 5.0, 220.0, 10)
-    #     perangkat_listrik7 = PerangkatListrik(7, True, "Device-7", 100.0, 5.0, 220.0, 10)
-    #     perangkat_listrik8 = PerangkatListrik(8, True, "Device-8", 100.0, 5.0, 220.0, 10)
-    #     perangkat_listrik9 = PerangkatListrik(9, True, "Device-9", 50.0, 5.0, 220.0, 10)
-    #     perangkat_listrik10 = PerangkatListrik(10, False, "Device-10", 250.0, 5.0, 220.0, 10)
-    #     list_perangkat_listrik1 = [
-    #         perangkat_listrik1,
-    #         perangkat_listrik2,
-    #         perangkat_listrik3,
-    #         perangkat_listrik4,
-    #     ]
-    #     list_perangkat_listrik2 = [
-    #         perangkat_listrik5,
-    #         perangkat_listrik6,
-    #         perangkat_listrik7,
-    #         perangkat_listrik8,
-    #     ]
-    #     list_perangkat_listrik3 = [perangkat_listrik9, perangkat_listrik10]
-    #     ruangan1 = Ruangan(1, "Ruangan-1", list_perangkat_listrik1, True, 900)
-    #     ruangan2 = Ruangan(2, "Ruangan-2", list_perangkat_listrik2, True, 1000)
-    #     ruangan3 = Ruangan(3, "Ruangan-3", list_perangkat_listrik3, False, 1000)
-    #     list_ruangan = [ruangan1, ruangan2, ruangan3]
-    #     simulator = Simulator(list_ruangan)
-    #     self.assertEqual(simulator.get_data_simulator(), (list_ruangan, False, False))
+    def test_run_gui(self):
+        try:
+            main.run_app()
+        except Exception as e:
+            self.fail(f"Running the app raised an exception: {e}")
 
 
 if __name__ == "__main__":

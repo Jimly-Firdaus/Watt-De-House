@@ -1,4 +1,4 @@
-from components.BaseButton import BaseButton
+from UI.components.BaseButton import BaseButton
 
 
 class UtilityButton(BaseButton):

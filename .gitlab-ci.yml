@@ -1,17 +1,23 @@
-image: alpine:latest
+image: python:3.9-slim-buster
 
 stages:
   - test
 
+variables:
+  PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/src"
+
 before_script:
-  - apk add --update python3
-  - echo "Python 3 installed"
+  - apt-get update && apt-get install -y python3-pip libgl1-mesa-glx libxcb1 libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libfontconfig1 libxcb-util0
+  - echo "Python 3, pip, and dependencies installed"
+  - pip3 install PyQt5
+  - echo "PyQt5 installed"
 
 run-tests:
   tags:
     - docker-runner
   stage: test
   script:
+    - export QT_DEBUG_PLUGINS=1
     - python3 -m unittest discover test
   only:
     - merge_requests

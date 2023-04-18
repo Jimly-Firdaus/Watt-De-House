@@ -1,3 +1,4 @@
-# Just a dummy main program to stimulate CI test
-def pangkat2(number):
-    return number ** 2
+from UI.app import run_app
+
+if __name__ == "__main__":
+    run_app()

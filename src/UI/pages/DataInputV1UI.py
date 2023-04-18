@@ -3,10 +3,10 @@ import sys
 sys.path.insert(0, "../../")
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtWidgets
-from components.UtilityButton import UtilityButton
-from util.PageWindow import PageWindow
+from UI.components.UtilityButton import UtilityButton
+from UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore
-from src.ClassFiles.DataInput import DataInput1
+from ClassFiles.DataInput import DataInput1
 
 
 class DataInputV1Page(PageWindow):
@@ -16,6 +16,7 @@ class DataInputV1Page(PageWindow):
         self, data_input_v1_list: list = [],
     ):
         super().__init__()
+        self.temp_data = []
 
         # List of tuple (name, power, voltage, current, room_name)
         self.v1_list = data_input_v1_list
@@ -83,6 +84,7 @@ class DataInputV1Page(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.name_input.setPlaceholderText("Required")
         input_layout.addWidget(self.name_input, 0, 1)
 
         # power container
@@ -201,6 +203,7 @@ class DataInputV1Page(PageWindow):
             padding: 3px 10px;
         """
         )
+        self.room_name_input.setPlaceholderText("Required")
         input_layout.addWidget(self.room_name_input, 4, 1)
 
         # btn container
@@ -261,6 +264,11 @@ class DataInputV1Page(PageWindow):
         back_btn_layout = QtWidgets.QHBoxLayout(back_btn_container)
         self.back_btn = UtilityButton("Back", lambda: self.back_to_simulator(), self)
         self.back_btn.setMinimumSize(90, 90)
+        self.reset_btn = UtilityButton(
+            "Reset", lambda: self.handle_reset_btn_clicked(), self
+        )
+        self.reset_btn.setMinimumSize(90, 90)
+        back_btn_layout.addWidget(self.reset_btn, alignment=QtCore.Qt.AlignBottom)
         back_btn_layout.addStretch()
         back_btn_layout.addWidget(self.back_btn, alignment=QtCore.Qt.AlignBottom)
 
@@ -284,24 +292,36 @@ class DataInputV1Page(PageWindow):
             device_voltage,
             device_room_name,
         )
-        self.v1_list.append(device.create_p_listrik())
-        self.list_updated.emit(self.v1_list)
-        print("Signal emitted with list:", self.v1_list)
+        self.temp_data.append(device.create_p_listrik())
 
     def back_to_simulator(self):
         self.goto("simulator")
 
     def reset_values(self):
-        self.name_input.setText("")
+        self.name_input.clear()
+        self.name_input.setPlaceholderText("Required")
+        self.power_spinbox.clear()
         self.power_spinbox.setValue(0)
-        self.voltage_spinbox.setValue(0)
+        self.voltage_spinbox.clear()
+        self.voltage_spinbox.setValue(120)
+        self.current_spinbox.clear()
         self.current_spinbox.setValue(0)
-        self.room_name_input.setText("")
+        self.room_name_input.clear()
+        self.room_name_input.setPlaceholderText("Required")
 
     def next_device(self):
         self.add_to_list()
         self.reset_values()
 
+    def handle_reset_btn_clicked(self):
+        self.reset_values()
+        self.temp_data = []
+        print("Handled reset")
+
     def finish_input(self):
         self.add_to_list()
+        for data in self.temp_data:
+            self.v1_list.append(data)
+            self.list_updated.emit(self.v1_list)
+            print("Signal emitted with list:", self.v1_list)
         self.goto("houseframe")

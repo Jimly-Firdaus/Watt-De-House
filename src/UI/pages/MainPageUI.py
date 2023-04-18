@@ -1,13 +1,17 @@
 import sys
-from components.FeatureButton import FeatureButton
-from components.UtilityButton import UtilityButton
-from util.PageWindow import PageWindow
+
+sys.path.insert(0, "../../")
+from UI.components.FeatureButton import FeatureButton
+from UI.components.UtilityButton import UtilityButton
+from UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtGui
-from composables.Utility import Util
+from UI.composables.Utility import Util
+import os
+from src.ClassFiles.Database import Database
 
 
 class MainFrame(PageWindow):
-    def __init__(self, list_ruangan, db):
+    def __init__(self, list_ruangan, list_perangkat_listrik, db):
         super().__init__()
         self.setBaseSize(1024, 720)
         self.setSizeIncrement(2, 2)
@@ -15,6 +19,7 @@ class MainFrame(PageWindow):
         self.setWindowTitle("Watt de House")
         self.list_ruangan = list_ruangan
         self.db = db
+        self.list_perangkat_listrik = list_perangkat_listrik
         self.init_ui()
 
     def init_ui(self):
@@ -74,9 +79,15 @@ class MainFrame(PageWindow):
 
         # Help button section
         h3_layout = QtWidgets.QHBoxLayout()
-        h3_layout.addStretch()
         self.helpButton = UtilityButton("Help", lambda: self.move_to_page("help"), self)
         self.helpButton.setMinimumSize(90, 90)
+
+        self.reset_data_btn = UtilityButton(
+            "Reset Database", self.handle_reset_database, self
+        )
+        self.reset_data_btn.setMinimumSize(90, 90)
+        h3_layout.addWidget(self.reset_data_btn)
+        h3_layout.addStretch()
         h3_layout.addWidget(self.helpButton)
         v_layout.addLayout(h3_layout)
 
@@ -97,3 +108,45 @@ class MainFrame(PageWindow):
         self.list_ruangan = list_ruangan
         self.list_perangkat_listrik = list_perangkat_listrik
         self.init_ui()
+
+    def handle_reset_database(self):
+        self.db.close()
+        if os.path.exists("watt_de_house.db"):
+            os.remove("watt_de_house.db")
+            print("Successfully Removed")
+            self.db = Database("watt_de_house.db")
+            self.modified_state = False
+            # Create table incase doesnot exist
+            self.db.create_table(
+                "perangkat_listrik",
+                {
+                    "id": "INTEGER PRIMARY KEY",
+                    "status": "INTEGER",
+                    "nama": "TEXT",
+                    "daya": "REAL",
+                    "arus": "REAL",
+                    "tegangan": "REAL",
+                    "nama_ruangan": "TEXT",
+                    "durasi": "INTEGER",
+                },
+            )
+            self.db.create_table(
+                "ruangan",
+                {
+                    "id": "INTEGER PRIMARY KEY",
+                    "nama_ruangan": "TEXT",
+                    "circuit_breaker": "INTEGER",
+                    "circuit_breaker_name": "TEXT",
+                    "threshold": "REAL",
+                },
+            )
+            self.db.create_table(
+                "ruangan_perangkat_listrik",
+                {
+                    "id_ruangan": "INTEGER",
+                    "id_perangkat_listrik": "INTEGER",
+                },
+            )
+            self.list_ruangan, self.list_perangkat_listrik = Util.get_all_data(self.db)
+        else:
+            print("The file does not exist")

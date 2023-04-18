@@ -5,18 +5,15 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget
-from components.BaseCard import BaseCard
-from pages.MainPageUI import MainFrame
-from pages.SimulatorUI import SimulatorPage
-from pages.EstimatorUI import EstimatorPage
-from pages.DataInputV1UI import DataInputV1Page
-from pages.DataInputV2UI import DataInputV2Page
-from pages.HelpUI import HelpPage
-from pages.HouseFrameUI import HouseFrame
-from src.ClassFiles.PerangkatListrik import PerangkatListrik
-from src.ClassFiles.Ruangan import Ruangan
-from src.ClassFiles.Database import Database
-from composables.Utility import Util
+from UI.pages.MainPageUI import MainFrame
+from UI.pages.SimulatorUI import SimulatorPage
+from UI.pages.EstimatorUI import EstimatorPage
+from UI.pages.DataInputV1UI import DataInputV1Page
+from UI.pages.DataInputV2UI import DataInputV2Page
+from UI.pages.HelpUI import HelpPage
+from UI.pages.HouseFrameUI import HouseFrame
+from ClassFiles.Database import Database
+from UI.composables.Utility import Util
 
 
 class Window(QtWidgets.QMainWindow):
@@ -71,14 +68,16 @@ class Window(QtWidgets.QMainWindow):
         # Pages here
         self.m_pages = {}
 
+        list_perangkat_listrik2 = []
+
         # Register page here
-        self.register(MainFrame(list_ruangan, self.db), "main")
+        self.register(MainFrame(list_ruangan, list_perangkat_listrik, self.db), "main")
         self.register(HelpPage(), "help")
         self.register(HouseFrame(list_perangkat_listrik, list_ruangan), "houseframe")
         self.register(SimulatorPage(list_ruangan), "simulator")
-        self.register(EstimatorPage(list_perangkat_listrik), "estimator")
+        self.register(EstimatorPage(list_perangkat_listrik2), "estimator")
         self.register(DataInputV1Page(list_perangkat_listrik), "datainputv1")
-        self.register(DataInputV2Page(list_perangkat_listrik), "datainputv2")
+        self.register(DataInputV2Page(list_perangkat_listrik2), "datainputv2")
 
         data_input_v1_page = self.m_pages["datainputv1"]
         data_input_v2_page = self.m_pages["datainputv2"]
@@ -109,7 +108,7 @@ class Window(QtWidgets.QMainWindow):
             self.setWindowTitle(widget.windowTitle())
 
 
-if __name__ == "__main__":
+def run_app():
     import sys
 
     app = QApplication(sys.argv)
