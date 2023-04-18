@@ -5,10 +5,10 @@ stages:
 
 variables:
   PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/src"
-  
+
 before_script:
-  - apk add --update python3 py3-pip
-  - echo "Python 3 installed"
+  - apk add --update python3 py3-pip gcc musl-dev python3-dev
+  - echo "Python 3 and build tools installed"
   - pip3 install PyQt5
   - echo "PyQt5 installed"
 
