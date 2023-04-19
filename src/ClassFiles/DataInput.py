@@ -33,7 +33,14 @@ class DataInput1:
 
     # Getters
     def get_user_input(self):
-        return (self.nama, self.daya, self.arus, self.tegangan, self.nama_ruangan)
+        return (
+            self.id,
+            self.nama,
+            self.daya,
+            self.arus,
+            self.tegangan,
+            self.nama_ruangan,
+        )
 
     def get_input_name(self):
         return self.nama
@@ -54,7 +61,7 @@ class DataInput1:
         data = self.get_user_input()
         # Need to fecth database item here to create new id
         return PerangkatListrik(
-            self.id, False, data[0], data[1], data[2], data[3], data[4]
+            self.id, False, data[1], data[2], data[3], data[4], data[5]
         )
 
 
@@ -74,6 +81,7 @@ class DataInput2(DataInput1):
 
     def get_user_input(self):
         return (
+            self.id,
             self.nama,
             self.daya,
             self.arus,
@@ -84,7 +92,6 @@ class DataInput2(DataInput1):
 
     def create_p_listrik(self):
         data = self.get_user_input()
-        # Need to fecth database item here to create new id
         return PerangkatListrik(
-            self.id, False, data[0], data[1], data[2], data[3], data[4], self.durasi
+            self.id, False, data[1], data[2], data[3], data[4], data[5], self.durasi
         )
