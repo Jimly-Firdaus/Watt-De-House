@@ -13,7 +13,8 @@ class DataInputV1Page(PageWindow):
     list_updated = pyqtSignal(list)
 
     def __init__(
-        self, data_input_v1_list: list = [],
+        self,
+        data_input_v1_list: list = [],
     ):
         super().__init__()
         self.temp_data = []
@@ -310,7 +311,10 @@ class DataInputV1Page(PageWindow):
         self.room_name_input.setPlaceholderText("Required")
 
     def next_device(self):
-        self.add_to_list()
+        try:
+            self.add_to_list()
+        except Exception as e:
+            print(e)
         self.reset_values()
 
     def handle_reset_btn_clicked(self):
@@ -319,9 +323,12 @@ class DataInputV1Page(PageWindow):
         print("Handled reset")
 
     def finish_input(self):
-        self.add_to_list()
-        for data in self.temp_data:
-            self.v1_list.append(data)
-            self.list_updated.emit(self.v1_list)
-            print("Signal emitted with list:", self.v1_list)
-        self.goto("houseframe")
+        try:
+            self.add_to_list()
+            for data in self.temp_data:
+                self.v1_list.append(data)
+                self.list_updated.emit(self.v1_list)
+                print("Signal emitted with list:", self.v1_list)
+            self.goto("houseframe")
+        except Exception as e:
+            self.goto("simulator")
