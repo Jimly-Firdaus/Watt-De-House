@@ -19,24 +19,26 @@ cd src
 python main.py
 ```
 
+<<<<<<< HEAD
 # Daftar Module
 1. Modul Data Input\
-<img src="../DataInput.png">
+![DataInput.png](images/DataInput.png)
     <p>Gambar 1. Tampilan Data Input</p>
 
 2. Modul Simulator\
-<img src= "../Simulator.png">
+![Simulator.png](images/Simulator.png)
     <p>Gambar 2. Tampilan Simulator</p>
 
 3. Modul Estimator\
-<img src = "../Estimator.png">
+![Estimator.png](images/Estimator.png)
     <p>Gambar 3. Tampilan Estimator</p>
 
 4. Modul Ruangan \
-<img src = "../Ruangan.png">
+![Ruangan.png](images/Ruangan.png)
     <p>Gambar 3. Tampilan Ruangan</p>
 
 5. Modul Perangkat Listrik
+=======
 # Database
 ## 1. perangkat_listrik
 This table is used to store the information regarding any electrical devices that is used in the program
@@ -66,6 +68,7 @@ Attribute | Constraint
 id_ruangan | Integer
 id_perangkat_listrik | Integer
 
+>>>>>>> d86992acc69eb0ab21ee1cf12057d62d76691f70
 
 # Runner Setup
 ## How to Activate Runner from Scratch
