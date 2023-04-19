@@ -4,13 +4,15 @@ sys.path.insert(0, "../../")
 from UI.components.FeatureButton import FeatureButton
 from UI.components.UtilityButton import UtilityButton
 from UI.util.PageWindow import PageWindow
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets, QtGui, QtCore
 from UI.composables.Utility import Util
 import os
 from src.ClassFiles.Database import Database
 
 
 class MainFrame(PageWindow):
+    list_ruangan_updated = QtCore.pyqtSignal(list)
+
     def __init__(self, list_ruangan, list_perangkat_listrik, db):
         super().__init__()
         self.setBaseSize(1024, 720)
@@ -148,5 +150,6 @@ class MainFrame(PageWindow):
                 },
             )
             self.list_ruangan, self.list_perangkat_listrik = Util.get_all_data(self.db)
+            self.list_ruangan_updated.emit(self.list_ruangan)
         else:
             print("The file does not exist")
