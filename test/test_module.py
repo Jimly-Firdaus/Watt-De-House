@@ -8,7 +8,7 @@ from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.Simulator import Simulator
 from src.ClassFiles.Ruangan import Ruangan
 from src.ClassFiles.DataInput import DataInput1, DataInput2
-from src import main
+from src.UI.app import run_app
 
 
 class ModuleTesting(unittest.TestCase):
@@ -157,7 +157,7 @@ class ModuleTesting(unittest.TestCase):
 
     def test_run_gui(self):
         try:
-            app = main.run_app()
+            app = run_app()
             app.quit()
         except Exception as e:
             self.fail(f"Running the app raised an exception: {e}")

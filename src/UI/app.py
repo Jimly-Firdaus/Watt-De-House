@@ -51,7 +51,10 @@ class Window(QtWidgets.QMainWindow):
         )
         self.db.create_table(
             "ruangan_perangkat_listrik",
-            {"id_ruangan": "INTEGER", "id_perangkat_listrik": "INTEGER",},
+            {
+                "id_ruangan": "INTEGER",
+                "id_perangkat_listrik": "INTEGER",
+            },
         )
 
         # Fetch all data from database
@@ -118,3 +121,4 @@ def run_app():
 
     window.show()
     sys.exit(app.exec_())
+    return app
