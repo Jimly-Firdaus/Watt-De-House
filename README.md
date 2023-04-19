@@ -66,6 +66,8 @@ Attribute | Constraint
 id_ruangan | Integer
 id_perangkat_listrik | Integer
 
+# Pembagian Tugas
+
 Nama (NIM) | Tugas
 ----- | -----
 Wilson Tansil (13521054) | Simulator
