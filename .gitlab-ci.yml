@@ -11,9 +11,9 @@ before_script:
   - wget http://ftp.us.debian.org/debian/pool/main/x/xcb-util/libxcb-util1_0.4.0-1+b1_amd64.deb
   - dpkg -i libxcb-util1_0.4.0-1+b1_amd64.deb
   - echo "Installed libxcb-util1"
-  - echo "Python 3, pip, and dependencies installed"
+  - pip3 uninstall -y PyQt5
   - pip3 install PyQt5
-  - echo "PyQt5 installed"
+  - echo "Python 3, pip, and dependencies installed"
 
 run-tests:
   tags:
