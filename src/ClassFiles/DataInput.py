@@ -61,7 +61,7 @@ class DataInput1:
         data = self.get_user_input()
         # Need to fecth database item here to create new id
         return PerangkatListrik(
-            self.id, False, data[0], data[1], data[2], data[3], data[4]
+            self.id, False, data[1], data[2], data[3], data[4], data[5]
         )
 
 
