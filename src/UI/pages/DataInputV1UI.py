@@ -326,7 +326,6 @@ class DataInputV1Page(PageWindow):
     def handle_reset_btn_clicked(self):
         self.reset_values()
         self.temp_data = []
-        print("Handled reset")
 
     def finish_input(self):
         try:
@@ -335,7 +334,6 @@ class DataInputV1Page(PageWindow):
             for data in self.temp_data:
                 self.v1_list.append(data)
                 self.list_updated.emit(self.v1_list)
-                print("Signal emitted with list:", self.v1_list)
             self.temp_data = []
             self.goto("houseframe")
         except Exception as e:

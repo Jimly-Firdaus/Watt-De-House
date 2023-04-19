@@ -17,7 +17,6 @@ class Database:
         columns_str = ", ".join(data.keys())
         values_str = ", ".join(["?" for _ in data.values()])
         values = tuple(data.values())
-        print(f"Inserting values: {values}")
         self.c.execute(
             f"INSERT OR REPLACE INTO {table_name} ({columns_str}) VALUES ({values_str})",
             tuple(data.values()),

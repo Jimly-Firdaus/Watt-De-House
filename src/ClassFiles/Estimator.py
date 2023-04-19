@@ -45,4 +45,3 @@ class Estimator:
                     * perangkatListrik.durasi_p_listrik
                     * self.hargaListrik
                 )
-                print(perangkatListrik.nama_p_listrik + " : " + biaya)

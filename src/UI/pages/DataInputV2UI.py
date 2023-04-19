@@ -308,15 +308,8 @@ class DataInputV2Page(PageWindow):
         self.list_updated.emit(self.list_of_data)
         self.back_to_estimator()
         self.temp_data = []
-        print("Total length: " + str(len(self.list_of_data)))
 
     def add_data(self):
-        print(self.name_input.text())
-        print(self.power_spinbox.value())
-        print(self.voltage_spinbox.value())
-        print(self.current_spinbox.value())
-        print(self.room_input.text())
-        print(self.duration_input.text())
         try:
             duration = self.duration_input.text()
             if not duration:
@@ -354,7 +347,6 @@ class DataInputV2Page(PageWindow):
 
     def handle_next_button_clicked(self):
         self.add_data()
-        print(self.temp_data)
 
     def handle_reset_button_clicked(self):
         self.reset_input_current()

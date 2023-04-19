@@ -270,7 +270,6 @@ class HouseFrame(PageWindow):
                             for ele in list_p_listrik:
                                 temp_list.append(ele)
                             self.list_ruangan[i].set_list_perangkat_listrik(temp_list)
-                            print(self.list_ruangan[i].get_list_perangkat_listrik())
                             self.list_ruangan_updated.emit(self.list_ruangan)
 
                 for tickbox in tickboxes:
@@ -375,7 +374,6 @@ class HouseFrame(PageWindow):
                             for ele in list_p_listrik:
                                 temp_list.append(ele)
                             self.list_ruangan[i].set_list_perangkat_listrik(temp_list)
-                            print(self.list_ruangan[i].get_list_perangkat_listrik())
                             self.list_ruangan_updated.emit(self.list_ruangan)
 
                             for tickbox in tickboxes:

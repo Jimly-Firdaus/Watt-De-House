@@ -51,13 +51,14 @@ class Window(QtWidgets.QMainWindow):
         )
         self.db.create_table(
             "ruangan_perangkat_listrik",
-            {"id_ruangan": "INTEGER", "id_perangkat_listrik": "INTEGER",},
+            {
+                "id_ruangan": "INTEGER",
+                "id_perangkat_listrik": "INTEGER",
+            },
         )
 
         # Fetch all data from database
         list_ruangan, list_perangkat_listrik = Util.get_all_data(self.db)
-        # print(list_ruangan[0].get_list_perangkat_listrik())
-        print(list_perangkat_listrik)
 
         # Center the opened window
         screen = QDesktopWidget().screenGeometry()

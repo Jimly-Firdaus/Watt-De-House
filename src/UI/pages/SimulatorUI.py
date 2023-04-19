@@ -116,7 +116,6 @@ class SimulatorPage(PageWindow):
 
     @QtCore.pyqtSlot(object, int)
     def update_state_perangkat(self, perangkat, state):
-        # print("Changed something!")
         perangkat.set_status_p_listrik(state == QtCore.Qt.Checked)
         state_ruangan = self.simulator.get_simulator_state(self.list_ruangan)
 
@@ -144,6 +143,5 @@ class SimulatorPage(PageWindow):
             self.overloaded_ruangan.setText("Overloaded Ruangan: Tidak ada")
 
     def update_self_list(self, new_list: List[Ruangan]):
-        print("Connected")
         self.list_ruangan = new_list
         self.init_ui()

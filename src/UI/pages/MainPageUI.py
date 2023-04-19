@@ -106,7 +106,6 @@ class MainFrame(PageWindow):
             sys.exit()
 
     def update_user_data(self, list_ruangan, list_perangkat_listrik):
-        print("Connected to main frame")
         self.list_ruangan = list_ruangan
         self.list_perangkat_listrik = list_perangkat_listrik
         self.init_ui()
@@ -115,7 +114,6 @@ class MainFrame(PageWindow):
         self.db.close()
         if os.path.exists("watt_de_house.db"):
             os.remove("watt_de_house.db")
-            print("Successfully Removed")
             self.db = Database("watt_de_house.db")
             self.modified_state = False
             # Create table incase doesnot exist
@@ -144,9 +142,10 @@ class MainFrame(PageWindow):
             )
             self.db.create_table(
                 "ruangan_perangkat_listrik",
-                {"id_ruangan": "INTEGER", "id_perangkat_listrik": "INTEGER",},
+                {
+                    "id_ruangan": "INTEGER",
+                    "id_perangkat_listrik": "INTEGER",
+                },
             )
             self.list_ruangan, self.list_perangkat_listrik = Util.get_all_data(self.db)
             self.list_ruangan_updated.emit(self.list_ruangan)
-        else:
-            print("The file does not exist")
