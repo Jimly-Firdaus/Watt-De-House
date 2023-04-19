@@ -268,6 +268,11 @@ class DataInputV1Page(PageWindow):
             "Reset", lambda: self.handle_reset_btn_clicked(), self
         )
         self.error_label = QtWidgets.QLabel("The input you give is incorrect!")
+        self.error_label.setStyleSheet(
+            """
+            color: red;
+        """
+        )
         self.error_label.setVisible(False)
         self.reset_btn.setMinimumSize(90, 90)
         back_btn_layout.addWidget(self.reset_btn, alignment=QtCore.Qt.AlignBottom)
