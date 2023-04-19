@@ -288,8 +288,12 @@ class DataInputV2Page(PageWindow):
             "Reset", self.handle_reset_button_clicked, self
         )
         self.reset_data_btn.setMinimumSize(90, 90)
+        self.error_label = QtWidgets.QLabel("The input you give is incorrect!")
+        self.error_label.setVisible(False)
 
         back_btn_layout.addWidget(self.reset_data_btn, alignment=QtCore.Qt.AlignBottom)
+        back_btn_layout.addStretch()
+        back_btn_layout.addWidget(self.error_label)
         back_btn_layout.addStretch()
         back_btn_layout.addWidget(self.back_btn, alignment=QtCore.Qt.AlignBottom)
 
@@ -299,10 +303,12 @@ class DataInputV2Page(PageWindow):
         main_layout.addWidget(back_btn_container)
 
     def back_to_estimator(self):
+        self.error_label.setVisible(False)
         self.goto("estimator")
 
     def handle_finish_button_clicked(self):
         self.add_data()
+        # self.error_label.setVisible(False)
         for data in self.temp_data:
             self.list_of_data.append(data)
         self.list_updated.emit(self.list_of_data)
@@ -335,8 +341,9 @@ class DataInputV2Page(PageWindow):
             )
             self.temp_data.append(export_data.create_p_listrik())
             self.reset_input_current()
+            self.error_label.setVisible(False)
         except Exception as e:
-            print(e)
+            self.error_label.setVisible(True)
 
     def reset_input_current(self):
         self.name_input.clear()
@@ -354,9 +361,11 @@ class DataInputV2Page(PageWindow):
 
     def handle_next_button_clicked(self):
         self.add_data()
+        # self.error_label.setVisible(False)
         print(self.temp_data)
 
     def handle_reset_button_clicked(self):
+        self.error_label.setVisible(False)
         self.reset_input_current()
         self.temp_data = []
 
