@@ -396,7 +396,7 @@ class HouseFrame(PageWindow):
         backbutton_layout.addWidget(back_button)
 
         def on_back_button_clicked():
-            self.goto("datainputv2")
+            self.goto("datainputv1")
 
         v_layout.addStretch(1)
 
