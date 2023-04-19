@@ -51,7 +51,10 @@ class Window(QtWidgets.QMainWindow):
         )
         self.db.create_table(
             "ruangan_perangkat_listrik",
-            {"id_ruangan": "INTEGER", "id_perangkat_listrik": "INTEGER",},
+            {
+                "id_ruangan": "INTEGER",
+                "id_perangkat_listrik": "INTEGER",
+            },
         )
 
         # Fetch all data from database
@@ -83,6 +86,7 @@ class Window(QtWidgets.QMainWindow):
         data_input_v2_page = self.m_pages["datainputv2"]
         house_frame = self.m_pages["houseframe"]
         simulator_page = self.m_pages["simulator"]
+        main_page = self.m_pages["main"]
         data_input_v1_page.list_updated.connect(
             house_frame.update_list_perangkat_listrik
         )
@@ -90,6 +94,7 @@ class Window(QtWidgets.QMainWindow):
             house_frame.update_list_perangkat_listrik
         )
         house_frame.list_ruangan_updated.connect(simulator_page.update_self_list)
+        main_page.list_ruangan_updated.connect(simulator_page.update_self_list)
 
         # Defaults to main
         self.goto("main")
