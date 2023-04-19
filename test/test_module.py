@@ -63,7 +63,7 @@ class ModuleTesting(unittest.TestCase):
         # Test valid input
         data_input = DataInput1(0, "Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
         self.assertEqual(
-            data_input.get_user_input(), ("Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
+            data_input.get_user_input(), (0, "Device-1", 100.0, 5.0, 220.0, "Ruangan-1")
         )
         perangkat_listrik = data_input.create_p_listrik()
         perangkat_listrik_expected = PerangkatListrik(
