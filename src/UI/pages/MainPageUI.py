@@ -7,6 +7,8 @@ from UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtGui, QtCore
 from UI.composables.Utility import Util
 import os
+from typing import List
+from ClassFiles.Ruangan import Ruangan
 from src.ClassFiles.Database import Database
 
 
@@ -150,3 +152,7 @@ class MainFrame(PageWindow):
             self.list_ruangan = []
             self.list_ruangan, self.list_perangkat_listrik = Util.get_all_data(self.db)
             self.list_ruangan_updated.emit(self.list_ruangan)
+
+    def update_self_list(self, new_list: List[Ruangan]):
+        self.list_ruangan = new_list
+        self.init_ui()
