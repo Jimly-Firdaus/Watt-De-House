@@ -28,3 +28,4 @@ run-tests:
     - main
     - dev
     - feature/gui
+    - hotfix/CI
