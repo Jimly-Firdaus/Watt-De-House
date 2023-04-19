@@ -30,6 +30,7 @@ class HouseFrame(PageWindow):
         self.id_ruangan = len(self.list_ruangan) + 1
         self.distinct_pl = set()
         self.distinct_room_name = set()
+        self.disabled_tickbox = []
         print(len(self.list_ruangan))
 
     def init_ui(self):
@@ -149,21 +150,22 @@ class HouseFrame(PageWindow):
         i = 0
         for ele in self.distinct_room_name:
             # Create a new checkbox
-            checkbox = QtWidgets.QCheckBox(ele)
-            tickboxes.append(checkbox)
+            if not ele in self.disabled_tickbox:
+                checkbox = QtWidgets.QCheckBox(ele)
+                tickboxes.append(checkbox)
 
-            # Connect the stateChanged signal
-            checkbox.stateChanged.connect(
-                lambda state, idx=i: update_checkbox_val(idx, state)
-            )
+                # Connect the stateChanged signal
+                checkbox.stateChanged.connect(
+                    lambda state, idx=i: update_checkbox_val(idx, state)
+                )
 
-            # Calculate the row and column for the tickbox
-            row = i // 3
-            col = i % 3
+                # Calculate the row and column for the tickbox
+                row = i // 3
+                col = i % 3
 
-            # Add the checkbox to the layout
-            tickbox_layout.addWidget(checkbox, row, col)
-            i += 1
+                # Add the checkbox to the layout
+                tickbox_layout.addWidget(checkbox, row, col)
+                i += 1
 
         tickbox_container.addStretch()
 
@@ -210,6 +212,7 @@ class HouseFrame(PageWindow):
                         any_checked = True
                         ticked_name.append(tickbox.text())
                         tickbox.setEnabled(False)
+                        self.disabled_tickbox.append(tickbox.text())
                         tickbox.setStyleSheet(
                             "QCheckBox::indicator {background-color:black; border-radius: 5%}"
                         )
@@ -316,6 +319,7 @@ class HouseFrame(PageWindow):
                     if tickbox.isChecked():
                         any_checked = True
                         ticked_name.append(tickbox.text())
+                        self.disabled_tickbox.append(tickbox.text())
                         tickbox.setStyleSheet(
                             "QCheckBox::indicator {background-color:black; border-radius: 5%}"
                         )
@@ -376,13 +380,6 @@ class HouseFrame(PageWindow):
 
             else:
                 self.goto("simulator")
-                # msg = QtWidgets.QMessageBox()
-                # msg.setText("Input Invalid!")
-                # msg.setInformativeText("Please try to input the correct value!")
-                # msg.setWindowTitle("Error Message")
-                # msg.exec_()
-                # self.list_ruangan_updated.emit(self.list_ruangan)
-                # self.goto("houseframe")
 
         # finish_button.clicked.connect(on_finish_button_clicked)
 
