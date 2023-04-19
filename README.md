@@ -19,7 +19,6 @@ cd src
 python main.py
 ```
 
-<<<<<<< HEAD
 # Daftar Module
 1. Modul Data Input\
 <img src="../DataInput.png">
@@ -38,7 +37,6 @@ python main.py
     <p>Gambar 3. Tampilan Ruangan</p>
 
 5. Modul Perangkat Listrik
-=======
 # Database
 ## 1. perangkat_listrik
 This table is used to store the information regarding any electrical devices that is used in the program
@@ -68,7 +66,6 @@ Attribute | Constraint
 id_ruangan | Integer
 id_perangkat_listrik | Integer
 
->>>>>>> d86992acc69eb0ab21ee1cf12057d62d76691f70
 
 # Runner Setup
 ## How to Activate Runner from Scratch
