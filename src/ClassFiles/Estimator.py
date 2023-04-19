@@ -1,9 +1,13 @@
+from typing import List
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
+
+
 class Estimator:
     def __init__(
         self,
-        showTotalConsumption,
-        listPerangkatListrik,
-        hargaListrik=605,  # asumsi daya 900VA dan bersubsidi
+        showTotalConsumption: bool,
+        listPerangkatListrik: List[PerangkatListrik],
+        hargaListrik: float,  # asumsi daya 900VA dan bersubsidi
     ):
         self.showTotalConsumption = showTotalConsumption
         self.listPerangkatListrik = listPerangkatListrik
@@ -17,6 +21,7 @@ class Estimator:
         self.hargaListrik = hargaListrik
 
     def get_total_biaya(self):
+        self.hitung_biaya_listrik()
         return self.totalBiaya
 
     def hitung_biaya_listrik(self):
@@ -30,7 +35,7 @@ class Estimator:
         self.totalBiaya *= self.hargaListrik
 
     def display_total_biaya(self):
-        print("Total Biaya :" + self.totalBiaya)
+        return "Total Biaya :" + str(self.totalBiaya)
 
     def show_consumption(self):
         if self.showTotalConsumption == True:
@@ -40,4 +45,3 @@ class Estimator:
                     * perangkatListrik.durasi_p_listrik
                     * self.hargaListrik
                 )
-                print(perangkatListrik.nama_p_listrik + " : " + biaya)

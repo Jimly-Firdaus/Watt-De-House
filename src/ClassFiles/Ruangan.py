@@ -9,12 +9,14 @@ class Ruangan:
         nama_ruangan: str,
         list_perangkat_listrik_ruangan: List[PerangkatListrik],
         circuit_breaker: bool,
+        circuit_breaker_name: str,
         threshold: float,
     ):
         self.id = id
         self.nama_ruangan = nama_ruangan
         self.list_perangkat_listrik_ruangan = list_perangkat_listrik_ruangan
         self.avail_circuit_breaker = circuit_breaker
+        self.circuit_breaker_name = circuit_breaker_name
         self.circuit_breaker_threshold = threshold
 
     def display_data_perangkat_listrik_ruangan(self):
@@ -34,9 +36,15 @@ class Ruangan:
             return self.circuit_breaker_threshold
         return -1
 
+    def get_circuit_breaker_name(self):
+        return self.circuit_breaker_name
+
     def set_threshold(self, o):
         if self.avail_circuit_breaker:
             self.circuit_breaker_threshold = o
+
+    def set_list_perangkat_listrik(self, o):
+        self.list_perangkat_listrik_ruangan = o
 
     def change_circuit_breaker_status(self, status):
         self.avail_circuit_breaker = status
@@ -65,5 +73,6 @@ class Ruangan:
             self.nama_ruangan,
             self.list_perangkat_listrik_ruangan,
             self.avail_circuit_breaker,
+            self.circuit_breaker_name,
             self.circuit_breaker_threshold,
         )

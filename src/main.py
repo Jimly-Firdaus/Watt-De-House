@@ -1,3 +1,6 @@
-# Just a dummy main program to stimulate CI test
-def pangkat2(number):
-    return number**2
+import threading
+from UI.app import run_app
+
+if __name__ == "__main__":
+    exit_flag = threading.Event()
+    run_app(exit_flag)
