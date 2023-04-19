@@ -28,7 +28,15 @@ class HelpPage(PageWindow):
         self.text.setReadOnly(True)
         self.text.setAlignment(Qt.AlignJustify)
         self.text.setStyleSheet(
-            "font-size: 24px; color: #FEFAE0; background-color: #0B2447; height: 200px; width: 500px; font-family: Times New Roman"
+            """
+            font-size: 24px; 
+            color: #FEFAE0; 
+            background-color: #0B2447; 
+            height: 200px; 
+            width: 500px; 
+            font-family: Times New Roman;
+            border: 5px solid #00AE90;
+            """
         )
 
         text = "FITUR ESTIMATOR \n1. Klik estimator untuk menjalakan fitur estimator \n2. Jika ingin menambahkan data, klik 'Please Press Here To Include Data' \n3. Masukkan data perangkat listrik yang diminta \n4. Jika ingin menambahkan lebih dari 1 perangkat listrik, klik tombol next setelah memasukkan data satu perangkat listrik untuk lanjut memasukkan data perangkat lainnya \n5. Jika data yang dimasukkan sudah merupakan data terakhir, klik finish. \n6. Hasil estimasi biaya akan tertampilkan setelah tombol finish diklik \n\nFITUR SIMULATOR \n1. Klik simulator untuk menjalankan fitur simulator \n2. Jika ingin menambahkan data, klik 'Tambahkan Perangkat Listrik' \n3. Masukkan data perangkat listrik yang diminta \n4. Jika ingin menambahkan lebih dari 1 perangkat listrik, klik tombol next setelah memasukkan data satu perangkat listrik untuk lanjut memasukkan data perangkat lainnya \n5. Jika data yang dimasukkan sudah merupakan data terakhir, klik finish. \n6. Perlu diingat, pada fitur ini, setelah melakukan klik tombol finish, jika ingin menambahkan perangkat listrik lagi, ruangan yang sudah dimasukkan pada input sebelumnya tidak bisa diinput lagi/dimasukkan perangkat listrik baru \n7. Fitur simulasi sudah siap digunakan. Klik checkbox pada perangkat listrik yang ingin dinyalakan saat simulasi \n8. Anda dapat melihat status electrical overload pada bagian kiri atas halaman "
