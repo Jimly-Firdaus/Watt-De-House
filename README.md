@@ -70,8 +70,8 @@ id_perangkat_listrik | Integer
 
 Nama (NIM) | Tugas
 ----- | -----
-Wilson Tansil (13521054) | Simulator
-Bill Clinton (13521064) | Perangkat Listrik
-Jimly Firdaus (13521102) | Data Input
-Ulung Adi Putra (13521122) | Estimator
-Muhammad Zaki Amanullah (13521146) | GUI 
+Wilson Tansil (13521054) | Simulator, GUI
+Bill Clinton (13521064) | Perangkat Listrik, GUI
+Jimly Firdaus (13521102) | Data Input, GUI
+Ulung Adi Putra (13521122) | Estimator, GUI
+Muhammad Zaki Amanullah (13521146) | Ruangan, GUI 
