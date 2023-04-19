@@ -31,10 +31,8 @@ class HouseFrame(PageWindow):
         self.distinct_pl = set()
         self.distinct_room_name = set()
         self.disabled_tickbox = []
-        print(len(self.list_ruangan))
 
         self.saved_pl = []  # For saved perangkat listrik name
-
         for j in range(len(self.list_perangkat_listrik)):
             self.saved_pl.append(
                 self.list_perangkat_listrik[j].get_data_perangkat_listrik()[6]
@@ -156,14 +154,12 @@ class HouseFrame(PageWindow):
 
         for ele in self.distinct_room_name:
             # Create a new checkbox
-            print("hoho")
             if (
                 not ele in self.disabled_tickbox and not ele in self.saved_pl
             ):  # If the name is already picked or saved before
                 checkbox = QtWidgets.QCheckBox(ele)
                 checkbox.setStyleSheet("QCheckBox { color: #FEFAE0 }")
                 tickboxes.append(checkbox)
-                print("hihi")
 
                 # Connect the stateChanged signal
                 checkbox.stateChanged.connect(
@@ -293,8 +289,6 @@ class HouseFrame(PageWindow):
                 msg.setWindowTitle("Error Message")
                 msg.exec_()
 
-        # next_button.clicked.connect(on_next_button_clicked)
-
         button_layout.addStretch()
         finish_button = UtilityButton("Finish", lambda: on_finish_button_clicked())
         finish_button.setMinimumSize(90, 90)
@@ -392,8 +386,6 @@ class HouseFrame(PageWindow):
             else:
                 self.goto("simulator")
 
-        # finish_button.clicked.connect(on_finish_button_clicked)
-
         v_layout.addStretch(2)
 
         # BackButton Layout
@@ -406,7 +398,6 @@ class HouseFrame(PageWindow):
         def on_back_button_clicked():
             self.goto("datainputv2")
 
-        # back_button.clicked.connect(on_back_button_clicked)
         v_layout.addStretch(1)
 
     def update_list_perangkat_listrik(self, new_list):
