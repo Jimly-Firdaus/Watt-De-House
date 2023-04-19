@@ -1,4 +1,5 @@
-# import sys
+import threading
+import time
 
 # sys.path.insert(0, "../")
 import unittest
@@ -157,8 +158,15 @@ class ModuleTesting(unittest.TestCase):
 
     def test_run_gui(self):
         try:
-            app = run_app()
-            app.quit()
+            # Start the run_app function in a separate thread
+            thread = threading.Thread(target=run_app)
+            thread.start()
+
+            # Wait for 5 seconds
+            time.sleep(5)
+
+            # Stop the thread
+            thread.terminate()
         except Exception as e:
             self.fail(f"Running the app raised an exception: {e}")
 
