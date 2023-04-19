@@ -13,8 +13,7 @@ class DataInputV1Page(PageWindow):
     list_updated = pyqtSignal(list)
 
     def __init__(
-        self,
-        data_input_v1_list: list = [],
+        self, data_input_v1_list: list = [],
     ):
         super().__init__()
         self.temp_data = []
@@ -269,6 +268,11 @@ class DataInputV1Page(PageWindow):
             "Reset", lambda: self.handle_reset_btn_clicked(), self
         )
         self.error_label = QtWidgets.QLabel("The input you give is incorrect!")
+        self.error_label.setStyleSheet(
+            """
+            color: red;
+        """
+        )
         self.error_label.setVisible(False)
         self.reset_btn.setMinimumSize(90, 90)
         back_btn_layout.addWidget(self.reset_btn, alignment=QtCore.Qt.AlignBottom)
@@ -302,6 +306,7 @@ class DataInputV1Page(PageWindow):
 
     def back_to_simulator(self):
         self.reset_values()
+        self.error_label.setVisible(False)
         self.goto("simulator")
 
     def reset_values(self):
@@ -325,6 +330,7 @@ class DataInputV1Page(PageWindow):
 
     def handle_reset_btn_clicked(self):
         self.reset_values()
+        self.error_label.setVisible(False)
         self.temp_data = []
 
     def finish_input(self):
