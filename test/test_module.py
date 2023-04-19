@@ -1,4 +1,5 @@
-# import sys
+import threading
+import time
 
 # sys.path.insert(0, "../")
 import unittest
@@ -8,7 +9,7 @@ from src.ClassFiles.Estimator import Estimator
 from src.ClassFiles.Simulator import Simulator
 from src.ClassFiles.Ruangan import Ruangan
 from src.ClassFiles.DataInput import DataInput1, DataInput2
-from src import main
+from src.UI.app import run_app
 
 
 class ModuleTesting(unittest.TestCase):
@@ -155,7 +156,17 @@ class ModuleTesting(unittest.TestCase):
 
     def test_run_gui(self):
         try:
-            main.run_app()
+            # flag
+            exit_flag = threading.Event()
+
+            # Start run_app function in a separate thread
+            thread = threading.Thread(target=run_app, args=(exit_flag,))
+            thread.start()
+
+            time.sleep(5)
+
+            # Set the flag to exit
+            exit_flag.set()
         except Exception as e:
             self.fail(f"Running the app raised an exception: {e}")
 

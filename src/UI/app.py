@@ -1,4 +1,5 @@
 import sys
+import time
 
 sys.path.insert(0, "../")
 from PyQt5 import QtCore, QtWidgets
@@ -51,10 +52,7 @@ class Window(QtWidgets.QMainWindow):
         )
         self.db.create_table(
             "ruangan_perangkat_listrik",
-            {
-                "id_ruangan": "INTEGER",
-                "id_perangkat_listrik": "INTEGER",
-            },
+            {"id_ruangan": "INTEGER", "id_perangkat_listrik": "INTEGER",},
         )
 
         # Fetch all data from database
@@ -93,6 +91,8 @@ class Window(QtWidgets.QMainWindow):
         )
         house_frame.list_ruangan_updated.connect(simulator_page.update_self_list)
         main_page.list_ruangan_updated.connect(simulator_page.update_self_list)
+        main_page.list_ruangan_updated.connect(house_frame.update_self_list)
+        house_frame.list_ruangan_updated.connect(main_page.update_self_list)
 
         # Defaults to main
         self.goto("main")
@@ -111,11 +111,17 @@ class Window(QtWidgets.QMainWindow):
             self.setWindowTitle(widget.windowTitle())
 
 
-def run_app():
+def run_app(exit_flag):
     import sys
 
     app = QApplication(sys.argv)
     window = Window()
 
     window.show()
-    sys.exit(app.exec_())
+
+    # Run the application event loop until the exit_flag is set
+    while not exit_flag.is_set():
+        app.processEvents()
+        time.sleep(0.1)
+
+    sys.exit()

@@ -5,19 +5,66 @@ Program ini dibuat untuk menyelesaikan Tugas Implementasi IF2250 Rekayasa Perang
 
 # How To Run Program
 1. Clone repository
-```
+```bash
 git clone "https://gitlab.informatika.org/Jimly-Firdaus/watt-de-house.git"
 ```
-2. Masuk ke directory tempat repository disimpan
+2. Go into the dictionary in which the repo is cloned
 
-3. Masuk ke folder src
-```
+3. Enter src
+```bash
 cd src
 ```
-4. Jalankan Program
-```
+4. Run the program
+```bash
 python main.py
 ```
+
+# Daftar Module
+1. Modul Data Input\
+<img src="../DataInput.png">
+    <p>Gambar 1. Tampilan Data Input</p>
+
+2. Modul Simulator\
+<img src= "../Simulator.png">
+    <p>Gambar 2. Tampilan Simulator</p>
+
+3. Modul Estimator\
+<img src = "../Estimator.png">
+    <p>Gambar 3. Tampilan Estimator</p>
+
+4. Modul Ruangan \
+<img src = "../Ruangan.png">
+    <p>Gambar 3. Tampilan Ruangan</p>
+
+5. Modul Perangkat Listrik
+# Database
+## 1. perangkat_listrik
+This table is used to store the information regarding any electrical devices that is used in the program
+Attribute | Constraint
+----- | -----
+id | Integer, Primary Key
+status | Integer
+nama | Text
+daya | Real
+arus | Real
+tegangan | Real
+nama_ruangan | Text
+durasi | Integer
+## 2. ruangan
+This table is used to store the rooms in the houseframe
+Attribute | Constraint
+----- | -----
+id | Integer, Primary Key
+nama_ruangan | Text
+circuit_breaker | Integer
+circuit_breaker_name | Text
+threshold | Real
+## 3. ruangan_perangkat_listrik
+This table is used to show relation between the room id and the device id
+Attribute | Constraint
+----- | -----
+id_ruangan | Integer
+id_perangkat_listrik | Integer
 
 
 # Runner Setup
