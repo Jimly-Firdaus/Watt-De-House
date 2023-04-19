@@ -147,5 +147,6 @@ class MainFrame(PageWindow):
                     "id_perangkat_listrik": "INTEGER",
                 },
             )
+            self.list_ruangan = []
             self.list_ruangan, self.list_perangkat_listrik = Util.get_all_data(self.db)
             self.list_ruangan_updated.emit(self.list_ruangan)
