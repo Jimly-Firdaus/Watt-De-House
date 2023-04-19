@@ -55,41 +55,60 @@ class SimulatorPage(PageWindow):
         col = 0
 
         # Loop each ruangan
-        for ruangan in self.list_ruangan:
-            # Group box for the Ruangan
-            group_box = QtWidgets.QGroupBox(ruangan.get_ruangan_name())
-            grid_layout.addWidget(group_box, row, col)
+        if len(self.list_ruangan) != 0:
+            for ruangan in self.list_ruangan:
+                # Group box for the Ruangan
+                group_box = QtWidgets.QGroupBox(ruangan.get_ruangan_name())
+                grid_layout.addWidget(group_box, row, col)
 
-            col += 1
-            if col == 3:
-                col = 0
-                row += 1
+                col += 1
+                if col == 3:
+                    col = 0
+                    row += 1
 
-            # Vertical layout for the Perangkat
-            v_layout = QtWidgets.QVBoxLayout(group_box)
+                # Vertical layout for the Perangkat
+                v_layout = QtWidgets.QVBoxLayout(group_box)
 
-            # Append Perangkat to the layout
-            for perangkat in ruangan.get_list_perangkat_listrik():
-                data = perangkat.get_data_perangkat_listrik()
-                check_box = QtWidgets.QCheckBox(data[2])
-                check_box.setChecked(data[1])
-                check_box.stateChanged.connect(
-                    lambda state, p=perangkat: self.update_state_perangkat(p, state)
-                )
-                v_layout.addWidget(check_box)
+                # Append Perangkat to the layout
+                for perangkat in ruangan.get_list_perangkat_listrik():
+                    data = perangkat.get_data_perangkat_listrik()
+                    check_box = QtWidgets.QCheckBox(data[2])
+                    check_box.setChecked(data[1])
+                    check_box.stateChanged.connect(
+                        lambda state, p=perangkat: self.update_state_perangkat(p, state)
+                    )
+                    v_layout.addWidget(check_box)
 
-            if ruangan.have_circuit_breaker():
-                circuit_breaker_box = QtWidgets.QCheckBox(
-                    ruangan.get_circuit_breaker_name()
-                )
-                circuit_breaker_box.setChecked(False)
-                circuit_breaker_box.setEnabled(False)
-                self.circuit_breaker_boxes[
-                    ruangan.get_ruangan_name()
-                ] = circuit_breaker_box
-                v_layout.addWidget(circuit_breaker_box)
-        main_layout.addLayout(grid_layout)
-        main_layout.addStretch()
+                if ruangan.have_circuit_breaker():
+                    circuit_breaker_box = QtWidgets.QCheckBox(
+                        ruangan.get_circuit_breaker_name()
+                    )
+                    circuit_breaker_box.setChecked(False)
+                    circuit_breaker_box.setEnabled(False)
+                    self.circuit_breaker_boxes[
+                        ruangan.get_ruangan_name()
+                    ] = circuit_breaker_box
+                    v_layout.addWidget(circuit_breaker_box)
+
+            main_layout.addLayout(grid_layout)
+            main_layout.addStretch()
+
+        else:
+            main_layout.addStretch()
+            label_layout = QtWidgets.QHBoxLayout()
+            label_layout.addStretch()
+            err_label = QtWidgets.QLabel("Tidak ada ruangan!")
+            err_label.setStyleSheet(
+                """
+                font-size: 30px;
+                font-family: Georgia;
+                color: red;
+            """
+            )
+            label_layout.addWidget(err_label)
+            label_layout.addStretch()
+            main_layout.addLayout(label_layout)
+            main_layout.addStretch()
 
         footer = QtWidgets.QHBoxLayout()
         # Set this to Data Input v1 page
