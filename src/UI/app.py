@@ -93,6 +93,7 @@ class Window(QtWidgets.QMainWindow):
         )
         house_frame.list_ruangan_updated.connect(simulator_page.update_self_list)
         main_page.list_ruangan_updated.connect(simulator_page.update_self_list)
+        main_page.list_ruangan_updated.connect(house_frame.update_self_list)
 
         # Defaults to main
         self.goto("main")
