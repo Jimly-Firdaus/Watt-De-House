@@ -267,8 +267,12 @@ class DataInputV1Page(PageWindow):
         self.reset_btn = UtilityButton(
             "Reset", lambda: self.handle_reset_btn_clicked(), self
         )
+        self.error_label = QtWidgets.QLabel("The input you give is incorrect!")
+        self.error_label.setVisible(False)
         self.reset_btn.setMinimumSize(90, 90)
         back_btn_layout.addWidget(self.reset_btn, alignment=QtCore.Qt.AlignBottom)
+        back_btn_layout.addStretch()
+        back_btn_layout.addWidget(self.error_label)
         back_btn_layout.addStretch()
         back_btn_layout.addWidget(self.back_btn, alignment=QtCore.Qt.AlignBottom)
 
@@ -293,8 +297,10 @@ class DataInputV1Page(PageWindow):
             device_room_name,
         )
         self.temp_data.append(device.create_p_listrik())
+        self.reset_values()
 
     def back_to_simulator(self):
+        self.reset_values()
         self.goto("simulator")
 
     def reset_values(self):
@@ -312,9 +318,9 @@ class DataInputV1Page(PageWindow):
     def next_device(self):
         try:
             self.add_to_list()
+            self.error_label.setVisible(False)
         except Exception as e:
-            print(e)
-        self.reset_values()
+            self.error_label.setVisible(True)
 
     def handle_reset_btn_clicked(self):
         self.reset_values()
@@ -324,10 +330,12 @@ class DataInputV1Page(PageWindow):
     def finish_input(self):
         try:
             self.add_to_list()
+            self.error_label.setVisible(False)
             for data in self.temp_data:
                 self.v1_list.append(data)
                 self.list_updated.emit(self.v1_list)
                 print("Signal emitted with list:", self.v1_list)
+            self.temp_data = []
             self.goto("houseframe")
         except Exception as e:
-            self.goto("simulator")
+            self.error_label.setVisible(True)
