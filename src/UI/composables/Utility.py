@@ -47,7 +47,7 @@ class Util:
         Util.db_length = len(ruangan_list)
         return (ruangan_list, all_perangkat_listrik)
 
-    @staticmethod
+    # @staticmethod
     # def get_unlisted_perangkat_listrik(db: Database):
     #     unlisted_perangkat_listrik = []
     #     list_perangkat_listrik = db.get_data(
