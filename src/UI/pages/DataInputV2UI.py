@@ -290,6 +290,11 @@ class DataInputV2Page(PageWindow):
         self.reset_data_btn.setMinimumSize(90, 90)
         self.error_label = QtWidgets.QLabel("The input you give is incorrect!")
         self.error_label.setVisible(False)
+        self.error_label.setStyleSheet(
+            """
+            color: red;
+        """
+        )
 
         back_btn_layout.addWidget(self.reset_data_btn, alignment=QtCore.Qt.AlignBottom)
         back_btn_layout.addStretch()
