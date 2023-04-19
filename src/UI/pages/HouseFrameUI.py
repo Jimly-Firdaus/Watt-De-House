@@ -152,6 +152,8 @@ class HouseFrame(PageWindow):
             # Create a new checkbox
             if not ele in self.disabled_tickbox:
                 checkbox = QtWidgets.QCheckBox(ele)
+                checkbox.setStyleSheet("QCheckBox { color: #FEFAE0 }")
+                checkbox.update()
                 tickboxes.append(checkbox)
 
                 # Connect the stateChanged signal
