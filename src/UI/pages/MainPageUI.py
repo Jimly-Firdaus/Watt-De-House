@@ -142,10 +142,7 @@ class MainFrame(PageWindow):
             )
             self.db.create_table(
                 "ruangan_perangkat_listrik",
-                {
-                    "id_ruangan": "INTEGER",
-                    "id_perangkat_listrik": "INTEGER",
-                },
+                {"id_ruangan": "INTEGER", "id_perangkat_listrik": "INTEGER",},
             )
             self.list_ruangan = []
             self.list_ruangan, self.list_perangkat_listrik = Util.get_all_data(self.db)
