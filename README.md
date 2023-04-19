@@ -19,7 +19,6 @@ cd src
 python main.py
 ```
 
-<<<<<<< HEAD
 # Daftar Module
 1. Modul Data Input\
 ![DataInput.png](images/DataInput.png)
@@ -38,7 +37,6 @@ python main.py
     <p>Gambar 3. Tampilan Ruangan</p>
 
 5. Modul Perangkat Listrik
-=======
 # Database
 ## 1. perangkat_listrik
 This table is used to store the information regarding any electrical devices that is used in the program
@@ -68,44 +66,10 @@ Attribute | Constraint
 id_ruangan | Integer
 id_perangkat_listrik | Integer
 
->>>>>>> d86992acc69eb0ab21ee1cf12057d62d76691f70
-
-# Runner Setup
-## How to Activate Runner from Scratch
-* Go to root of this project
-* Ensure that you have Docker Desktop installed and opened
-* Open terminal then 
-```bash
-docker build -t <image-name> .
-```
-* Specify the <image-name>
-* Then run image with
-```bash
-docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock <image-name>:<version>
-```
-
-## How to Activate Runner from Docker Registry
-* Ensure that you have Docker Desktop installed and opened
-* Open terminal then
-```bash
-docker pull jimlyfirdaus/gitlab-runner-concurrent
-```
-* Then run image with
-```bash
-docker run -d --name <runner-name> -v /var/run/docker.sock:/var/run/docker.sock <image-name>:<version>
-```
-
-## Reference
-* https://docs.gitlab.com/runner/install/docker.html
-* https://docs.gitlab.com/runner/register/index.html#docker
-
-# How to Enable Auto Lint Python Files
-1. Make sure you have already installed `black`
-```bash
-pip install black
-``` 
-2. Then go to root of this project:
-```bash
-.\black.setup.bat
-```
-3. Black should be triggered after this when staging files
+Nama (NIM) | Tugas
+----- | -----
+Wilson Tansil (13521054) | Simulator
+Bill Clinton (13521064) | Perangkat Listrik
+Jimly Firdaus (13521102) | Data Input
+Ulung Adi Putra (13521122) | Estimator
+Muhammad Zaki Amanullah (13521146) | GUI 
