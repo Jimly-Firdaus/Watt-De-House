@@ -33,6 +33,13 @@ class HouseFrame(PageWindow):
         self.disabled_tickbox = []
         print(len(self.list_ruangan))
 
+        self.saved_pl = []  # For saved perangkat listrik name
+
+        for j in range(len(self.list_perangkat_listrik)):
+            self.saved_pl.append(
+                self.list_perangkat_listrik[j].get_data_perangkat_listrik()[6]
+            )
+
     def init_ui(self):
         list_obj_ruangan = []
         self.add_ruangan()
@@ -138,9 +145,7 @@ class HouseFrame(PageWindow):
         tickbox_container.addLayout(tickbox_layout)
 
         # Add multiple tickboxes here
-        num_checkboxes = len(
-            self.distinct_room_name
-        )  # Number of Circuit Breaker (Can be Modified)
+        num_checkboxes = len(self.distinct_room_name)
         tickboxes = []
         checkbox_values = [False] * num_checkboxes
 
@@ -148,11 +153,17 @@ class HouseFrame(PageWindow):
             checkbox_values[idx] = state == 2
 
         i = 0
+
         for ele in self.distinct_room_name:
             # Create a new checkbox
-            if not ele in self.disabled_tickbox:
+            print("hoho")
+            if (
+                not ele in self.disabled_tickbox and not ele in self.saved_pl
+            ):  # If the name is already picked or saved before
                 checkbox = QtWidgets.QCheckBox(ele)
+                checkbox.setStyleSheet("QCheckBox { color: #FEFAE0 }")
                 tickboxes.append(checkbox)
+                print("hihi")
 
                 # Connect the stateChanged signal
                 checkbox.stateChanged.connect(
