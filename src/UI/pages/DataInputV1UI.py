@@ -302,6 +302,7 @@ class DataInputV1Page(PageWindow):
 
     def back_to_simulator(self):
         self.reset_values()
+        self.error_label.setVisible(False)
         self.goto("simulator")
 
     def reset_values(self):
@@ -325,6 +326,7 @@ class DataInputV1Page(PageWindow):
 
     def handle_reset_btn_clicked(self):
         self.reset_values()
+        self.error_label.setVisible(False)
         self.temp_data = []
         print("Handled reset")
 
