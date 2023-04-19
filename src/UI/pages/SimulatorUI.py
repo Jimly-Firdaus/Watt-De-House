@@ -163,4 +163,15 @@ class SimulatorPage(PageWindow):
 
     def update_self_list(self, new_list: List[Ruangan]):
         self.list_ruangan = new_list
+        self.circuit_breaker_boxes = {}
+        for ruangan in self.list_ruangan:
+            if ruangan.have_circuit_breaker():
+                circuit_breaker_box = QtWidgets.QCheckBox(
+                    ruangan.get_circuit_breaker_name()
+                )
+                circuit_breaker_box.setChecked(False)
+                circuit_breaker_box.setEnabled(False)
+                self.circuit_breaker_boxes[
+                    ruangan.get_ruangan_name()
+                ] = circuit_breaker_box
         self.init_ui()

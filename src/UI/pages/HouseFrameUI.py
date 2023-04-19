@@ -31,7 +31,9 @@ class HouseFrame(PageWindow):
         self.distinct_pl = set()
         self.distinct_room_name = set()
         self.disabled_tickbox = []
+        self.init_self_list()
 
+    def init_self_list(self):
         self.saved_pl = []  # For saved perangkat listrik name
         for j in range(len(self.list_perangkat_listrik)):
             self.saved_pl.append(
