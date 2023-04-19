@@ -19,6 +19,24 @@ cd src
 python main.py
 ```
 
+# Daftar Module
+1. Modul Data Input\
+<img src="../DataInput.png">
+    <p>Gambar 1. Tampilan Data Input</p>
+
+2. Modul Simulator\
+<img src= "../Simulator.png">
+    <p>Gambar 2. Tampilan Simulator</p>
+
+3. Modul Estimator\
+<img src = "../Estimator.png">
+    <p>Gambar 3. Tampilan Estimator</p>
+
+4. Modul Ruangan \
+<img src = "../Ruangan.png">
+    <p>Gambar 3. Tampilan Ruangan</p>
+
+5. Modul Perangkat Listrik
 
 # Runner Setup
 ## How to Activate Runner from Scratch
