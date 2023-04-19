@@ -406,3 +406,7 @@ class HouseFrame(PageWindow):
         for perangkat in self.list_perangkat_listrik:
             self.distinct_pl.add(perangkat)
             self.distinct_room_name.add(perangkat.get_data_perangkat_listrik()[6])
+
+    def update_self_list(self, new_list: List[Ruangan]):
+        self.list_ruangan = new_list
+        self.init_ui()
