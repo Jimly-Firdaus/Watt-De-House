@@ -2,9 +2,9 @@ import sys
 
 sys.path.insert(0, "../../")
 from typing import List
-from ClassFiles.Database import Database
-from ClassFiles.PerangkatListrik import PerangkatListrik
-from ClassFiles.Ruangan import Ruangan
+from src.ClassFiles.Database import Database
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
+from src.ClassFiles.Ruangan import Ruangan
 
 
 class Util:
