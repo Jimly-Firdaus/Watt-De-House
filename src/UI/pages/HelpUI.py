@@ -2,11 +2,11 @@ import sys
 
 sys.path.insert(0, "../../")
 from PyQt5.QtCore import Qt
-from UI.components.FeatureButton import FeatureButton
-from UI.components.UtilityButton import UtilityButton
-from UI.util.PageWindow import PageWindow
+from src.UI.components.FeatureButton import FeatureButton
+from src.UI.components.UtilityButton import UtilityButton
+from src.UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets
-from UI.components.UtilityButton import UtilityButton
+from src.UI.components.UtilityButton import UtilityButton
 
 
 class HelpPage(PageWindow):
