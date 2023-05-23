@@ -6,15 +6,15 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget
-from UI.pages.MainPageUI import MainFrame
-from UI.pages.SimulatorUI import SimulatorPage
-from UI.pages.EstimatorUI import EstimatorPage
-from UI.pages.DataInputV1UI import DataInputV1Page
-from UI.pages.DataInputV2UI import DataInputV2Page
-from UI.pages.HelpUI import HelpPage
-from UI.pages.HouseFrameUI import HouseFrame
-from ClassFiles.Database import Database
-from UI.composables.Utility import Util
+from src.UI.pages.MainPageUI import MainFrame
+from src.UI.pages.SimulatorUI import SimulatorPage
+from src.UI.pages.EstimatorUI import EstimatorPage
+from src.UI.pages.DataInputV1UI import DataInputV1Page
+from src.UI.pages.DataInputV2UI import DataInputV2Page
+from src.UI.pages.HelpUI import HelpPage
+from src.UI.pages.HouseFrameUI import HouseFrame
+from src.ClassFiles.Database import Database
+from src.UI.composables.Utility import Util
 
 
 class Window(QtWidgets.QMainWindow):
