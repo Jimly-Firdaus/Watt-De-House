@@ -1,12 +1,12 @@
 import sys
 
 sys.path.insert(0, "../../")
-from UI.components.UtilityButton import UtilityButton
-from UI.util.PageWindow import PageWindow
+from src.UI.components.UtilityButton import UtilityButton
+from src.UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore
 from typing import List
-from ClassFiles.Ruangan import Ruangan
-from ClassFiles.Simulator import Simulator
+from src.ClassFiles.Ruangan import Ruangan
+from src.ClassFiles.Simulator import Simulator
 
 
 class SimulatorPage(PageWindow):
