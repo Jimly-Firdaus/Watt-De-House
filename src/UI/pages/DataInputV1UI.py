@@ -3,10 +3,10 @@ import sys
 sys.path.insert(0, "../../")
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtWidgets
-from UI.components.UtilityButton import UtilityButton
-from UI.util.PageWindow import PageWindow
+from src.UI.components.UtilityButton import UtilityButton
+from src.UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore
-from ClassFiles.DataInput import DataInput1
+from src.ClassFiles.DataInput import DataInput1
 
 
 class DataInputV1Page(PageWindow):
