@@ -4,7 +4,9 @@ from src.ClassFiles.Estimator import Estimator
 
 
 class Simulator:
-    def __init__(self,):
+    def __init__(
+        self,
+    ):
         self.electrical_overload = False
         self.notify_button = False
 

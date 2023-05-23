@@ -13,7 +13,8 @@ class DataInputV1Page(PageWindow):
     list_updated = pyqtSignal(list)
 
     def __init__(
-        self, data_input_v1_list: list = [],
+        self,
+        data_input_v1_list: list = [],
     ):
         super().__init__()
         self.temp_data = []
