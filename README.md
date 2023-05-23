@@ -1,14 +1,14 @@
 # Watt-De-House
 
 # General Information
-Program ini dibuat untuk menyelesaikan Tugas Implementasi IF2250 Rekayasa Perangkat Lunak. Program ini memiliki dua fitur utama yaitu Estimator dan Simulator. Fitur Estimator berfungsi untuk mengkalkulasi perkiraan biaya yang harus dikeluarkan untuk konsumsi listrik. Fitur ini meminta input data perangkat listrik serta estimasi durasi penggunaan dari perangkat listrik tersebut. Fitur Simulator berfungsi untuk melakukan simulasi perangkat listrik yang ada di rumah. Fitru ini meminta input data perangkat listrik, circuit breaker, dan ruangan. Setelah itu, program aka mensimulasikan apakah terjadi electrical overload atau tidak jika perangkat listrik dinyalakan secara bersamaan. 
+This program was created to complete the IF2250 Software Engineering Implementation Task. This program has two main features: Estimator and Simulator. The Estimator feature is used to calculate the estimated cost of electricity consumption. This feature requests input data for electrical devices and an estimated duration of use for these devices. The Simulator feature is used to simulate the electrical devices in a house. This feature requests input data for electrical devices, circuit breakers, and rooms. After that, the program will simulate whether an electrical overload occurs or not if the electrical devices are turned on simultaneously.
 
 # How To Run Program
 1. Clone repository
 ```bash
 git clone "https://gitlab.informatika.org/Jimly-Firdaus/watt-de-house.git"
 ```
-2. Go into the dictionary in which the repo is cloned
+2. Go into the directory in which the repo is cloned
 
 3. Enter src
 ```bash
@@ -19,27 +19,28 @@ cd src
 python main.py
 ```
 
-# Daftar Module
-1. Modul Data Input\
+# List of Modules
+1. Data Input Module\
 ![DataInput.png](images/DataInput.png)
-    <p>Gambar 1. Tampilan Data Input</p>
+    <p>Figure 1. Data Input Display</p>
 
-2. Modul Simulator\
+2. Simulator Module\
 ![Simulator.png](images/Simulator.png)
-    <p>Gambar 2. Tampilan Simulator</p>
+    <p>Figure 2. Simulator Display</p>
 
-3. Modul Estimator\
+3. Estimator Module\
 ![Estimator.png](images/Estimator.png)
-    <p>Gambar 3. Tampilan Estimator</p>
+    <p>Figure 3. Estimator Display</p>
 
-4. Modul Ruangan \
+4. Room Module \
 ![Ruangan.png](images/Ruangan.png)
-    <p>Gambar 3. Tampilan Ruangan</p>
+    <p>Figure 4. Room Display</p>
 
-5. Modul Perangkat Listrik
+5. Electrical Device Module
+
 # Database
 ## 1. perangkat_listrik
-This table is used to store the information regarding any electrical devices that is used in the program
+This table is used to store information regarding any electrical devices that are used in the program.
 Attribute | Constraint
 ----- | -----
 id | Integer, Primary Key
@@ -50,8 +51,9 @@ arus | Real
 tegangan | Real
 nama_ruangan | Text
 durasi | Integer
+
 ## 2. ruangan
-This table is used to store the rooms in the houseframe
+This table is used to store the rooms in the house frame.
 Attribute | Constraint
 ----- | -----
 id | Integer, Primary Key
@@ -59,19 +61,20 @@ nama_ruangan | Text
 circuit_breaker | Integer
 circuit_breaker_name | Text
 threshold | Real
+
 ## 3. ruangan_perangkat_listrik
-This table is used to show relation between the room id and the device id
+This table is used to show the relation between the room id and the device id.
 Attribute | Constraint
 ----- | -----
 id_ruangan | Integer
 id_perangkat_listrik | Integer
 
-# Pembagian Tugas
+# Task Distribution
 
-Nama (NIM) | Tugas
+Name (NIM) | Task
 ----- | -----
 Wilson Tansil (13521054) | Simulator, GUI
-Bill Clinton (13521064) | Perangkat Listrik, GUI
+Bill Clinton (13521064) | Electrical Device, GUI
 Jimly Firdaus (13521102) | Data Input, GUI
 Ulung Adi Putra (13521122) | Estimator, GUI
-Muhammad Zaki Amanullah (13521146) | Ruangan, GUI 
+Muhammad Zaki Amanullah (13521146) | Room, GUI
