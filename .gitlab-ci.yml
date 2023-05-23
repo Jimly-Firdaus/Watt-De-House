@@ -1,0 +1,31 @@
+image: python:3.9-slim-buster
+
+stages:
+  - test
+
+variables:
+  PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/src"
+
+before_script:
+  - apt-get update && apt-get install -y python3-pip libgl1-mesa-glx libxcb1 libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libfontconfig1 libxcb-util0 wget
+  - wget http://ftp.us.debian.org/debian/pool/main/x/xcb-util/libxcb-util1_0.4.0-1+b1_amd64.deb
+  - dpkg -i libxcb-util1_0.4.0-1+b1_amd64.deb
+  - echo "Installed libxcb-util1"
+  - pip3 uninstall -y PyQt5
+  - pip3 install PyQt5
+  - echo "Python 3, pip, and dependencies installed"
+
+run-tests:
+  tags:
+    - docker-runner
+  stage: test
+  script:
+    - export QT_DEBUG_PLUGINS=1
+    - export QT_QPA_PLATFORM=offscreen
+    - python3 -m unittest discover test
+  only:
+    - merge_requests
+    - main
+    - dev
+    - feature/gui
+    - hotfix/CI
