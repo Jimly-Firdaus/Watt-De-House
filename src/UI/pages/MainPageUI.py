@@ -1,14 +1,14 @@
 import sys
 
 sys.path.insert(0, "../../")
-from UI.components.FeatureButton import FeatureButton
-from UI.components.UtilityButton import UtilityButton
-from UI.util.PageWindow import PageWindow
+from src.UI.components.FeatureButton import FeatureButton
+from src.UI.components.UtilityButton import UtilityButton
+from src.UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtGui, QtCore
-from UI.composables.Utility import Util
+from src.UI.composables.Utility import Util
 import os
 from typing import List
-from ClassFiles.Ruangan import Ruangan
+from src.ClassFiles.Ruangan import Ruangan
 from src.ClassFiles.Database import Database
 
 
