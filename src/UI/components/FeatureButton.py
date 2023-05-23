@@ -1,4 +1,4 @@
-from UI.components.BaseButton import BaseButton
+from src.UI.components.BaseButton import BaseButton
 
 
 class FeatureButton(BaseButton):
