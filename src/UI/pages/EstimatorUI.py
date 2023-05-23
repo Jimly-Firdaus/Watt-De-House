@@ -1,11 +1,11 @@
 import sys
-from UI.components.FeatureButton import FeatureButton
-from UI.components.UtilityButton import UtilityButton
-from UI.util.PageWindow import PageWindow
+from src.UI.components.FeatureButton import FeatureButton
+from src.UI.components.UtilityButton import UtilityButton
+from src.UI.util.PageWindow import PageWindow
 from PyQt5 import QtWidgets, QtCore, QtGui
-from ClassFiles.Estimator import Estimator
-from ClassFiles.DataInput import DataInput1, DataInput2
-from ClassFiles.PerangkatListrik import PerangkatListrik
+from src.ClassFiles.Estimator import Estimator
+from src.ClassFiles.DataInput import DataInput1, DataInput2
+from src.ClassFiles.PerangkatListrik import PerangkatListrik
 from typing import List
 
 
